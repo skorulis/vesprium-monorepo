@@ -151,14 +151,31 @@ func drawCharacterElementDivisions(context: CGContext, layout: CharacterLayout, 
     let headYi = Int(layout.headY)
     let headXi = Int(layout.headX)
     let headWi = max(1, Int(ceil(layout.headW)))
-    let hairBottomY = headYi + layout.hairRows - 1
-    strokeHLine(
-        context,
-        x0: headXi,
-        x1: headXi + headWi - 1,
-        y: hairBottomY,
-        color: palette.hairDivision
-    )
+    if layout.hairCapRows > 0 {
+        let hairBottomY = headYi + layout.hairCapRows - 1
+        switch layout.hairStyle {
+        case .mohawk:
+            let mw = max(2, headWi / 3)
+            let mx = headXi + (headWi - mw) / 2
+            strokeHLine(
+                context,
+                x0: mx,
+                x1: mx + mw - 1,
+                y: hairBottomY,
+                color: palette.hairDivision
+            )
+        case .short, .buzz, .long, .ponytail:
+            strokeHLine(
+                context,
+                x0: headXi,
+                x1: headXi + headWi - 1,
+                y: hairBottomY,
+                color: palette.hairDivision
+            )
+        case .bald:
+            break
+        }
+    }
 }
 
 func clampProportion(_ v: CGFloat) -> CGFloat {

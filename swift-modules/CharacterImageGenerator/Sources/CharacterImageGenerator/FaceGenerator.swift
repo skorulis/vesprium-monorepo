@@ -6,6 +6,12 @@ import CoreGraphics
 
 enum FaceGenerator {
     static func drawHead(context: CGContext, layout: CharacterLayout, palette: CharacterShadingPalette) {
+        drawHeadBase(context: context, layout: layout, palette: palette)
+        drawNeck(context: context, layout: layout, palette: palette)
+    }
+
+    /// Head skin only (no neck). Used when something must be layered between head and neck (e.g. ponytail behind the torso).
+    static func drawHeadBase(context: CGContext, layout: CharacterLayout, palette: CharacterShadingPalette) {
         fillRectSkin(
             context,
             x: Int(layout.headX),
@@ -14,12 +20,36 @@ enum FaceGenerator {
             height: Int(ceil(layout.headH)),
             palette: palette
         )
+    }
+
+    static func drawNeck(context: CGContext, layout: CharacterLayout, palette: CharacterShadingPalette) {
         fillRectSkin(
             context,
             x: Int(layout.neckX),
             y: Int(layout.neckY),
             width: layout.neckWi,
             height: layout.neckHi,
+            palette: palette
+        )
+    }
+
+    /// Drawn before neck, body, and legs so the torso and limbs occlude the tail (front view).
+    static func drawPonytailTailBeforeBody(context: CGContext, layout: CharacterLayout, palette: CharacterShadingPalette) {
+        let h = layout.canvasHeight
+        let headYi = Int(layout.headY)
+        let cx = Int(round(layout.centerX))
+        let tailW = 2
+        let tailX = cx - tailW / 2
+        let headHi = Int(ceil(layout.headH))
+        let startY = headYi + headHi
+        let maxLen = min(max(4, Int(8 * layout.unitScale)), h - startY - 1)
+        guard maxLen > 0 else { return }
+        fillRectHair(
+            context,
+            x: tailX,
+            y: startY,
+            width: tailW,
+            height: maxLen,
             palette: palette
         )
     }
@@ -65,10 +95,118 @@ enum FaceGenerator {
         let headYi = Int(layout.headY)
         let headWi = Int(ceil(layout.headW))
         let headXi = Int(layout.headX)
+        let capRows = layout.hairCapRows
 
-        for i in 0..<layout.hairRows {
+        switch layout.hairStyle {
+        case .bald:
+            return
+        case .buzz:
+            drawHairCapBand(
+                context: context,
+                headXi: headXi,
+                headYi: headYi,
+                headWi: headWi,
+                capRows: capRows,
+                canvasHeight: h,
+                palette: palette
+            )
+        case .mohawk:
+            let mw = max(2, headWi / 3)
+            let mx = headXi + (headWi - mw) / 2
+            let extraUp = max(1, Int(2 * layout.unitScale))
+            for up in 1...extraUp {
+                let yy = headYi - up
+                if yy >= 0 {
+                    fillRectHair(
+                        context,
+                        x: mx,
+                        y: yy,
+                        width: mw,
+                        height: 1,
+                        palette: palette
+                    )
+                }
+            }
+            for i in 0..<capRows {
+                let yy = headYi + i
+                if yy < h {
+                    fillRectHair(
+                        context,
+                        x: mx,
+                        y: yy,
+                        width: mw,
+                        height: 1,
+                        palette: palette
+                    )
+                }
+            }
+        case .short:
+            drawHairCapBand(
+                context: context,
+                headXi: headXi,
+                headYi: headYi,
+                headWi: headWi,
+                capRows: capRows,
+                canvasHeight: h,
+                palette: palette
+            )
+            drawSideHair(
+                context: context,
+                layout: layout,
+                headXi: headXi,
+                headYi: headYi,
+                headWi: headWi,
+                canvasHeight: h,
+                palette: palette,
+                bandScale: 4,
+                includeNonFemale: false
+            )
+        case .long:
+            drawHairCapBand(
+                context: context,
+                headXi: headXi,
+                headYi: headYi,
+                headWi: headWi,
+                capRows: capRows,
+                canvasHeight: h,
+                palette: palette
+            )
+            drawSideHair(
+                context: context,
+                layout: layout,
+                headXi: headXi,
+                headYi: headYi,
+                headWi: headWi,
+                canvasHeight: h,
+                palette: palette,
+                bandScale: layout.gender == .female ? 6 : 3,
+                includeNonFemale: true
+            )
+        case .ponytail:
+            drawHairCapBand(
+                context: context,
+                headXi: headXi,
+                headYi: headYi,
+                headWi: headWi,
+                capRows: capRows,
+                canvasHeight: h,
+                palette: palette
+            )
+        }
+    }
+
+    private static func drawHairCapBand(
+        context: CGContext,
+        headXi: Int,
+        headYi: Int,
+        headWi: Int,
+        capRows: Int,
+        canvasHeight: Int,
+        palette: CharacterShadingPalette
+    ) {
+        for i in 0..<capRows {
             let yy = headYi + i
-            if yy < h {
+            if yy < canvasHeight {
                 fillRectHair(
                     context,
                     x: headXi,
@@ -79,27 +217,45 @@ enum FaceGenerator {
                 )
             }
         }
+    }
 
-        if layout.gender == .female {
-            let sideHairH = min(4 * Int(max(1, layout.unitScale)), h - Int(layout.headH) - 1)
-            if sideHairH > 0 {
-                fillRectHair(
-                    context,
-                    x: headXi - 1,
-                    y: headYi + 1,
-                    width: 1,
-                    height: sideHairH,
-                    palette: palette
-                )
-                fillRectHair(
-                    context,
-                    x: headXi + headWi,
-                    y: headYi + 1,
-                    width: 1,
-                    height: sideHairH,
-                    palette: palette
-                )
-            }
+    private static func drawSideHair(
+        context: CGContext,
+        layout: CharacterLayout,
+        headXi: Int,
+        headYi: Int,
+        headWi: Int,
+        canvasHeight: Int,
+        palette: CharacterShadingPalette,
+        bandScale: Int,
+        includeNonFemale: Bool
+    ) {
+        let useSides: Bool
+        switch layout.gender {
+        case .female:
+            useSides = true
+        case .male, .unspecified:
+            useSides = includeNonFemale
         }
+        guard useSides else { return }
+
+        let sideHairH = min(bandScale * Int(max(1, layout.unitScale)), canvasHeight - Int(layout.headH) - 1)
+        guard sideHairH > 0 else { return }
+        fillRectHair(
+            context,
+            x: headXi - 1,
+            y: headYi + 1,
+            width: 1,
+            height: sideHairH,
+            palette: palette
+        )
+        fillRectHair(
+            context,
+            x: headXi + headWi,
+            y: headYi + 1,
+            width: 1,
+            height: sideHairH,
+            palette: palette
+        )
     }
 }

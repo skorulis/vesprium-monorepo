@@ -10,6 +10,7 @@ struct CharacterLayout {
     let skin: RGB
     let hair: RGB
     let gender: Gender
+    let hairStyle: HairStyle
 
     /// Uniform scale vs the original 24× logical grid (e.g. `2` when width is 48).
     let unitScale: CGFloat
@@ -45,6 +46,8 @@ struct CharacterLayout {
     let footPad: Int
 
     let hairRows: Int
+    /// Rows of hair drawn on the skull (forehead seam); `0` when bald.
+    let hairCapRows: Int
 
     let centerX: CGFloat
 
@@ -54,6 +57,7 @@ struct CharacterLayout {
         skin = info.skinColor
         hair = info.hairColor
         gender = info.gender
+        hairStyle = info.hairStyle
 
         let w = canvasWidth
         let h = canvasHeight
@@ -123,6 +127,14 @@ struct CharacterLayout {
         rightLegX = leftLegX + legWi + Int(legGap)
         legHi = Int(ceil(legH))
         hairRows = max(2, Int(ceil(headH / max(3 * s, 1))))
+        switch info.hairStyle {
+        case .bald:
+            hairCapRows = 0
+        case .buzz:
+            hairCapRows = max(1, min(2, hairRows / 2))
+        case .short, .long, .ponytail, .mohawk:
+            hairCapRows = hairRows
+        }
 
         footH = max(1, Int(round(1 * s)))
         footPad = max(1, Int(round(1 * s)))

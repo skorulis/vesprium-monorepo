@@ -61,6 +61,39 @@ private let customEyeColor = CharacterInfo(
     headSize: 1.0
 )
 
+private let mohawkMale = CharacterInfo(
+    gender: .male,
+    skinColor: RGB(r: 245, g: 220, b: 200),
+    hairColor: RGB(r: 90, g: 40, b: 120),
+    hairStyle: .mohawk,
+    height: 1.0,
+    weight: 1.0,
+    armLength: 1.0,
+    headSize: 1.0
+)
+
+private let baldFemale = CharacterInfo(
+    gender: .female,
+    skinColor: RGB(r: 200, g: 160, b: 130),
+    hairColor: RGB(r: 40, g: 40, b: 45),
+    hairStyle: .bald,
+    height: 1.0,
+    weight: 1.0,
+    armLength: 1.0,
+    headSize: 1.0
+)
+
+private let ponytailFemale = CharacterInfo(
+    gender: .female,
+    skinColor: RGB(r: 255, g: 210, b: 180),
+    hairColor: RGB(r: 25, g: 20, b: 18),
+    hairStyle: .ponytail,
+    height: 1.0,
+    weight: 1.0,
+    armLength: 1.0,
+    headSize: 1.0
+)
+
 /// Width used for snapshot PNGs (height is `2 * snapshotWidth`).
 private let snapshotWidth = 48
 
@@ -128,4 +161,16 @@ private func assertSnapshotMatchesCharacter(
 
 @Test func customEyeColorSnapshot() {
     assertSnapshotMatchesCharacter(customEyeColor)
+}
+
+@Test func mohawkMaleSnapshot() {
+    assertSnapshotMatchesCharacter(mohawkMale)
+}
+
+@Test func baldFemaleSnapshot() {
+    assertSnapshotMatchesCharacter(baldFemale)
+}
+
+@Test func ponytailFemaleSnapshot() {
+    assertSnapshotMatchesCharacter(ponytailFemale)
 }

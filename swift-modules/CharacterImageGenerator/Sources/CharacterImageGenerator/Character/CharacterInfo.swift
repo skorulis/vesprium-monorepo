@@ -35,6 +35,7 @@ public struct CharacterInfo: Equatable, Sendable {
     public var gender: Gender
     public var skinColor: RGB
     public var hairColor: RGB
+    public var hairStyle: HairStyle
     /// Pixel color for both eyes. When omitted at initialization, a contrast‑aware default is chosen from ``skinColor``.
     public var eyeColor: RGB
     /// Vertical scale for legs and torso span.
@@ -50,6 +51,7 @@ public struct CharacterInfo: Equatable, Sendable {
         gender: Gender = .unspecified,
         skinColor: RGB = RGB(r: 220, g: 180, b: 150),
         hairColor: RGB = RGB(r: 60, g: 40, b: 25),
+        hairStyle: HairStyle = .short,
         eyeColor: RGB? = nil,
         height: CGFloat = 1.0,
         weight: CGFloat = 1.0,
@@ -59,6 +61,7 @@ public struct CharacterInfo: Equatable, Sendable {
         self.gender = gender
         self.skinColor = skinColor
         self.hairColor = hairColor
+        self.hairStyle = hairStyle
         self.eyeColor = eyeColor ?? Self.defaultEyeColor(forSkin: skinColor)
         self.height = height
         self.weight = weight

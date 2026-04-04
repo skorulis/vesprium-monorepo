@@ -78,7 +78,11 @@ public final class CharacterImageGenerator {
             context.scaleBy(x: 1, y: -1)
             #endif
 
-            FaceGenerator.drawHead(context: context, layout: layout, palette: palette)
+            FaceGenerator.drawHeadBase(context: context, layout: layout, palette: palette)
+            if layout.hairStyle == .ponytail {
+                FaceGenerator.drawPonytailTailBeforeBody(context: context, layout: layout, palette: palette)
+            }
+            FaceGenerator.drawNeck(context: context, layout: layout, palette: palette)
             BodyGenerator.draw(context: context, layout: layout, palette: palette)
             LegsGenerator.draw(context: context, layout: layout, palette: palette)
             FaceGenerator.drawHair(context: context, layout: layout, palette: palette)
