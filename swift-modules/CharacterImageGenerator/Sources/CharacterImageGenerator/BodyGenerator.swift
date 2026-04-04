@@ -6,7 +6,7 @@ import CoreGraphics
 
 enum BodyGenerator {
     static func draw(context: CGContext, layout: CharacterLayout, palette: CharacterShadingPalette) {
-        fillRectShadedSkin(
+        fillRectSkin(
             context,
             x: Int(layout.torsoX),
             y: Int(layout.torsoY),
@@ -20,8 +20,7 @@ enum BodyGenerator {
             let hipY = Int(layout.torsoY) + layout.torsoHi - 1
             let hipW = min(layout.torsoWi + 4, w - 2)
             let hipX = Int(floor(layout.centerX - CGFloat(hipW) / 2))
-            let hip = palette.skin[min(3, palette.skin.count - 1)]
-            fillRect(context, x: hipX, y: hipY, width: hipW, height: 1, color: hip)
+            fillRect(context, x: hipX, y: hipY, width: hipW, height: 1, color: palette.skinDivision)
         }
 
         let armH = Int(ceil(layout.armLen))
@@ -61,7 +60,7 @@ enum BodyGenerator {
         let handH = min(desiredHandH, totalHeight)
         let upperH = totalHeight - handH
         if upperH > 0 {
-            fillRectShadedSkin(
+            fillRectSkin(
                 context,
                 x: x,
                 y: shoulderY,
@@ -70,7 +69,7 @@ enum BodyGenerator {
                 palette: palette
             )
         }
-        fillRectShadedSkin(
+        fillRectSkin(
             context,
             x: x,
             y: shoulderY + upperH,

@@ -6,7 +6,7 @@ import CoreGraphics
 
 enum FaceGenerator {
     static func drawHead(context: CGContext, layout: CharacterLayout, palette: CharacterShadingPalette) {
-        fillRectShadedSkin(
+        fillRectSkin(
             context,
             x: Int(layout.headX),
             y: Int(layout.headY),
@@ -14,7 +14,7 @@ enum FaceGenerator {
             height: Int(ceil(layout.headH)),
             palette: palette
         )
-        fillRectShadedSkin(
+        fillRectSkin(
             context,
             x: Int(layout.neckX),
             y: Int(layout.neckY),
@@ -52,7 +52,7 @@ enum FaceGenerator {
         for i in 0..<layout.hairRows {
             let yy = headYi + i
             if yy < h {
-                fillRectShadedHair(
+                fillRectHair(
                     context,
                     x: headXi,
                     y: yy,
@@ -66,7 +66,7 @@ enum FaceGenerator {
         if layout.gender == .female {
             let sideHairH = min(4 * Int(max(1, layout.unitScale)), h - Int(layout.headH) - 1)
             if sideHairH > 0 {
-                fillRectShadedHair(
+                fillRectHair(
                     context,
                     x: headXi - 1,
                     y: headYi + 1,
@@ -74,7 +74,7 @@ enum FaceGenerator {
                     height: sideHairH,
                     palette: palette
                 )
-                fillRectShadedHair(
+                fillRectHair(
                     context,
                     x: headXi + headWi,
                     y: headYi + 1,

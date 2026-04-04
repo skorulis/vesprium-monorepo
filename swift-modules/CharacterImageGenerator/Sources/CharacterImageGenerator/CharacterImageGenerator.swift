@@ -8,7 +8,7 @@ public final class CharacterImageGenerator {
     public init() {}
 
     /// Logical canvas width in pixels (height is always `2 * logicalWidth`).
-    /// Larger than the original 24× grid so shading and facial features have room to read.
+    /// Larger than the original 24× grid so seams and facial features have room to read.
     private static let logicalWidth = 48
     private static let logicalHeight = 96
 
@@ -82,6 +82,7 @@ public final class CharacterImageGenerator {
             BodyGenerator.draw(context: context, layout: layout, palette: palette)
             LegsGenerator.draw(context: context, layout: layout, palette: palette)
             FaceGenerator.drawHair(context: context, layout: layout, palette: palette)
+            drawCharacterElementDivisions(context: context, layout: layout, palette: palette)
             FaceGenerator.drawFaceFeatures(context: context, layout: layout, palette: palette)
 
             return context.makeImage()

@@ -6,7 +6,7 @@ import CoreGraphics
 
 enum LegsGenerator {
     static func draw(context: CGContext, layout: CharacterLayout, palette: CharacterShadingPalette) {
-        fillRectShadedSkin(
+        fillRectSkin(
             context,
             x: layout.leftLegX,
             y: Int(layout.legY),
@@ -14,7 +14,7 @@ enum LegsGenerator {
             height: layout.legHi,
             palette: palette
         )
-        fillRectShadedSkin(
+        fillRectSkin(
             context,
             x: layout.rightLegX,
             y: Int(layout.legY),
@@ -69,8 +69,7 @@ enum LegsGenerator {
                 let inAnkle = x >= legX && x < legX + legW
                 let inToe = x >= legX - outwardPad && x < legX
                 guard inAnkle || inToe else { continue }
-                let t = shadeTTopLeft(px: lx, py: py, width: bboxW, height: height)
-                fillPixel(context, x: x, y: y + py, color: palette.skin(at: t))
+                fillPixel(context, x: x, y: y + py, color: palette.skinFlat)
             }
         }
     }
@@ -95,8 +94,7 @@ enum LegsGenerator {
                 let inAnkle = x >= legX && x < legX + legW
                 let inToe = x >= legX + legW && x < legX + legW + outwardPad
                 guard inAnkle || inToe else { continue }
-                let t = shadeTTopLeft(px: lx, py: py, width: bboxW, height: height)
-                fillPixel(context, x: x, y: y + py, color: palette.skin(at: t))
+                fillPixel(context, x: x, y: y + py, color: palette.skinFlat)
             }
         }
     }
