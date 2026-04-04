@@ -82,8 +82,9 @@ struct CharacterLayout {
         }
 
         var neckH = max(1 * s, 1)
+        let footHForBounds = CGFloat(max(1, Int(round(1 * s))))
         let maxContentH = CGFloat(h - 2)
-        let totalH = headH + neckH + torsoH + legH
+        let totalH = headH + neckH + torsoH + legH + footHForBounds
         if totalH > maxContentH {
             let shrink = maxContentH / totalH
             headH *= shrink
@@ -98,25 +99,24 @@ struct CharacterLayout {
         torsoW = min(torsoW, CGFloat(w - 2))
 
         headX = floor(cx - headW / 2)
-        headY = 0
 
         neckWi = max(2, Int(round(2 * s)))
         neckHi = max(1, Int(round(neckH)))
         neckX = floor(cx - CGFloat(neckWi) / 2)
-        neckY = headH
 
         torsoX = floor(cx - torsoW / 2)
-        torsoY = headH + CGFloat(neckHi)
         torsoWi = Int(torsoW)
         torsoHi = Int(ceil(torsoH))
-        armLen = min(8 * armP * s, CGFloat(h) - torsoY - 2 * s)
+
+        let torsoYBase = headH + CGFloat(neckHi)
+        armLen = min(8 * armP * s, CGFloat(h) - torsoYBase - 2 * s)
         armW = max(2, Int(round(2 * s)))
-        shoulderY = torsoY + 2 * s
+        let shoulderYBase = torsoYBase + 2 * s
         leftArmX = Int(floor(cx - torsoW / 2 - CGFloat(armW)))
         rightArmX = Int(torsoX) + torsoWi
 
         let legGap = 2 * s
-        legY = torsoY + CGFloat(torsoHi)
+        let legYBase = torsoYBase + CGFloat(torsoHi)
         legWi = max(2, min(Int(ceil(legW)), Int(cx) - 2))
         let totalLegs = CGFloat(legWi * 2) + legGap
         leftLegX = Int(floor(cx - totalLegs / 2))
@@ -129,5 +129,14 @@ struct CharacterLayout {
 
         self.headW = headW
         self.headH = headH
+
+        let bottomExclusive = legYBase + CGFloat(legHi) + CGFloat(footH)
+        let verticalOffset = CGFloat(h) - bottomExclusive
+
+        headY = verticalOffset
+        neckY = headH + verticalOffset
+        torsoY = torsoYBase + verticalOffset
+        shoulderY = shoulderYBase + verticalOffset
+        legY = legYBase + verticalOffset
     }
 }
