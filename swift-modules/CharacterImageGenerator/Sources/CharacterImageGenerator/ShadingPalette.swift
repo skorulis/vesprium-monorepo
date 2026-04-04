@@ -11,10 +11,10 @@ struct CharacterShadingPalette: Sendable {
     let eye: RGB
     let mouth: RGB
 
-    init(skinBase: RGB, hairBase: RGB) {
+    init(skinBase: RGB, hairBase: RGB, eyeColor: RGB) {
         skin = Self.skinRamp(from: skinBase)
         hair = Self.hairRamp(from: hairBase)
-        eye = Self.eyeColor(skinBase: skinBase)
+        eye = eyeColor
         mouth = Self.mouthColor(skinBase: skinBase)
     }
 
@@ -49,14 +49,6 @@ struct CharacterShadingPalette: Sendable {
             mix(base, black, 0.26),
             mix(base, black, 0.48),
         ]
-    }
-
-    private static func eyeColor(skinBase: RGB) -> RGB {
-        let luminance =
-            (CGFloat(skinBase.r) * 0.2126 + CGFloat(skinBase.g) * 0.7152 + CGFloat(skinBase.b) * 0.0722) / 255
-        // Lighter faces get darker iris pixels for contrast.
-        let dark = luminance > 0.55 ? RGB(r: 22, g: 18, b: 16) : RGB(r: 12, g: 10, b: 9)
-        return dark
     }
 
     private static func mouthColor(skinBase: RGB) -> RGB {

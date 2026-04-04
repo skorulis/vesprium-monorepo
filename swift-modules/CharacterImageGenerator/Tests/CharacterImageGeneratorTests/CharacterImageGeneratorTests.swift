@@ -50,6 +50,17 @@ private let largeHeadFemale = CharacterInfo(
     headSize: 1.65
 )
 
+private let customEyeColor = CharacterInfo(
+    gender: .male,
+    skinColor: RGB(r: 245, g: 220, b: 200),
+    hairColor: RGB(r: 30, g: 25, b: 20),
+    eyeColor: RGB(r: 64, g: 120, b: 200),
+    height: 1.0,
+    weight: 1.0,
+    armLength: 1.0,
+    headSize: 1.0
+)
+
 /// Width used for snapshot PNGs (height is `2 * snapshotWidth`).
 private let snapshotWidth = 48
 
@@ -113,4 +124,8 @@ private func assertSnapshotMatchesCharacter(
 
 @Test func largeHeadFemaleSnapshot() {
     assertSnapshotMatchesCharacter(largeHeadFemale)
+}
+
+@Test func customEyeColorSnapshot() {
+    assertSnapshotMatchesCharacter(customEyeColor)
 }

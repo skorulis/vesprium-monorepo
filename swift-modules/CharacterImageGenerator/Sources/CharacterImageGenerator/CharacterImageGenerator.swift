@@ -51,7 +51,11 @@ public final class CharacterImageGenerator {
         var data = Data(count: w * h * bytesPerPixel)
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let layout = CharacterLayout(info: info, canvasWidth: w, canvasHeight: h)
-        let palette = CharacterShadingPalette(skinBase: info.skinColor, hairBase: info.hairColor)
+        let palette = CharacterShadingPalette(
+            skinBase: info.skinColor,
+            hairBase: info.hairColor,
+            eyeColor: info.eyeColor
+        )
 
         return data.withUnsafeMutableBytes { ptr -> CGImage? in
             memset(ptr.baseAddress!, 0, ptr.count)
