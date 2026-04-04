@@ -111,7 +111,7 @@ struct CharacterLayout {
         let torsoYBase = headH + CGFloat(neckHi)
         armLen = min(8 * armP * s, CGFloat(h) - torsoYBase - 2 * s)
         armW = max(2, Int(round(2 * s)))
-        let shoulderYBase = torsoYBase + 2 * s
+        let shoulderYBase = torsoYBase
         leftArmX = Int(floor(cx - torsoW / 2 - CGFloat(armW)))
         rightArmX = Int(torsoX) + torsoWi
 
