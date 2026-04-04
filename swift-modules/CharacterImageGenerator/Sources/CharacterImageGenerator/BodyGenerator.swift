@@ -24,20 +24,58 @@ enum BodyGenerator {
             fillRect(context, x: hipX, y: hipY, width: hipW, height: 1, color: hip)
         }
 
-        fillRectShadedSkin(
-            context,
+        let armH = Int(ceil(layout.armLen))
+        let shoulderY = Int(layout.shoulderY)
+        drawArmWithHand(
+            context: context,
             x: layout.leftArmX,
-            y: Int(layout.shoulderY),
-            width: layout.armW,
-            height: Int(ceil(layout.armLen)),
+            shoulderY: shoulderY,
+            armWidth: layout.armW,
+            totalHeight: armH,
+            unitScale: layout.unitScale,
             palette: palette
         )
+        drawArmWithHand(
+            context: context,
+            x: layout.rightArmX,
+            shoulderY: shoulderY,
+            armWidth: layout.armW,
+            totalHeight: armH,
+            unitScale: layout.unitScale,
+            palette: palette
+        )
+    }
+
+    /// Upper arm plus a distinct hand block (reference: ~2×2 skin pixels on the base grid — here `2 * unitScale` tall, `armW` wide).
+    private static func drawArmWithHand(
+        context: CGContext,
+        x: Int,
+        shoulderY: Int,
+        armWidth: Int,
+        totalHeight: Int,
+        unitScale: CGFloat,
+        palette: CharacterShadingPalette
+    ) {
+        guard totalHeight > 0 else { return }
+        let desiredHandH = max(2, Int(round(2 * unitScale)))
+        let handH = min(desiredHandH, totalHeight)
+        let upperH = totalHeight - handH
+        if upperH > 0 {
+            fillRectShadedSkin(
+                context,
+                x: x,
+                y: shoulderY,
+                width: armWidth,
+                height: upperH,
+                palette: palette
+            )
+        }
         fillRectShadedSkin(
             context,
-            x: layout.rightArmX,
-            y: Int(layout.shoulderY),
-            width: layout.armW,
-            height: Int(ceil(layout.armLen)),
+            x: x,
+            y: shoulderY + upperH,
+            width: armWidth,
+            height: handH,
             palette: palette
         )
     }
