@@ -30,7 +30,7 @@ public enum Gender: Equatable, Sendable, CaseIterable {
 
 /// Describes visual parameters for a generated character.
 ///
-/// Proportion values use `0.25...1.75` with `1.0` as a neutral baseline.
+/// Proportion values use `0.5...1.5` with `1.0` as a neutral baseline.
 public struct CharacterInfo: Equatable, Sendable {
     public var gender: Gender
     public var skinColor: RGB

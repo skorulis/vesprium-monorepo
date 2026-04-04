@@ -25,7 +25,7 @@ private let shortHeavyFemale = CharacterInfo(
     skinColor: RGB(r: 120, g: 80, b: 60),
     hairColor: RGB(r: 200, g: 50, b: 40),
     height: 0.65,
-    weight: 1.65,
+    weight: 1.5,
     armLength: 0.8,
     headSize: 1.2
 )
@@ -36,7 +36,7 @@ private let longArmsUnspecified = CharacterInfo(
     hairColor: RGB(r: 50, g: 50, b: 55),
     height: 1.0,
     weight: 1.0,
-    armLength: 1.75,
+    armLength: 1.5,
     headSize: 1.0
 )
 
@@ -47,7 +47,7 @@ private let largeHeadFemale = CharacterInfo(
     height: 1.0,
     weight: 1.0,
     armLength: 1.0,
-    headSize: 1.65
+    headSize: 1.5
 )
 
 private let customEyeColor = CharacterInfo(

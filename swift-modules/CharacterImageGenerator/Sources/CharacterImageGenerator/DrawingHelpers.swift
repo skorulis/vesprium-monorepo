@@ -162,5 +162,5 @@ func drawCharacterElementDivisions(context: CGContext, layout: CharacterLayout, 
 }
 
 func clampProportion(_ v: CGFloat) -> CGFloat {
-    min(max(v, 0.25), 1.75)
+    min(max(v, 0.5), 1.5)
 }
