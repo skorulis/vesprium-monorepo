@@ -11,10 +11,18 @@ struct CharacterLayout {
     let hair: RGB
     let gender: Gender
 
+    /// Uniform scale vs the original 24× logical grid (e.g. `2` when width is 48).
+    let unitScale: CGFloat
+
     let headX: CGFloat
     let headY: CGFloat
     let headW: CGFloat
     let headH: CGFloat
+
+    let neckX: CGFloat
+    let neckY: CGFloat
+    let neckWi: Int
+    let neckHi: Int
 
     let torsoX: CGFloat
     let torsoY: CGFloat
@@ -33,6 +41,9 @@ struct CharacterLayout {
     let leftLegX: Int
     let rightLegX: Int
 
+    let footH: Int
+    let footPad: Int
+
     let hairRows: Int
 
     let centerX: CGFloat
@@ -46,35 +57,39 @@ struct CharacterLayout {
 
         let w = canvasWidth
         let h = canvasHeight
+        let s = CGFloat(canvasWidth) / 24.0
+        unitScale = s
 
         let heightP = clampProportion(info.height)
         let weightP = clampProportion(info.weight)
         let armP = clampProportion(info.armLength)
         let headP = clampProportion(info.headSize)
 
-        var headW = 6 * headP
-        var headH = 6 * headP
-        var torsoW = 8 * weightP
-        var torsoH = 10 * heightP
-        let legW = 3 * weightP
-        var legH = 12 * heightP
+        var headW = 6 * headP * s
+        var headH = 6 * headP * s
+        var torsoW = 8 * weightP * s
+        var torsoH = 10 * heightP * s
+        let legW = 3 * weightP * s
+        var legH = 12 * heightP * s
 
         switch info.gender {
         case .male:
-            torsoW += 1
+            torsoW += 1 * s
         case .female:
-            torsoW += 0.5
+            torsoW += 0.5 * s
         case .unspecified:
             break
         }
 
-        let totalH = headH + torsoH + legH
+        var neckH = max(1 * s, 1)
         let maxContentH = CGFloat(h - 2)
+        let totalH = headH + neckH + torsoH + legH
         if totalH > maxContentH {
-            let s = maxContentH / totalH
-            headH *= s
-            torsoH *= s
-            legH *= s
+            let shrink = maxContentH / totalH
+            headH *= shrink
+            neckH *= shrink
+            torsoH *= shrink
+            legH *= shrink
         }
 
         let cx = CGFloat(w) / 2
@@ -84,25 +99,33 @@ struct CharacterLayout {
 
         headX = floor(cx - headW / 2)
         headY = 0
+
+        neckWi = max(2, Int(round(2 * s)))
+        neckHi = max(1, Int(round(neckH)))
+        neckX = floor(cx - CGFloat(neckWi) / 2)
+        neckY = headH
+
         torsoX = floor(cx - torsoW / 2)
-        torsoY = headH
+        torsoY = headH + CGFloat(neckHi)
         torsoWi = Int(torsoW)
         torsoHi = Int(ceil(torsoH))
-        armLen = min(8 * armP, CGFloat(h) - torsoY - 4)
-        armW = 2
-        shoulderY = torsoY + 2
+        armLen = min(8 * armP * s, CGFloat(h) - torsoY - 2 * s)
+        armW = max(2, Int(round(2 * s)))
+        shoulderY = torsoY + 2 * s
         leftArmX = Int(floor(cx - torsoW / 2 - CGFloat(armW)))
-        // Must match the drawn torso width (`torsoWi` truncates `torsoW`); using `ceil(cx + torsoW/2)` leaves a gap.
         rightArmX = Int(torsoX) + torsoWi
 
-        let legGap: CGFloat = 2
+        let legGap = 2 * s
         legY = torsoY + CGFloat(torsoHi)
         legWi = max(2, min(Int(ceil(legW)), Int(cx) - 2))
         let totalLegs = CGFloat(legWi * 2) + legGap
         leftLegX = Int(floor(cx - totalLegs / 2))
         rightLegX = leftLegX + legWi + Int(legGap)
         legHi = Int(ceil(legH))
-        hairRows = max(2, Int(ceil(headH / 3)))
+        hairRows = max(2, Int(ceil(headH / max(3 * s, 1))))
+
+        footH = max(1, Int(round(1 * s)))
+        footPad = max(1, Int(round(1 * s)))
 
         self.headW = headW
         self.headH = headH

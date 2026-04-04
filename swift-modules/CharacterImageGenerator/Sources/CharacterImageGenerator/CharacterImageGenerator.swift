@@ -8,8 +8,9 @@ public final class CharacterImageGenerator {
     public init() {}
 
     /// Logical canvas width in pixels (height is always `2 * logicalWidth`).
-    private static let logicalWidth = 24
-    private static let logicalHeight = 48
+    /// Larger than the original 24× grid so shading and facial features have room to read.
+    private static let logicalWidth = 48
+    private static let logicalHeight = 96
 
     /// Renders a character bitmap with width `widthInPixels` and height `2 * widthInPixels`.
     /// - Parameter widthInPixels: Output width; must be at least ``minimumOutputWidth``.
@@ -40,7 +41,7 @@ public final class CharacterImageGenerator {
 
     public static let minimumOutputWidth = 8
 
-    // MARK: - Logical raster (24×48)
+    // MARK: - Logical raster (48×96)
 
     private func makeLogicalImage(info: CharacterInfo) -> CGImage? {
         let w = Self.logicalWidth
@@ -50,6 +51,7 @@ public final class CharacterImageGenerator {
         var data = Data(count: w * h * bytesPerPixel)
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let layout = CharacterLayout(info: info, canvasWidth: w, canvasHeight: h)
+        let palette = CharacterShadingPalette(skinBase: info.skinColor, hairBase: info.hairColor)
 
         return data.withUnsafeMutableBytes { ptr -> CGImage? in
             memset(ptr.baseAddress!, 0, ptr.count)
@@ -72,10 +74,11 @@ public final class CharacterImageGenerator {
             context.scaleBy(x: 1, y: -1)
             #endif
 
-            FaceGenerator.drawHead(context: context, layout: layout)
-            BodyGenerator.draw(context: context, layout: layout)
-            LegsGenerator.draw(context: context, layout: layout)
-            FaceGenerator.drawHair(context: context, layout: layout)
+            FaceGenerator.drawHead(context: context, layout: layout, palette: palette)
+            BodyGenerator.draw(context: context, layout: layout, palette: palette)
+            LegsGenerator.draw(context: context, layout: layout, palette: palette)
+            FaceGenerator.drawHair(context: context, layout: layout, palette: palette)
+            FaceGenerator.drawFaceFeatures(context: context, layout: layout, palette: palette)
 
             return context.makeImage()
         }

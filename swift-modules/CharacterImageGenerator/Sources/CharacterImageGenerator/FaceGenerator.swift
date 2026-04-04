@@ -2,47 +2,85 @@
 
 import CoreGraphics
 
-// MARK: - Face (head + hair)
+// MARK: - Face (head + neck + hair + features)
 
 enum FaceGenerator {
-    static func drawHead(context: CGContext, layout: CharacterLayout) {
-        fillRect(
+    static func drawHead(context: CGContext, layout: CharacterLayout, palette: CharacterShadingPalette) {
+        fillRectShadedSkin(
             context,
             x: Int(layout.headX),
             y: Int(layout.headY),
-            width: Int(layout.headW),
+            width: Int(ceil(layout.headW)),
             height: Int(ceil(layout.headH)),
-            color: layout.skin
+            palette: palette
+        )
+        fillRectShadedSkin(
+            context,
+            x: Int(layout.neckX),
+            y: Int(layout.neckY),
+            width: layout.neckWi,
+            height: layout.neckHi,
+            palette: palette
         )
     }
 
-    static func drawHair(context: CGContext, layout: CharacterLayout) {
+    static func drawFaceFeatures(context: CGContext, layout: CharacterLayout, palette: CharacterShadingPalette) {
+        let hy = Int(layout.headY)
+        let hw = max(1, Int(ceil(layout.headW)))
+        let hh = max(1, Int(ceil(layout.headH)))
+        let cx = Int(layout.centerX)
+
+        let eyeY = hy + max(1, (hh * 2) / 5)
+        let spread = max(1, hw / 5)
+        fillPixel(context, x: cx - spread, y: eyeY, color: palette.eye)
+        fillPixel(context, x: cx + spread, y: eyeY, color: palette.eye)
+
+        let mouthW = min(3, max(2, hw / 4))
+        let mouthY = hy + hh - max(2, hh / 5)
+        let mx = cx - mouthW / 2
+        for dx in 0..<mouthW {
+            fillPixel(context, x: mx + dx, y: mouthY, color: palette.mouth)
+        }
+    }
+
+    static func drawHair(context: CGContext, layout: CharacterLayout, palette: CharacterShadingPalette) {
         let h = layout.canvasHeight
         let headYi = Int(layout.headY)
+        let headWi = Int(ceil(layout.headW))
+        let headXi = Int(layout.headX)
+
         for i in 0..<layout.hairRows {
             let yy = headYi + i
             if yy < h {
-                fillRect(
+                fillRectShadedHair(
                     context,
-                    x: Int(layout.headX),
+                    x: headXi,
                     y: yy,
-                    width: Int(layout.headW),
+                    width: headWi,
                     height: 1,
-                    color: layout.hair
+                    palette: palette
                 )
             }
         }
+
         if layout.gender == .female {
-            let sideHairH = min(4, h - Int(layout.headH) - 1)
+            let sideHairH = min(4 * Int(max(1, layout.unitScale)), h - Int(layout.headH) - 1)
             if sideHairH > 0 {
-                fillRect(context, x: Int(layout.headX) - 1, y: headYi + 1, width: 1, height: sideHairH, color: layout.hair)
-                fillRect(
+                fillRectShadedHair(
                     context,
-                    x: Int(ceil(layout.headX + layout.headW)),
+                    x: headXi - 1,
                     y: headYi + 1,
                     width: 1,
                     height: sideHairH,
-                    color: layout.hair
+                    palette: palette
+                )
+                fillRectShadedHair(
+                    context,
+                    x: headXi + headWi,
+                    y: headYi + 1,
+                    width: 1,
+                    height: sideHairH,
+                    palette: palette
                 )
             }
         }
