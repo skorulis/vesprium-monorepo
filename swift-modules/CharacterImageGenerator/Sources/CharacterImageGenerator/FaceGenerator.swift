@@ -32,8 +32,8 @@ enum FaceGenerator {
 
         let eyeY = hy + max(1, (hh * 2) / 5)
         let spread = max(1, hw / 5)
-        fillPixel(context, x: cx - spread, y: eyeY, color: palette.eye)
-        fillPixel(context, x: cx + spread, y: eyeY, color: palette.eye)
+        drawEye(context, centerX: cx - spread, y: eyeY, palette: palette, opensToTheRight: true)
+        drawEye(context, centerX: cx + spread, y: eyeY, palette: palette, opensToTheRight: false)
 
         let mouthW = min(3, max(2, hw / 4))
         let mouthY = hy + hh - max(2, hh / 5)
@@ -41,6 +41,23 @@ enum FaceGenerator {
         for dx in 0..<mouthW {
             fillPixel(context, x: mx + dx, y: mouthY, color: palette.mouth)
         }
+    }
+
+    /// One iris pixel plus darker pixels on the outer side and eyelid lines (avoids overlap at the nose bridge).
+    private static func drawEye(
+        _ context: CGContext,
+        centerX: Int,
+        y: Int,
+        palette: CharacterShadingPalette,
+        opensToTheRight: Bool
+    ) {
+        fillPixel(context, x: centerX, y: y, color: palette.eye)
+        let outwardDx = opensToTheRight ? -1 : 1
+        fillPixel(context, x: centerX + outwardDx, y: y, color: palette.eyeShade)
+        fillPixel(context, x: centerX, y: y - 1, color: palette.eyeShade)
+        fillPixel(context, x: centerX, y: y + 1, color: palette.eyeShade)
+        fillPixel(context, x: centerX + outwardDx, y: y - 1, color: palette.eyeShade)
+        fillPixel(context, x: centerX + outwardDx, y: y + 1, color: palette.eyeShade)
     }
 
     static func drawHair(context: CGContext, layout: CharacterLayout, palette: CharacterShadingPalette) {

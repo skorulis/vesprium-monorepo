@@ -10,6 +10,8 @@ struct CharacterShadingPalette: Sendable {
     let hairFlat: RGB
     let hairDivision: RGB
     let eye: RGB
+    /// Darker ring around the iris for subtle eyelid / socket shading.
+    let eyeShade: RGB
     let mouth: RGB
 
     init(skinBase: RGB, hairBase: RGB, eyeColor: RGB) {
@@ -18,6 +20,7 @@ struct CharacterShadingPalette: Sendable {
         hairFlat = hairBase
         hairDivision = Self.mix(hairBase, Self.black, 0.26)
         eye = eyeColor
+        eyeShade = Self.mix(eyeColor, Self.black, 0.42)
         mouth = Self.mouthColor(skinBase: skinBase)
     }
 
