@@ -20,3 +20,5 @@ The aim is not always a “better person” in a moral sense. Often it is **effi
 ## Relationship to other methods
 
 Evolutionary biohacking operates at **population scale** and **generational time**. It complements individual-focused approaches (grafts, symbiosis, direct editing) when institutions want **durable, heritable** advantage—not only a single enhanced body.
+
+**Cost per individual** can be **much lower** than bespoke methods: once selection, screening, and lineage infrastructure exist, each additional person who inherits the trait is relatively cheap compared to repeatedly paying for intensive individualized intervention. The trade is that payoff is delayed, spread across generations, and less precisely targeted to any one life.
