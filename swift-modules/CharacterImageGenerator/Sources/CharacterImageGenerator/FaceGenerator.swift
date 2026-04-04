@@ -12,14 +12,7 @@ enum FaceGenerator {
 
     /// Head skin only (no neck). Used when something must be layered between head and neck (e.g. ponytail behind the torso).
     static func drawHeadBase(context: CGContext, layout: CharacterLayout, palette: CharacterShadingPalette) {
-        fillRectSkin(
-            context,
-            x: Int(layout.headX),
-            y: Int(layout.headY),
-            width: Int(ceil(layout.headW)),
-            height: Int(ceil(layout.headH)),
-            palette: palette
-        )
+        fillPathSkin(context, path: headOutlinePath(layout: layout), palette: palette)
     }
 
     static func drawNeck(context: CGContext, layout: CharacterLayout, palette: CharacterShadingPalette) {
@@ -99,21 +92,12 @@ enum FaceGenerator {
 
         switch layout.hairStyle {
         case .bald:
-            return
-        case .buzz:
-            drawHairCapBand(
-                context: context,
-                headXi: headXi,
-                headYi: headYi,
-                headWi: headWi,
-                capRows: capRows,
-                canvasHeight: h,
-                palette: palette
-            )
+            break
         case .mohawk:
             let mw = max(2, headWi / 3)
             let mx = headXi + (headWi - mw) / 2
             let extraUp = max(1, Int(2 * layout.unitScale))
+            // Rows above the skull sit outside `headOutlinePath`; draw without clipping.
             for up in 1...extraUp {
                 let yy = headYi - up
                 if yy >= 0 {
@@ -127,6 +111,9 @@ enum FaceGenerator {
                     )
                 }
             }
+            context.saveGState()
+            context.addPath(headOutlinePath(layout: layout))
+            context.clip()
             for i in 0..<capRows {
                 let yy = headYi + i
                 if yy < h {
@@ -140,7 +127,25 @@ enum FaceGenerator {
                     )
                 }
             }
+            context.restoreGState()
+        case .buzz:
+            context.saveGState()
+            context.addPath(headOutlinePath(layout: layout))
+            context.clip()
+            drawHairCapBand(
+                context: context,
+                headXi: headXi,
+                headYi: headYi,
+                headWi: headWi,
+                capRows: capRows,
+                canvasHeight: h,
+                palette: palette
+            )
+            context.restoreGState()
         case .short:
+            context.saveGState()
+            context.addPath(headOutlinePath(layout: layout))
+            context.clip()
             drawHairCapBand(
                 context: context,
                 headXi: headXi,
@@ -161,7 +166,11 @@ enum FaceGenerator {
                 bandScale: 4,
                 includeNonFemale: false
             )
+            context.restoreGState()
         case .long:
+            context.saveGState()
+            context.addPath(headOutlinePath(layout: layout))
+            context.clip()
             drawHairCapBand(
                 context: context,
                 headXi: headXi,
@@ -182,7 +191,11 @@ enum FaceGenerator {
                 bandScale: layout.gender == .female ? 6 : 3,
                 includeNonFemale: true
             )
+            context.restoreGState()
         case .ponytail:
+            context.saveGState()
+            context.addPath(headOutlinePath(layout: layout))
+            context.clip()
             drawHairCapBand(
                 context: context,
                 headXi: headXi,
@@ -192,6 +205,7 @@ enum FaceGenerator {
                 canvasHeight: h,
                 palette: palette
             )
+            context.restoreGState()
         }
     }
 

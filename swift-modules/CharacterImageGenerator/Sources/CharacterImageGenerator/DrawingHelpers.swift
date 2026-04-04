@@ -33,6 +33,40 @@ func fillRectSkin(
     fillRect(context, x: x, y: y, width: width, height: height, color: palette.skinFlat)
 }
 
+/// Rounded top, flat bottom — reads as an oval-ish head without gaps beside the neck.
+func headOutlinePath(layout: CharacterLayout) -> CGPath {
+    let x = layout.headX
+    let y = layout.headY
+    let w = layout.headW
+    let h = layout.headH
+    let m = min(w, h)
+    let r = min(m * 0.36, m / 2 - 0.01)
+    let path = CGMutablePath()
+    path.move(to: CGPoint(x: x + r, y: y))
+    path.addLine(to: CGPoint(x: x + w - r, y: y))
+    path.addArc(
+        tangent1End: CGPoint(x: x + w, y: y),
+        tangent2End: CGPoint(x: x + w, y: y + h),
+        radius: r
+    )
+    path.addLine(to: CGPoint(x: x + w, y: y + h))
+    path.addLine(to: CGPoint(x: x, y: y + h))
+    path.addLine(to: CGPoint(x: x, y: y + r))
+    path.addArc(
+        tangent1End: CGPoint(x: x, y: y),
+        tangent2End: CGPoint(x: x + w, y: y),
+        radius: r
+    )
+    path.closeSubpath()
+    return path
+}
+
+func fillPathSkin(_ context: CGContext, path: CGPath, palette: CharacterShadingPalette) {
+    context.setFillColor(palette.skinFlat.cgColor())
+    context.addPath(path)
+    context.fillPath()
+}
+
 func fillRectHair(
     _ context: CGContext,
     x: Int,
