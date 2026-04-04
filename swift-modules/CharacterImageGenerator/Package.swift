@@ -16,6 +16,9 @@ let package = Package(
             targets: ["CharacterImageGenerator"]
         ),
     ],
+    dependencies: [
+        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.19.0"),
+    ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
         // Targets can depend on other targets in this package and products from dependencies.
@@ -24,7 +27,11 @@ let package = Package(
         ),
         .testTarget(
             name: "CharacterImageGeneratorTests",
-            dependencies: ["CharacterImageGenerator"]
+            dependencies: [
+                "CharacterImageGenerator",
+                .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
+            ],
+            exclude: ["__Snapshots__"]
         ),
     ]
 )

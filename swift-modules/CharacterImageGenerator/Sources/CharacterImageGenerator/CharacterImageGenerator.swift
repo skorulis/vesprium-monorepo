@@ -122,6 +122,12 @@ public final class CharacterImageGenerator {
             context.setShouldAntialias(false)
             context.interpolationQuality = .none
 
+            // macOS bitmap contexts use a lower-left origin (Y up); layout code assumes top-left (Y down).
+            #if os(macOS)
+            context.translateBy(x: 0, y: CGFloat(h))
+            context.scaleBy(x: 1, y: -1)
+            #endif
+
             fillRect(context, x: Int(headX), y: Int(headYi), width: Int(headW), height: Int(ceil(headH)), color: skin)
             fillRect(context, x: Int(torsoX), y: Int(torsoY), width: torsoWi, height: torsoHi, color: skin)
 

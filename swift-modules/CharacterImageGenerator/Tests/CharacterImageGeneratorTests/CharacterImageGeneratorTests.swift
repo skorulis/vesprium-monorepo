@@ -1,7 +1,14 @@
 import CoreGraphics
 import Foundation
+import SnapshotTesting
 import Testing
 @testable import CharacterImageGenerator
+
+#if canImport(AppKit)
+import AppKit
+#elseif canImport(UIKit)
+import UIKit
+#endif
 
 private let tallLightMale = CharacterInfo(
     gender: .male,
@@ -43,30 +50,30 @@ private let largeHeadFemale = CharacterInfo(
     headSize: 1.65
 )
 
-private func checksumRGBA32(_ image: CGImage) -> UInt64 {
-    let w = image.width
-    let h = image.height
-    let bytesPerPixel = 4
-    let bytesPerRow = w * bytesPerPixel
-    var data = Data(count: w * h * bytesPerPixel)
-    guard let colorSpace = image.colorSpace else { return 0 }
-    data.withUnsafeMutableBytes { ptr in
-        guard let ctx = CGContext(
-            data: ptr.baseAddress,
-            width: w,
-            height: h,
-            bitsPerComponent: 8,
-            bytesPerRow: bytesPerRow,
-            space: colorSpace,
-            bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
-        ) else { return }
-        ctx.draw(image, in: CGRect(x: 0, y: 0, width: w, height: h))
+/// Width used for snapshot PNGs (height is `2 * snapshotWidth`).
+private let snapshotWidth = 48
+
+private func assertSnapshotMatchesCharacter(
+    _ info: CharacterInfo,
+    file: StaticString = #filePath,
+    testName: String = #function,
+    line: UInt = #line
+) {
+    let gen = CharacterImageGenerator()
+    guard let cgImage = gen.image(for: info, widthInPixels: snapshotWidth) else {
+        Issue.record("Expected non-nil CGImage")
+        return
     }
-    var hash: UInt64 = 5381
-    for byte in data {
-        hash = ((hash &<< 5) &+ hash) &+ UInt64(byte)
-    }
-    return hash
+    #if canImport(AppKit)
+    let image = NSImage(
+        cgImage: cgImage,
+        size: NSSize(width: cgImage.width, height: cgImage.height)
+    )
+    assertSnapshot(of: image, as: .image, file: file, testName: testName, line: line)
+    #elseif canImport(UIKit)
+    let image = UIImage(cgImage: cgImage, scale: 1.0, orientation: .up)
+    assertSnapshot(of: image, as: .image, file: file, testName: testName, line: line)
+    #endif
 }
 
 @Test func initializes() async throws {
@@ -92,42 +99,18 @@ private func checksumRGBA32(_ image: CGImage) -> UInt64 {
     #expect(data!.starts(with: [0x89, 0x50, 0x4E, 0x47, 0x0D, 0x0A, 0x1A, 0x0A]))
 }
 
-@Test func examplePresetsProduceStableChecksums() async throws {
-    let gen = CharacterImageGenerator()
-    let width = 48
-
-    guard let a = gen.image(for: tallLightMale, widthInPixels: width),
-          let b = gen.image(for: shortHeavyFemale, widthInPixels: width),
-          let c = gen.image(for: longArmsUnspecified, widthInPixels: width),
-          let d = gen.image(for: largeHeadFemale, widthInPixels: width)
-    else {
-        Issue.record("Expected all images")
-        return
-    }
-
-    let ha = checksumRGBA32(a)
-    let hb = checksumRGBA32(b)
-    let hc = checksumRGBA32(c)
-    let hd = checksumRGBA32(d)
-
-    #expect(ha != 0)
-    #expect(hb != 0)
-    #expect(hc != 0)
-    #expect(hd != 0)
-
-    #expect(ha != hb)
-    #expect(ha != hc)
-    #expect(hb != hd)
-
-    // Regression anchors (UInt64; update if pixel output intentionally changes)
-    #expect(ha == ANCHOR_TALL_LIGHT_MALE)
-    #expect(hb == ANCHOR_SHORT_HEAVY_FEMALE)
-    #expect(hc == ANCHOR_LONG_ARMS)
-    #expect(hd == ANCHOR_LARGE_HEAD_FEMALE)
+@Test func tallLightMaleSnapshot() {
+    assertSnapshotMatchesCharacter(tallLightMale)
 }
 
-/// Captured from deterministic output on Apple platforms; update if art changes.
-private let ANCHOR_TALL_LIGHT_MALE: UInt64 = 2_459_379_329_161_092_885
-private let ANCHOR_SHORT_HEAVY_FEMALE: UInt64 = 16_750_201_747_489_600_513
-private let ANCHOR_LONG_ARMS: UInt64 = 1_873_878_755_639_238_629
-private let ANCHOR_LARGE_HEAD_FEMALE: UInt64 = 5_654_733_151_769_712_949
+@Test func shortHeavyFemaleSnapshot() {
+    assertSnapshotMatchesCharacter(shortHeavyFemale)
+}
+
+@Test func longArmsUnspecifiedSnapshot() {
+    assertSnapshotMatchesCharacter(longArmsUnspecified)
+}
+
+@Test func largeHeadFemaleSnapshot() {
+    assertSnapshotMatchesCharacter(largeHeadFemale)
+}
