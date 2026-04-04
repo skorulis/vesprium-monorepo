@@ -5,3 +5,4 @@ This folder holds design notes, worldbuilding, and reference material for Vespri
 Start here:
 
 - [Premise](premise.md) — what the world is, and what makes it distinct
+- [Political landscape](political-landscape.md) — power, inequality, instability, and long horizons
