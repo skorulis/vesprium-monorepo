@@ -29,11 +29,75 @@ enum LegsGenerator {
         let h = layout.canvasHeight
         guard fy + fh <= h else { return }
 
-        let leftFx = layout.leftLegX - pad
-        let rightFx = layout.rightLegX - pad
-        let footW = layout.legWi + 2 * pad
+        fillLeftFootShaded(
+            context,
+            legX: layout.leftLegX,
+            legW: layout.legWi,
+            y: fy,
+            height: fh,
+            outwardPad: pad,
+            palette: palette
+        )
+        fillRightFootShaded(
+            context,
+            legX: layout.rightLegX,
+            legW: layout.legWi,
+            y: fy,
+            height: fh,
+            outwardPad: pad,
+            palette: palette
+        )
+    }
 
-        fillRectShadedSkin(context, x: leftFx, y: fy, width: footW, height: fh, palette: palette)
-        fillRectShadedSkin(context, x: rightFx, y: fy, width: footW, height: fh, palette: palette)
+    /// Ankle column matches the leg width; toes extend only to the left (away from the body midline).
+    private static func fillLeftFootShaded(
+        _ context: CGContext,
+        legX: Int,
+        legW: Int,
+        y: Int,
+        height: Int,
+        outwardPad: Int,
+        palette: CharacterShadingPalette
+    ) {
+        guard height > 0, legW > 0, outwardPad > 0 else { return }
+        let minX = legX - outwardPad
+        let maxX = legX + legW - 1
+        let bboxW = maxX - minX + 1
+        for py in 0..<height {
+            for lx in 0..<bboxW {
+                let x = minX + lx
+                let inAnkle = x >= legX && x < legX + legW
+                let inToe = x >= legX - outwardPad && x < legX
+                guard inAnkle || inToe else { continue }
+                let t = shadeTTopLeft(px: lx, py: py, width: bboxW, height: height)
+                fillPixel(context, x: x, y: y + py, color: palette.skin(at: t))
+            }
+        }
+    }
+
+    /// Ankle column matches the leg width; toes extend only to the right (away from the body midline).
+    private static func fillRightFootShaded(
+        _ context: CGContext,
+        legX: Int,
+        legW: Int,
+        y: Int,
+        height: Int,
+        outwardPad: Int,
+        palette: CharacterShadingPalette
+    ) {
+        guard height > 0, legW > 0, outwardPad > 0 else { return }
+        let minX = legX
+        let maxX = legX + legW + outwardPad - 1
+        let bboxW = maxX - minX + 1
+        for py in 0..<height {
+            for lx in 0..<bboxW {
+                let x = minX + lx
+                let inAnkle = x >= legX && x < legX + legW
+                let inToe = x >= legX + legW && x < legX + legW + outwardPad
+                guard inAnkle || inToe else { continue }
+                let t = shadeTTopLeft(px: lx, py: py, width: bboxW, height: height)
+                fillPixel(context, x: x, y: y + py, color: palette.skin(at: t))
+            }
+        }
     }
 }
