@@ -33,32 +33,16 @@ func fillRectSkin(
     fillRect(context, x: x, y: y, width: width, height: height, color: palette.skinFlat)
 }
 
-/// Rounded top, flat bottom — reads as an oval-ish head without gaps beside the neck.
+/// Rounded-rectangle head (all four corners). Radius is a fraction of the shorter side, capped below half so the shape stays a rounded rect, not a circle or pill.
 func headOutlinePath(layout: CharacterLayout) -> CGPath {
     let x = layout.headX
     let y = layout.headY
     let w = layout.headW
     let h = layout.headH
     let m = min(w, h)
-    let r = min(m * 0.36, m / 2 - 0.01)
-    let path = CGMutablePath()
-    path.move(to: CGPoint(x: x + r, y: y))
-    path.addLine(to: CGPoint(x: x + w - r, y: y))
-    path.addArc(
-        tangent1End: CGPoint(x: x + w, y: y),
-        tangent2End: CGPoint(x: x + w, y: y + h),
-        radius: r
-    )
-    path.addLine(to: CGPoint(x: x + w, y: y + h))
-    path.addLine(to: CGPoint(x: x, y: y + h))
-    path.addLine(to: CGPoint(x: x, y: y + r))
-    path.addArc(
-        tangent1End: CGPoint(x: x, y: y),
-        tangent2End: CGPoint(x: x + w, y: y),
-        radius: r
-    )
-    path.closeSubpath()
-    return path
+    let r = min(m * 0.30, m / 2 - 0.01)
+    let rect = CGRect(x: x, y: y, width: w, height: h)
+    return CGPath(roundedRect: rect, cornerWidth: r, cornerHeight: r, transform: nil)
 }
 
 func fillPathSkin(_ context: CGContext, path: CGPath, palette: CharacterShadingPalette) {
