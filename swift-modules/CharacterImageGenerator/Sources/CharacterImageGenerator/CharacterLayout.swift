@@ -54,20 +54,20 @@ struct CharacterLayout {
     init(info: CharacterInfo, canvasWidth: Int, canvasHeight: Int) {
         self.canvasWidth = canvasWidth
         self.canvasHeight = canvasHeight
-        skin = info.skinColor
-        hair = info.hairColor
-        gender = info.gender
-        hairStyle = info.hairStyle
+        skin = info.face.skinColor
+        hair = info.face.hairColor
+        gender = info.body.gender
+        hairStyle = info.face.hairStyle
 
         let w = canvasWidth
         let h = canvasHeight
         let s = CGFloat(canvasWidth) / 24.0
         unitScale = s
 
-        let heightP = clampProportion(info.height)
-        let weightP = clampProportion(info.weight)
-        let armP = clampProportion(info.armLength)
-        let headP = clampProportion(info.headSize)
+        let heightP = clampProportion(info.body.height)
+        let weightP = clampProportion(info.body.weight)
+        let armP = clampProportion(info.body.armLength)
+        let headP = clampProportion(info.face.headSize)
 
         var headW = 6 * headP * s
         var headH = 6 * headP * s
@@ -76,7 +76,7 @@ struct CharacterLayout {
         let legW = 3 * weightP * s
         var legH = 12 * heightP * s
 
-        switch info.gender {
+        switch info.body.gender {
         case .male:
             torsoW += 1 * s
         case .female:
@@ -127,7 +127,7 @@ struct CharacterLayout {
         rightLegX = leftLegX + legWi + Int(legGap)
         legHi = Int(ceil(legH))
         hairRows = max(2, Int(ceil(headH / max(3 * s, 1))))
-        switch info.hairStyle {
+        switch info.face.hairStyle {
         case .bald:
             hairCapRows = 0
         case .buzz:

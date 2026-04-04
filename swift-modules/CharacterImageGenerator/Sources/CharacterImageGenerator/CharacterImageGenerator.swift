@@ -52,9 +52,9 @@ public final class CharacterImageGenerator {
         let colorSpace = CGColorSpaceCreateDeviceRGB()
         let layout = CharacterLayout(info: info, canvasWidth: w, canvasHeight: h)
         let palette = CharacterShadingPalette(
-            skinBase: info.skinColor,
-            hairBase: info.hairColor,
-            eyeColor: info.eyeColor
+            skinBase: info.face.skinColor,
+            hairBase: info.face.hairColor,
+            eyeColor: info.face.eyeColor
         )
 
         return data.withUnsafeMutableBytes { ptr -> CGImage? in
