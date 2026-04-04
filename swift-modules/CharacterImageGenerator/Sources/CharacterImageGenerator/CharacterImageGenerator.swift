@@ -97,7 +97,8 @@ public final class CharacterImageGenerator {
         let armW = 2
         let shoulderY = torsoY + 2
         let leftArmX = Int(floor(cx - torsoW / 2 - CGFloat(armW)))
-        let rightArmX = Int(ceil(cx + torsoW / 2))
+        // Must match the drawn torso width (`torsoWi` truncates `torsoW`); using `ceil(cx + torsoW/2)` leaves a gap.
+        let rightArmX = Int(torsoX) + torsoWi
         let legGap: CGFloat = 2
         let legY = torsoY + CGFloat(torsoHi)
         let legWi = max(2, min(Int(ceil(legW)), Int(cx) - 2))
