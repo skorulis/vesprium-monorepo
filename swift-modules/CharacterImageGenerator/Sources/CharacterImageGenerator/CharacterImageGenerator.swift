@@ -49,64 +49,7 @@ public final class CharacterImageGenerator {
         let bytesPerRow = w * bytesPerPixel
         var data = Data(count: w * h * bytesPerPixel)
         let colorSpace = CGColorSpaceCreateDeviceRGB()
-
-        let skin = info.skinColor
-        let hair = info.hairColor
-
-        let heightP = Self.clampProportion(info.height)
-        let weightP = Self.clampProportion(info.weight)
-        let armP = Self.clampProportion(info.armLength)
-        let headP = Self.clampProportion(info.headSize)
-
-        var headW = 6 * headP
-        var headH = 6 * headP
-        var torsoW = 8 * weightP
-        var torsoH = 10 * heightP
-        let legW = 3 * weightP
-        var legH = 12 * heightP
-
-        switch info.gender {
-        case .male:
-            torsoW += 1
-        case .female:
-            torsoW += 0.5
-        case .unspecified:
-            break
-        }
-
-        let totalH = headH + torsoH + legH
-        let maxContentH = CGFloat(h - 2)
-        if totalH > maxContentH {
-            let s = maxContentH / totalH
-            headH *= s
-            torsoH *= s
-            legH *= s
-        }
-
-        let cx = CGFloat(w) / 2
-        headW = min(headW, CGFloat(w - 4))
-        torsoW = min(torsoW, CGFloat(w - 2))
-
-        let headX = floor(cx - headW / 2)
-        let headYi = 0.0
-        let torsoX = floor(cx - torsoW / 2)
-        let torsoY = headH
-        let torsoWi = Int(torsoW)
-        let torsoHi = Int(ceil(torsoH))
-        let armLen = min(8 * armP, CGFloat(h) - torsoY - 4)
-        let armW = 2
-        let shoulderY = torsoY + 2
-        let leftArmX = Int(floor(cx - torsoW / 2 - CGFloat(armW)))
-        // Must match the drawn torso width (`torsoWi` truncates `torsoW`); using `ceil(cx + torsoW/2)` leaves a gap.
-        let rightArmX = Int(torsoX) + torsoWi
-        let legGap: CGFloat = 2
-        let legY = torsoY + CGFloat(torsoHi)
-        let legWi = max(2, min(Int(ceil(legW)), Int(cx) - 2))
-        let totalLegs = CGFloat(legWi * 2) + legGap
-        let leftLegX = Int(floor(cx - totalLegs / 2))
-        let rightLegX = leftLegX + legWi + Int(legGap)
-        let legHi = Int(ceil(legH))
-        let hairRows = max(2, Int(ceil(headH / 3)))
+        let layout = CharacterLayout(info: info, canvasWidth: w, canvasHeight: h)
 
         return data.withUnsafeMutableBytes { ptr -> CGImage? in
             memset(ptr.baseAddress!, 0, ptr.count)
@@ -129,76 +72,13 @@ public final class CharacterImageGenerator {
             context.scaleBy(x: 1, y: -1)
             #endif
 
-            fillRect(context, x: Int(headX), y: Int(headYi), width: Int(headW), height: Int(ceil(headH)), color: skin)
-            fillRect(context, x: Int(torsoX), y: Int(torsoY), width: torsoWi, height: torsoHi, color: skin)
-
-            if info.gender == .female {
-                let hipY = Int(torsoY) + torsoHi - 1
-                let hipW = min(torsoWi + 4, w - 2)
-                let hipX = Int(floor(cx - CGFloat(hipW) / 2))
-                fillRect(context, x: hipX, y: hipY, width: hipW, height: 1, color: skin)
-            }
-
-            fillRect(
-                context,
-                x: leftArmX,
-                y: Int(shoulderY),
-                width: armW,
-                height: Int(ceil(armLen)),
-                color: skin
-            )
-            fillRect(
-                context,
-                x: rightArmX,
-                y: Int(shoulderY),
-                width: armW,
-                height: Int(ceil(armLen)),
-                color: skin
-            )
-
-            fillRect(context, x: leftLegX, y: Int(legY), width: legWi, height: legHi, color: skin)
-            fillRect(context, x: rightLegX, y: Int(legY), width: legWi, height: legHi, color: skin)
-
-            for i in 0..<hairRows {
-                let yy = Int(headYi) + i
-                if yy < h {
-                    fillRect(context, x: Int(headX), y: yy, width: Int(headW), height: 1, color: hair)
-                }
-            }
-            if info.gender == .female {
-                let sideHairH = min(4, h - Int(headH) - 1)
-                if sideHairH > 0 {
-                    fillRect(context, x: Int(headX) - 1, y: Int(headYi) + 1, width: 1, height: sideHairH, color: hair)
-                    fillRect(
-                        context,
-                        x: Int(ceil(headX + headW)),
-                        y: Int(headYi) + 1,
-                        width: 1,
-                        height: sideHairH,
-                        color: hair
-                    )
-                }
-            }
+            FaceGenerator.drawHead(context: context, layout: layout)
+            BodyGenerator.draw(context: context, layout: layout)
+            LegsGenerator.draw(context: context, layout: layout)
+            FaceGenerator.drawHair(context: context, layout: layout)
 
             return context.makeImage()
         }
-    }
-
-    private func fillRect(
-        _ context: CGContext,
-        x: Int,
-        y: Int,
-        width: Int,
-        height: Int,
-        color: RGB
-    ) {
-        guard width > 0, height > 0 else { return }
-        context.setFillColor(color.cgColor())
-        context.fill(CGRect(x: x, y: y, width: width, height: height))
-    }
-
-    private static func clampProportion(_ v: CGFloat) -> CGFloat {
-        min(max(v, 0.25), 1.75)
     }
 
     private func scaleNearestNeighbor(
