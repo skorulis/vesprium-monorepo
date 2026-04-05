@@ -127,6 +127,79 @@ private let tallShortsMale = CharacterInfo(
 /// Width used for snapshot PNGs (height is `2 * snapshotWidth`).
 private let snapshotWidth = 48
 
+private func nude(_ info: CharacterInfo) -> CharacterInfo {
+    info.with(clothes: .nude())
+}
+
+/// Renders each character at ``snapshotWidth`` and composites them left-to-right into one bitmap.
+private func compositeCGImagesHorizontally(_ images: [CGImage]) -> CGImage? {
+    guard !images.isEmpty else { return nil }
+    let w0 = images[0].width
+    let h0 = images[0].height
+    for img in images.dropFirst() {
+        guard img.width == w0, img.height == h0 else { return nil }
+    }
+    let totalW = w0 * images.count
+    let colorSpace = CGColorSpaceCreateDeviceRGB()
+    let bytesPerPixel = 4
+    let bytesPerRow = totalW * bytesPerPixel
+    var data = Data(count: totalW * h0 * bytesPerPixel)
+    return data.withUnsafeMutableBytes { ptr -> CGImage? in
+        memset(ptr.baseAddress!, 0, ptr.count)
+        guard let context = CGContext(
+            data: ptr.baseAddress,
+            width: totalW,
+            height: h0,
+            bitsPerComponent: 8,
+            bytesPerRow: bytesPerRow,
+            space: colorSpace,
+            bitmapInfo: CGImageAlphaInfo.premultipliedLast.rawValue
+        ) else { return nil }
+
+        context.setShouldAntialias(false)
+        context.interpolationQuality = .none
+        for (i, img) in images.enumerated() {
+            context.draw(
+                img,
+                in: CGRect(x: CGFloat(i * w0), y: 0, width: CGFloat(w0), height: CGFloat(h0))
+            )
+        }
+        return context.makeImage()
+    }
+}
+
+/// Snapshot assertion for several characters in one horizontal strip (fewer reference PNGs than one test per character).
+private func assertSnapshotMatchesCharactersHorizontally(
+    _ infos: [CharacterInfo],
+    file: StaticString = #filePath,
+    testName: String = #function,
+    line: UInt = #line
+) {
+    let gen = CharacterImageGenerator()
+    var images: [CGImage] = []
+    for info in infos {
+        guard let cgImage = gen.image(for: info, widthInPixels: snapshotWidth) else {
+            Issue.record("Expected non-nil CGImage")
+            return
+        }
+        images.append(cgImage)
+    }
+    guard let composite = compositeCGImagesHorizontally(images) else {
+        Issue.record("Expected composite CGImage")
+        return
+    }
+    #if canImport(AppKit)
+    let image = NSImage(
+        cgImage: composite,
+        size: NSSize(width: composite.width, height: composite.height)
+    )
+    assertSnapshot(of: image, as: .image, file: file, testName: testName, line: line)
+    #elseif canImport(UIKit)
+    let image = UIImage(cgImage: composite, scale: 1.0, orientation: .up)
+    assertSnapshot(of: image, as: .image, file: file, testName: testName, line: line)
+    #endif
+}
+
 private func assertSnapshotMatchesCharacter(
     _ info: CharacterInfo,
     file: StaticString = #filePath,
@@ -216,4 +289,15 @@ private func assertSnapshotMatchesCharacter(
 
 @Test func bareLegsMaleSnapshot() {
     assertSnapshotMatchesCharacter(bareLegsMale)
+}
+
+/// Five nude (no leg wear) body types in one horizontal strip for easy comparison.
+@Test func fiveNudeCharactersHorizontallySnapshot() {
+    assertSnapshotMatchesCharactersHorizontally([
+        nude(tallLightMale),
+        nude(shortHeavyFemale),
+        nude(longArmsUnspecified),
+        nude(largeHeadFemale),
+        nude(customEyeColor),
+    ])
 }

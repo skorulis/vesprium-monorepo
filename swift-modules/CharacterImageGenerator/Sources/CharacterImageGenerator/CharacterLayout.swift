@@ -121,12 +121,14 @@ struct CharacterLayout {
         leftArmX = Int(floor(cx - torsoW / 2 - CGFloat(armW)))
         rightArmX = Int(torsoX) + torsoWi
 
-        let legGap = 2 * s
         let legYBase = torsoYBase + CGFloat(torsoHi)
-        legWi = max(2, min(Int(ceil(legW)), Int(cx) - 2))
-        let totalLegs = CGFloat(legWi * 2) + legGap
-        leftLegX = Int(floor(cx - totalLegs / 2))
-        rightLegX = leftLegX + legWi + Int(legGap)
+        // Leg outer edges align with torso sides; leg width is capped so both columns fit.
+        let maxLegW = max(1, torsoWi / 2)
+        let legWDesired = max(2, min(Int(ceil(legW)), Int(cx) - 2))
+        legWi = min(legWDesired, maxLegW)
+        let torsoLeft = Int(torsoX)
+        leftLegX = torsoLeft
+        rightLegX = torsoLeft + torsoWi - legWi
         legHi = Int(ceil(legH))
         hairRows = max(2, Int(ceil(headH / max(3 * s, 1))))
         switch info.face.hairStyle {
