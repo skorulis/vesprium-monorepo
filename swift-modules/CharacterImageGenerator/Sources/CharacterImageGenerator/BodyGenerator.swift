@@ -6,23 +6,38 @@ import CoreGraphics
 
 enum BodyGenerator {
     static func draw(context: CGContext, layout: CharacterLayout, palette: CharacterShadingPalette) {
-        fillRectSkin(
+        let torsoColor: RGB
+        if let tw = layout.topWear {
+            torsoColor = palette.topWearFlat(tw)
+        } else {
+            torsoColor = palette.skinFlat
+        }
+        fillRect(
             context,
             x: Int(layout.torsoX),
             y: Int(layout.torsoY),
             width: layout.torsoWi,
             height: layout.torsoHi,
-            palette: palette
+            color: torsoColor
         )
 
         let armH = Int(ceil(layout.armLen))
         let shoulderY = Int(layout.shoulderY)
+        let desiredHandH = max(2, Int(round(2 * layout.unitScale)))
+        let handH = min(desiredHandH, armH)
+        let upperH = armH - handH
+        let sleeveRows = layout.sleeveRowsOnUpperArm(upperArmHeight: upperH)
+        let sleeveColor: RGB? = layout.topWear.map { palette.topWearFlat($0) }
+
         drawArmWithHand(
             context: context,
             x: layout.leftArmX,
             shoulderY: shoulderY,
             armWidth: layout.armW,
             totalHeight: armH,
+            upperArmHeight: upperH,
+            sleeveRows: sleeveRows,
+            sleeveColor: sleeveColor,
             unitScale: layout.unitScale,
             palette: palette,
             outerEdge: .left
@@ -33,6 +48,9 @@ enum BodyGenerator {
             shoulderY: shoulderY,
             armWidth: layout.armW,
             totalHeight: armH,
+            upperArmHeight: upperH,
+            sleeveRows: sleeveRows,
+            sleeveColor: sleeveColor,
             unitScale: layout.unitScale,
             palette: palette,
             outerEdge: .right
@@ -52,6 +70,9 @@ enum BodyGenerator {
         shoulderY: Int,
         armWidth: Int,
         totalHeight: Int,
+        upperArmHeight: Int,
+        sleeveRows: Int,
+        sleeveColor: RGB?,
         unitScale: CGFloat,
         palette: CharacterShadingPalette,
         outerEdge: ShoulderOuterEdge
@@ -66,11 +87,17 @@ enum BodyGenerator {
             let inset = dy < chamfer ? chamfer - dy : 0
             let w = armWidth - inset
             guard w > 0 else { continue }
+            let rowColor: RGB
+            if let sc = sleeveColor, dy < upperArmHeight, dy < sleeveRows {
+                rowColor = sc
+            } else {
+                rowColor = palette.skinFlat
+            }
             switch outerEdge {
             case .left:
-                fillRectSkin(context, x: x + inset, y: y, width: w, height: 1, palette: palette)
+                fillRect(context, x: x + inset, y: y, width: w, height: 1, color: rowColor)
             case .right:
-                fillRectSkin(context, x: x, y: y, width: w, height: 1, palette: palette)
+                fillRect(context, x: x, y: y, width: w, height: 1, color: rowColor)
             }
         }
     }

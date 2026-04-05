@@ -131,6 +131,12 @@ private func nude(_ info: CharacterInfo) -> CharacterInfo {
     info.with(clothes: .nude())
 }
 
+private func withTopWear(_ info: CharacterInfo, _ top: TopWear?) -> CharacterInfo {
+    var c = info.clothes
+    c.topWear = top
+    return info.with(clothes: c)
+}
+
 /// Renders each character at ``snapshotWidth`` and composites them left-to-right into one bitmap.
 private func compositeCGImagesHorizontally(_ images: [CGImage]) -> CGImage? {
     guard !images.isEmpty else { return nil }
@@ -299,5 +305,16 @@ private func assertSnapshotMatchesCharacter(
         nude(longArmsUnspecified),
         nude(largeHeadFemale),
         nude(customEyeColor),
+    ])
+}
+
+/// Five characters with distinct top and leg clothing: bare torso, tee, dress shirt, tee + shorts, long sleeve + bare legs.
+@Test func fiveTopWearClothingOptionsHorizontallySnapshot() {
+    assertSnapshotMatchesCharactersHorizontally([
+        withTopWear(tallLightMale, nil),
+        withTopWear(tallLightMale, .tShirt),
+        withTopWear(shortHeavyFemale, .shirt),
+        withTopWear(tallShortsMale, .tShirt),
+        withTopWear(bareLegsMale, .shirt),
     ])
 }

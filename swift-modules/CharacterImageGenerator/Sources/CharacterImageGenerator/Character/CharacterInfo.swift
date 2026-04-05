@@ -1,7 +1,7 @@
 import CoreGraphics
 
 /// sRGB color for character rendering; components are `0...255`.
-public struct RGB: Equatable, Sendable {
+public struct RGB: Equatable, Sendable, Codable {
     public var r: UInt8
     public var g: UInt8
     public var b: UInt8
@@ -57,7 +57,8 @@ public struct CharacterInfo: Equatable, Sendable {
         weight: CGFloat = 1.0,
         armLength: CGFloat = 1.0,
         headSize: CGFloat = 1.0,
-        legWear: LegWear? = nil
+        legWear: LegWear? = nil,
+        topWear: TopWear? = nil
     ) {
         self.face = FaceParams(
             skinColor: skinColor,
@@ -72,6 +73,6 @@ public struct CharacterInfo: Equatable, Sendable {
             weight: weight,
             armLength: armLength
         )
-        self.clothes = Clothes(legWear: legWear)
+        self.clothes = Clothes(legWear: legWear, topWear: topWear)
     }
 }

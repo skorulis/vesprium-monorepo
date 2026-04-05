@@ -21,6 +21,13 @@ struct CharacterShadingPalette: Sendable {
     let shortsFlat: RGB
     let shortsDivision: RGB
 
+    /// Cotton tee fill for ``TopWear/tShirt``.
+    let tShirtFlat: RGB
+    let tShirtDivision: RGB
+    /// Woven shirt fill for ``TopWear/shirt``.
+    let shirtFlat: RGB
+    let shirtDivision: RGB
+
     init(skinBase: RGB, hairBase: RGB, eyeColor: RGB) {
         skinFlat = skinBase
         skinDivision = Self.mix(skinBase, Self.black, 0.30)
@@ -34,6 +41,25 @@ struct CharacterShadingPalette: Sendable {
         pantsDivision = Self.mix(Self.pantsBase, Self.black, 0.26)
         shortsFlat = Self.shortsBase
         shortsDivision = Self.mix(Self.shortsBase, Self.black, 0.26)
+
+        tShirtFlat = Self.tShirtBase
+        tShirtDivision = Self.mix(Self.tShirtBase, Self.black, 0.22)
+        shirtFlat = Self.dressShirtBase
+        shirtDivision = Self.mix(Self.dressShirtBase, Self.black, 0.24)
+    }
+
+    func topWearFlat(_ top: TopWear) -> RGB {
+        switch top {
+        case .tShirt: return tShirtFlat
+        case .shirt: return shirtFlat
+        }
+    }
+
+    func topWearDivision(_ top: TopWear) -> RGB {
+        switch top {
+        case .tShirt: return tShirtDivision
+        case .shirt: return shirtDivision
+        }
     }
 
     private static func mouthColor(skinBase: RGB) -> RGB {
@@ -48,6 +74,8 @@ struct CharacterShadingPalette: Sendable {
     private static let black = RGB(r: 0, g: 0, b: 0)
     private static let pantsBase = RGB(r: 55, g: 75, b: 120)
     private static let shortsBase = RGB(r: 210, g: 165, b: 95)
+    private static let tShirtBase = RGB(r: 228, g: 228, b: 232)
+    private static let dressShirtBase = RGB(r: 198, g: 212, b: 235)
 
     private static func mix(_ a: RGB, _ b: RGB, _ t: CGFloat) -> RGB {
         let t = min(max(t, 0), 1)

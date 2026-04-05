@@ -94,6 +94,7 @@ func drawCharacterElementDivisions(context: CGContext, layout: CharacterLayout, 
     let desiredHandH = max(2, Int(round(2 * layout.unitScale)))
     let handH = min(desiredHandH, armH)
     let upperH = armH - handH
+    let sleeveRows = layout.sleeveRowsOnUpperArm(upperArmHeight: upperH)
 
     strokeHLine(
         context,
@@ -109,12 +110,18 @@ func drawCharacterElementDivisions(context: CGContext, layout: CharacterLayout, 
         y: torsoYi,
         color: palette.skinDivision
     )
+    let torsoLegSeamColor: RGB
+    if let tw = layout.topWear {
+        torsoLegSeamColor = palette.topWearDivision(tw)
+    } else {
+        torsoLegSeamColor = palette.skinDivision
+    }
     strokeHLine(
         context,
         x0: torsoX,
         x1: torsoX + layout.torsoWi - 1,
         y: Int(layout.legY),
-        color: palette.skinDivision
+        color: torsoLegSeamColor
     )
 
     let shortsCover = layout.shortsLegCoveragePixels
@@ -136,20 +143,74 @@ func drawCharacterElementDivisions(context: CGContext, layout: CharacterLayout, 
         )
     }
 
-    strokeVLine(
-        context,
-        x: torsoX,
-        y0: shoulderYi,
-        y1: shoulderYi + armH - 1,
-        color: palette.skinDivision
-    )
-    strokeVLine(
-        context,
-        x: torsoX + layout.torsoWi - 1,
-        y0: shoulderYi,
-        y1: shoulderYi + armH - 1,
-        color: palette.skinDivision
-    )
+    if let tw = layout.topWear {
+        let fabricEdge = palette.topWearDivision(tw)
+        if sleeveRows > 0 {
+            strokeVLine(
+                context,
+                x: torsoX,
+                y0: shoulderYi,
+                y1: shoulderYi + sleeveRows - 1,
+                color: fabricEdge
+            )
+            strokeVLine(
+                context,
+                x: torsoX + layout.torsoWi - 1,
+                y0: shoulderYi,
+                y1: shoulderYi + sleeveRows - 1,
+                color: fabricEdge
+            )
+        }
+        if sleeveRows < armH {
+            strokeVLine(
+                context,
+                x: torsoX,
+                y0: shoulderYi + sleeveRows,
+                y1: shoulderYi + armH - 1,
+                color: palette.skinDivision
+            )
+            strokeVLine(
+                context,
+                x: torsoX + layout.torsoWi - 1,
+                y0: shoulderYi + sleeveRows,
+                y1: shoulderYi + armH - 1,
+                color: palette.skinDivision
+            )
+        }
+    } else {
+        strokeVLine(
+            context,
+            x: torsoX,
+            y0: shoulderYi,
+            y1: shoulderYi + armH - 1,
+            color: palette.skinDivision
+        )
+        strokeVLine(
+            context,
+            x: torsoX + layout.torsoWi - 1,
+            y0: shoulderYi,
+            y1: shoulderYi + armH - 1,
+            color: palette.skinDivision
+        )
+    }
+
+    if case .some(.tShirt) = layout.topWear, sleeveRows > 0, sleeveRows < upperH {
+        let yHem = shoulderYi + sleeveRows
+        strokeHLine(
+            context,
+            x0: layout.leftArmX,
+            x1: layout.leftArmX + layout.armW - 1,
+            y: yHem,
+            color: palette.tShirtDivision
+        )
+        strokeHLine(
+            context,
+            x0: layout.rightArmX,
+            x1: layout.rightArmX + layout.armW - 1,
+            y: yHem,
+            color: palette.tShirtDivision
+        )
+    }
 
     if upperH > 0 {
         let yHand = shoulderYi + upperH

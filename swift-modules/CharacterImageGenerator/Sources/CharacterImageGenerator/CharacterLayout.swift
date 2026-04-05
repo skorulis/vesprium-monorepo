@@ -12,6 +12,7 @@ struct CharacterLayout {
     let gender: Gender
     let hairStyle: HairStyle
     let legWear: LegWear?
+    let topWear: TopWear?
 
     /// Uniform scale vs the original 24× logical grid (e.g. `2` when width is 48).
     let unitScale: CGFloat
@@ -60,6 +61,7 @@ struct CharacterLayout {
         gender = info.body.gender
         hairStyle = info.face.hairStyle
         legWear = info.clothes.legWear
+        topWear = info.clothes.topWear
 
         let w = canvasWidth
         let h = canvasHeight
@@ -166,5 +168,16 @@ struct CharacterLayout {
     var innerLegCrotchFillHeight: Int {
         let cap = max(2, Int(round(2 * unitScale)))
         return min(legHi, cap)
+    }
+
+    /// Rows of each upper arm (from the shoulder, excluding the hand block) covered by ``topWear``; `0` if bare torso or no top.
+    func sleeveRowsOnUpperArm(upperArmHeight: Int) -> Int {
+        guard let tw = topWear, upperArmHeight > 0 else { return 0 }
+        switch tw {
+        case .tShirt:
+            return min(upperArmHeight, max(2, upperArmHeight * 2 / 5))
+        case .shirt:
+            return upperArmHeight
+        }
     }
 }
