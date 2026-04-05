@@ -36,11 +36,11 @@ public enum LegWear: Equatable, Sendable, CaseIterable {
     case pants
 }
 
-/// Clothing options that affect how the character is drawn.
+/// Clothing options that affect how the character is drawn. Omit a field (or pass `nil`) to leave that body region unchanged (e.g. skin for legs).
 public struct Clothes: Equatable, Sendable {
-    public var legWear: LegWear
+    public var legWear: LegWear?
 
-    public init(legWear: LegWear = .pants) {
+    public init(legWear: LegWear? = nil) {
         self.legWear = legWear
     }
 }
@@ -68,7 +68,7 @@ public struct CharacterInfo: Equatable, Sendable {
         weight: CGFloat = 1.0,
         armLength: CGFloat = 1.0,
         headSize: CGFloat = 1.0,
-        legWear: LegWear = .pants
+        legWear: LegWear? = nil
     ) {
         self.face = FaceParams(
             skinColor: skinColor,

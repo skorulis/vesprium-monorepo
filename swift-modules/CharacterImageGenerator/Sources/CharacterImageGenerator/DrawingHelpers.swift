@@ -118,7 +118,7 @@ func drawCharacterElementDivisions(context: CGContext, layout: CharacterLayout, 
     )
 
     let shortsCover = layout.shortsLegCoveragePixels
-    if layout.legWear == .shorts, shortsCover > 0, shortsCover < layout.legHi {
+    if layout.legWear == .some(.shorts), shortsCover > 0, shortsCover < layout.legHi {
         let hemY = Int(layout.legY) + shortsCover
         strokeHLine(
             context,
@@ -170,7 +170,7 @@ func drawCharacterElementDivisions(context: CGContext, layout: CharacterLayout, 
     }
 
     let footTop = Int(layout.legY) + layout.legHi
-    let footSeamColor = layout.legWear == .pants ? palette.pantsDivision : palette.skinDivision
+    let footSeamColor = layout.legWear == .some(.pants) ? palette.pantsDivision : palette.skinDivision
     strokeHLine(
         context,
         x0: layout.leftLegX,

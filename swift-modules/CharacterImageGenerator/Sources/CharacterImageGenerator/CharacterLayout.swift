@@ -11,7 +11,7 @@ struct CharacterLayout {
     let hair: RGB
     let gender: Gender
     let hairStyle: HairStyle
-    let legWear: LegWear
+    let legWear: LegWear?
 
     /// Uniform scale vs the original 24× logical grid (e.g. `2` when width is 48).
     let unitScale: CGFloat
@@ -154,14 +154,10 @@ struct CharacterLayout {
         legY = legYBase + verticalOffset
     }
 
-    /// Rows of each leg covered by shorts when ``legWear`` is ``LegWear/shorts``; `0` for pants.
+    /// Rows of each leg covered by shorts when ``legWear`` is ``LegWear/shorts``; `0` if bare legs or pants.
     var shortsLegCoveragePixels: Int {
-        switch legWear {
-        case .pants:
-            return 0
-        case .shorts:
-            return min(legHi, max(2, legHi * 2 / 5))
-        }
+        guard case .some(.shorts) = legWear else { return 0 }
+        return min(legHi, max(2, legHi * 2 / 5))
     }
 
     /// Height of the inner-leg (inseam) fabric that joins the two legs—only at the top of the garment, not full leg length.

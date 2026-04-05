@@ -10,7 +10,24 @@ enum LegsGenerator {
         let w = layout.legWi
         let legH = layout.legHi
         switch layout.legWear {
-        case .pants:
+        case nil:
+            fillRectSkin(
+                context,
+                x: layout.leftLegX,
+                y: y,
+                width: w,
+                height: legH,
+                palette: palette
+            )
+            fillRectSkin(
+                context,
+                x: layout.rightLegX,
+                y: y,
+                width: w,
+                height: legH,
+                palette: palette
+            )
+        case .some(.pants):
             fillRect(context, x: layout.leftLegX, y: y, width: w, height: legH, color: palette.pantsFlat)
             fillRect(context, x: layout.rightLegX, y: y, width: w, height: legH, color: palette.pantsFlat)
             fillInnerLegGap(
@@ -20,7 +37,7 @@ enum LegsGenerator {
                 height: layout.innerLegCrotchFillHeight,
                 color: palette.pantsFlat
             )
-        case .shorts:
+        case .some(.shorts):
             let sh = layout.shortsLegCoveragePixels
             fillRect(context, x: layout.leftLegX, y: y, width: w, height: sh, color: palette.shortsFlat)
             fillRectSkin(

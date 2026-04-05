@@ -17,7 +17,8 @@ private let tallLightMale = CharacterInfo(
     height: 1.5,
     weight: 0.85,
     armLength: 1.0,
-    headSize: 0.9
+    headSize: 0.9,
+    legWear: .pants
 )
 
 private let shortHeavyFemale = CharacterInfo(
@@ -27,7 +28,8 @@ private let shortHeavyFemale = CharacterInfo(
     height: 0.65,
     weight: 1.5,
     armLength: 0.8,
-    headSize: 1.2
+    headSize: 1.2,
+    legWear: .pants
 )
 
 private let longArmsUnspecified = CharacterInfo(
@@ -37,7 +39,8 @@ private let longArmsUnspecified = CharacterInfo(
     height: 1.0,
     weight: 1.0,
     armLength: 1.5,
-    headSize: 1.0
+    headSize: 1.0,
+    legWear: .pants
 )
 
 private let largeHeadFemale = CharacterInfo(
@@ -47,7 +50,8 @@ private let largeHeadFemale = CharacterInfo(
     height: 1.0,
     weight: 1.0,
     armLength: 1.0,
-    headSize: 1.5
+    headSize: 1.5,
+    legWear: .pants
 )
 
 private let customEyeColor = CharacterInfo(
@@ -58,7 +62,8 @@ private let customEyeColor = CharacterInfo(
     height: 1.0,
     weight: 1.0,
     armLength: 1.0,
-    headSize: 1.0
+    headSize: 1.0,
+    legWear: .pants
 )
 
 private let mohawkMale = CharacterInfo(
@@ -69,7 +74,8 @@ private let mohawkMale = CharacterInfo(
     height: 1.0,
     weight: 1.0,
     armLength: 1.0,
-    headSize: 1.0
+    headSize: 1.0,
+    legWear: .pants
 )
 
 private let baldFemale = CharacterInfo(
@@ -80,7 +86,8 @@ private let baldFemale = CharacterInfo(
     height: 1.0,
     weight: 1.0,
     armLength: 1.0,
-    headSize: 1.0
+    headSize: 1.0,
+    legWear: .pants
 )
 
 private let ponytailFemale = CharacterInfo(
@@ -91,7 +98,19 @@ private let ponytailFemale = CharacterInfo(
     height: 1.0,
     weight: 1.0,
     armLength: 1.0,
-    headSize: 1.0
+    headSize: 1.0,
+    legWear: .pants
+)
+
+private let bareLegsMale = CharacterInfo(
+    gender: .male,
+    skinColor: RGB(r: 245, g: 220, b: 200),
+    hairColor: RGB(r: 30, g: 25, b: 20),
+    height: 1.5,
+    weight: 0.85,
+    armLength: 1.0,
+    headSize: 0.9,
+    legWear: nil
 )
 
 private let tallShortsMale = CharacterInfo(
@@ -190,7 +209,11 @@ private func assertSnapshotMatchesCharacter(
     assertSnapshotMatchesCharacter(tallShortsMale)
 }
 
-/// Default ``LegWear`` is ``LegWear/pants``; matches ``tallShortsMale`` proportions with full-length leg fill.
+/// Same proportions as ``tallShortsMale`` with ``LegWear/pants`` instead of shorts.
 @Test func tallPantsMaleSnapshot() {
     assertSnapshotMatchesCharacter(tallLightMale)
+}
+
+@Test func bareLegsMaleSnapshot() {
+    assertSnapshotMatchesCharacter(bareLegsMale)
 }
