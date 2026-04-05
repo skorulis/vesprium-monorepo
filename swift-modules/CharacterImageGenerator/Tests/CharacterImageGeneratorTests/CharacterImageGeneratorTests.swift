@@ -308,12 +308,13 @@ private func assertSnapshotMatchesCharacter(
     ])
 }
 
-/// Five characters with distinct top and leg clothing: bare torso, tee, dress shirt, tee + shorts, long sleeve + bare legs.
-@Test func fiveTopWearClothingOptionsHorizontallySnapshot() {
+/// Six characters with distinct top and leg clothing: bare torso, tee, dress shirt, singlet, tee + shorts, long sleeve + bare legs.
+@Test func sixTopWearClothingOptionsHorizontallySnapshot() {
     assertSnapshotMatchesCharactersHorizontally([
         withTopWear(tallLightMale, nil),
         withTopWear(tallLightMale, .tShirt),
         withTopWear(shortHeavyFemale, .shirt),
+        withTopWear(largeHeadFemale, .singlet),
         withTopWear(tallShortsMale, .tShirt),
         withTopWear(bareLegsMale, .shirt),
     ])

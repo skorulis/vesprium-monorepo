@@ -29,4 +29,6 @@ public enum TopWear: Equatable, Sendable, CaseIterable {
     case tShirt
     /// Long sleeves to the wrist; hands stay skin tone.
     case shirt
+    /// Sleeveless tank; torso covered, upper arms skin tone.
+    case singlet
 }

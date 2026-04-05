@@ -178,6 +178,8 @@ struct CharacterLayout {
             return min(upperArmHeight, max(2, upperArmHeight * 2 / 5))
         case .shirt:
             return upperArmHeight
+        case .singlet:
+            return 0
         }
     }
 }
