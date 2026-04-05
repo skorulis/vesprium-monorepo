@@ -15,14 +15,6 @@ enum BodyGenerator {
             palette: palette
         )
 
-        if layout.gender == .female {
-            let w = layout.canvasWidth
-            let hipY = Int(layout.torsoY) + layout.torsoHi - 1
-            let hipW = min(layout.torsoWi + 4, w - 2)
-            let hipX = Int(floor(layout.centerX - CGFloat(hipW) / 2))
-            fillRect(context, x: hipX, y: hipY, width: hipW, height: 1, color: palette.skinDivision)
-        }
-
         let armH = Int(ceil(layout.armLen))
         let shoulderY = Int(layout.shoulderY)
         drawArmWithHand(
