@@ -28,14 +28,33 @@ public enum Gender: Equatable, Sendable, CaseIterable {
     case unspecified
 }
 
+/// Lower-body garment style for the sprite.
+public enum LegWear: Equatable, Sendable, CaseIterable {
+    /// Ends partway down the thigh; lower leg uses skin tone.
+    case shorts
+    /// Covers each leg down to the ankle.
+    case pants
+}
+
+/// Clothing options that affect how the character is drawn.
+public struct Clothes: Equatable, Sendable {
+    public var legWear: LegWear
+
+    public init(legWear: LegWear = .pants) {
+        self.legWear = legWear
+    }
+}
+
 /// Describes visual parameters for a generated character.
 public struct CharacterInfo: Equatable, Sendable {
     public var face: FaceParams
     public var body: BodyParams
+    public var clothes: Clothes
 
-    public init(face: FaceParams = FaceParams(), body: BodyParams = BodyParams()) {
+    public init(face: FaceParams = FaceParams(), body: BodyParams = BodyParams(), clothes: Clothes = Clothes()) {
         self.face = face
         self.body = body
+        self.clothes = clothes
     }
 
     /// Convenience initializer matching the previous flat ``CharacterInfo`` API.
@@ -48,7 +67,8 @@ public struct CharacterInfo: Equatable, Sendable {
         height: CGFloat = 1.0,
         weight: CGFloat = 1.0,
         armLength: CGFloat = 1.0,
-        headSize: CGFloat = 1.0
+        headSize: CGFloat = 1.0,
+        legWear: LegWear = .pants
     ) {
         self.face = FaceParams(
             skinColor: skinColor,
@@ -63,5 +83,6 @@ public struct CharacterInfo: Equatable, Sendable {
             weight: weight,
             armLength: armLength
         )
+        self.clothes = Clothes(legWear: legWear)
     }
 }

@@ -94,6 +94,17 @@ private let ponytailFemale = CharacterInfo(
     headSize: 1.0
 )
 
+private let tallShortsMale = CharacterInfo(
+    gender: .male,
+    skinColor: RGB(r: 245, g: 220, b: 200),
+    hairColor: RGB(r: 30, g: 25, b: 20),
+    height: 1.5,
+    weight: 0.85,
+    armLength: 1.0,
+    headSize: 0.9,
+    legWear: .shorts
+)
+
 /// Width used for snapshot PNGs (height is `2 * snapshotWidth`).
 private let snapshotWidth = 48
 
@@ -173,4 +184,13 @@ private func assertSnapshotMatchesCharacter(
 
 @Test func ponytailFemaleSnapshot() {
     assertSnapshotMatchesCharacter(ponytailFemale)
+}
+
+@Test func tallShortsMaleSnapshot() {
+    assertSnapshotMatchesCharacter(tallShortsMale)
+}
+
+/// Default ``LegWear`` is ``LegWear/pants``; matches ``tallShortsMale`` proportions with full-length leg fill.
+@Test func tallPantsMaleSnapshot() {
+    assertSnapshotMatchesCharacter(tallLightMale)
 }

@@ -6,28 +6,49 @@ import CoreGraphics
 
 enum LegsGenerator {
     static func draw(context: CGContext, layout: CharacterLayout, palette: CharacterShadingPalette) {
-        fillRectSkin(
-            context,
-            x: layout.leftLegX,
-            y: Int(layout.legY),
-            width: layout.legWi,
-            height: layout.legHi,
-            palette: palette
-        )
-        fillRectSkin(
-            context,
-            x: layout.rightLegX,
-            y: Int(layout.legY),
-            width: layout.legWi,
-            height: layout.legHi,
-            palette: palette
-        )
+        let y = Int(layout.legY)
+        let w = layout.legWi
+        let legH = layout.legHi
+        switch layout.legWear {
+        case .pants:
+            fillRect(context, x: layout.leftLegX, y: y, width: w, height: legH, color: palette.pantsFlat)
+            fillRect(context, x: layout.rightLegX, y: y, width: w, height: legH, color: palette.pantsFlat)
+            fillInnerLegGap(
+                context,
+                layout: layout,
+                topY: y,
+                height: layout.innerLegCrotchFillHeight,
+                color: palette.pantsFlat
+            )
+        case .shorts:
+            let sh = layout.shortsLegCoveragePixels
+            fillRect(context, x: layout.leftLegX, y: y, width: w, height: sh, color: palette.shortsFlat)
+            fillRectSkin(
+                context,
+                x: layout.leftLegX,
+                y: y + sh,
+                width: w,
+                height: legH - sh,
+                palette: palette
+            )
+            fillRect(context, x: layout.rightLegX, y: y, width: w, height: sh, color: palette.shortsFlat)
+            fillRectSkin(
+                context,
+                x: layout.rightLegX,
+                y: y + sh,
+                width: w,
+                height: legH - sh,
+                palette: palette
+            )
+            let crotchH = min(sh, layout.innerLegCrotchFillHeight)
+            fillInnerLegGap(context, layout: layout, topY: y, height: crotchH, color: palette.shortsFlat)
+        }
 
         let fy = Int(layout.legY) + layout.legHi
         let fh = layout.footH
         let pad = layout.footPad
-        let h = layout.canvasHeight
-        guard fy + fh <= h else { return }
+        let canvasH = layout.canvasHeight
+        guard fy + fh <= canvasH else { return }
 
         fillLeftFootShaded(
             context,
@@ -46,6 +67,28 @@ enum LegsGenerator {
             height: fh,
             outwardPad: pad,
             palette: palette
+        )
+    }
+
+    /// Fabric between the leg columns at the top only (crotch / upper inseam), not the full garment height.
+    private static func fillInnerLegGap(
+        _ context: CGContext,
+        layout: CharacterLayout,
+        topY: Int,
+        height: Int,
+        color: RGB
+    ) {
+        guard height > 0 else { return }
+        let gapStart = layout.leftLegX + layout.legWi
+        let gapEnd = layout.rightLegX - 1
+        guard gapEnd >= gapStart else { return }
+        fillRect(
+            context,
+            x: gapStart,
+            y: topY,
+            width: gapEnd - gapStart + 1,
+            height: height,
+            color: color
         )
     }
 

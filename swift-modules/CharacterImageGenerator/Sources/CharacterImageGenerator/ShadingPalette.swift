@@ -14,6 +14,13 @@ struct CharacterShadingPalette: Sendable {
     let eyeShade: RGB
     let mouth: RGB
 
+    /// Denim-like fill for ``LegWear/pants``.
+    let pantsFlat: RGB
+    let pantsDivision: RGB
+    /// Khaki fill for ``LegWear/shorts``.
+    let shortsFlat: RGB
+    let shortsDivision: RGB
+
     init(skinBase: RGB, hairBase: RGB, eyeColor: RGB) {
         skinFlat = skinBase
         skinDivision = Self.mix(skinBase, Self.black, 0.30)
@@ -22,6 +29,11 @@ struct CharacterShadingPalette: Sendable {
         eye = eyeColor
         eyeShade = Self.mix(eyeColor, Self.black, 0.42)
         mouth = Self.mouthColor(skinBase: skinBase)
+
+        pantsFlat = Self.pantsBase
+        pantsDivision = Self.mix(Self.pantsBase, Self.black, 0.26)
+        shortsFlat = Self.shortsBase
+        shortsDivision = Self.mix(Self.shortsBase, Self.black, 0.26)
     }
 
     private static func mouthColor(skinBase: RGB) -> RGB {
@@ -34,6 +46,8 @@ struct CharacterShadingPalette: Sendable {
     }
 
     private static let black = RGB(r: 0, g: 0, b: 0)
+    private static let pantsBase = RGB(r: 55, g: 75, b: 120)
+    private static let shortsBase = RGB(r: 210, g: 165, b: 95)
 
     private static func mix(_ a: RGB, _ b: RGB, _ t: CGFloat) -> RGB {
         let t = min(max(t, 0), 1)
