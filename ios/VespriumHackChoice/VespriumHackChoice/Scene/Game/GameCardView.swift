@@ -101,8 +101,8 @@ struct GameCardView: View {
 #Preview("Job card") {
     HStack(spacing: 8) {
         GameCardView(card: .job(.farming))
-        
+
         GameCardView(card: .activity(.school))
     }
-    
+
 }

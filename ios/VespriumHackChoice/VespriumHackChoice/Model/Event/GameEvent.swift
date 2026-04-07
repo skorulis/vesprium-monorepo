@@ -6,7 +6,7 @@ struct GameEvent: Sendable, Codable, Equatable {
     let text: String
     let cards: [GameCard]
     let skippable: Bool
-    
+
     init(
         text: String,
         cards: [GameCard],

@@ -54,9 +54,7 @@ final class GameService: ObservableObject {
 
     private func executeMonthChanges() {
         var player = self.store.player
-        if let job = player.job {
-            player.money += job.monthlyIncome
-        }
+        player.money += player.cards.monthlyBalanceChange
         self.store.player = player
     }
 
@@ -69,10 +67,8 @@ final class GameService: ObservableObject {
     func resolvePendingEvent(selecting card: GameCard?) {
         guard let event = store.gameState.pendingEvent else { return }
         if let card {
-            guard event.cards.contains(card) else { return }
-            guard case let .job(job) = card else { return }
             var player = store.player
-            player.cards.job = job
+            player.cards.add(card: card)
             store.player = player
         } else {
             guard event.skippable else { return }
@@ -80,5 +76,6 @@ final class GameService: ObservableObject {
         var state = store.gameState
         state.pendingEvent = nil
         store.gameState = state
+        self.start()
     }
 }

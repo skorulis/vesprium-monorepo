@@ -4,6 +4,7 @@ import Foundation
 import Knit
 import KnitMacros
 
+@MainActor
 struct EventGenerator {
 
     let mainStore: MainStore
@@ -12,7 +13,7 @@ struct EventGenerator {
     init(mainStore: MainStore) {
         self.mainStore = mainStore
     }
-    
+
     func nextEvent() -> GameEvent? {
         if mainStore.player.job == nil {
             return firstJobOfferEvent()
