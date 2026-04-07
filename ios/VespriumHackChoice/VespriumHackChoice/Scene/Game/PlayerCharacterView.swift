@@ -34,7 +34,7 @@ struct PlayerCharacterView: View {
 
             Section("Attributes") {
                 ForEach(Attribute.allCases, id: \.self) { attribute in
-                    LabeledContent(attributeLabel(attribute)) {
+                    LabeledContent(attribute.name) {
                         let value = player.attributes[attribute]
                         Text("\(value)")
                             .monospacedDigit()
@@ -46,23 +46,6 @@ struct PlayerCharacterView: View {
 
     private func formattedDate(_ date: VespriumDate) -> String {
         "\(date.year) \(date.month.displayName) \(date.day)"
-    }
-
-    private func attributeLabel(_ attribute: Attribute) -> String {
-        switch attribute {
-        case .strength:
-            "Strength"
-        case .agility:
-            "Agility"
-        case .intelligence:
-            "Intelligence"
-        case .vitality:
-            "Vitality"
-        case .charisma:
-            "Charisma"
-        case .stability:
-            "Stability"
-        }
     }
 }
 
