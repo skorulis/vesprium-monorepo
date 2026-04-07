@@ -19,7 +19,7 @@ struct GameCardView: View {
             backgroundImage
         }
         .padding(12)
-        .frame(width: 180, height: 270)
+        .frame(width: 150, height: 225)
         .background {
             RoundedRectangle(cornerRadius: 12, style: .continuous)
                 .fill(.background.secondary)
@@ -34,10 +34,10 @@ struct GameCardView: View {
 
     @ViewBuilder
     private var footer: some View {
-        HStack(spacing: 4) {
+        HStack(spacing: 8) {
             maybeHours
-
-            Spacer()
+            maybeMoney
+            Spacer(minLength: 0)
         }
         .foregroundStyle(.secondary)
         .frame(maxWidth: .infinity)
@@ -46,21 +46,46 @@ struct GameCardView: View {
     @ViewBuilder
     private var maybeHours: some View {
         if card.dailyHours != 0 {
-            Image(systemName: "clock.fill")
-                .font(.caption.weight(.semibold))
-                .imageScale(.small)
-            Text("\(card.dailyHours)")
-                .font(.caption.monospacedDigit().weight(.medium))
+            HStack(spacing: 4) {
+                Image(systemName: "clock.fill")
+                    .font(.caption.weight(.semibold))
+                    .imageScale(.small)
+                Text("\(card.dailyHours)")
+                    .font(.caption.monospacedDigit().weight(.medium))
+            }
         }
+    }
 
+    @ViewBuilder
+    private var maybeMoney: some View {
+        if card.monthlyMoneyChange != 0 {
+            HStack(spacing: 4) {
+                Image(systemName: "dollarsign.circle.fill")
+                    .font(.caption.weight(.semibold))
+                    .imageScale(.small)
+                Text(moneyChangeLabel)
+                    .font(.caption.monospacedDigit().weight(.medium))
+            }
+        }
+    }
+
+    private var moneyChangeLabel: String {
+        let change = card.monthlyMoneyChange
+        if change > 0 {
+            return "+\(change)"
+        }
+        return "\(change)"
     }
 
     private var accessibilityTitle: String {
-        if card.dailyHours > 0 {
-            "\(card.name), \(card.dailyHours) hours per day"
-        } else {
-            card.name
+        var parts: [String] = [card.name]
+        if card.dailyHours != 0 {
+            parts.append("\(card.dailyHours) hours per day")
         }
+        if card.monthlyMoneyChange != 0 {
+            parts.append("\(moneyChangeLabel) per month")
+        }
+        return parts.joined(separator: ", ")
     }
 
     private var backgroundImage: some View {
@@ -71,16 +96,13 @@ struct GameCardView: View {
             .frame(width: 64)
             .accessibilityHidden(true)
     }
-
-    /// Width ÷ height for the card face.
-    private static let cardAspectRatio: CGFloat = 0.5
-
-    /// Vertical space reserved for future bottom-row stats or labels.
-    private static let footerReservedHeight: CGFloat = 36
 }
 
 #Preview("Job card") {
-    GameCardView(card: .job(.farming))
-        .padding()
-        .frame(maxWidth: 320)
+    HStack(spacing: 8) {
+        GameCardView(card: .job(.farming))
+        
+        GameCardView(card: .activity(.school))
+    }
+    
 }

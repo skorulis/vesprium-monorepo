@@ -5,10 +5,12 @@ import SwiftUI
 
 enum GameCard: Codable, Sendable, Equatable {
     case job(Job)
+    case activity(Activity)
 
     var name: String {
         switch self {
         case let .job(job): return job.name
+        case let .activity(activity): return activity.name
         }
     }
 
@@ -22,12 +24,14 @@ enum GameCard: Codable, Sendable, Equatable {
     var monthlyMoneyChange: Int {
         switch self {
         case let .job(job): return job.monthlyIncome
+        case let .activity(activity): return -activity.monthlyCost
         }
     }
 
     var dailyHours: Int {
         switch self {
         case let .job(job): return job.dailyHours
+        case let .activity(activity): return activity.dailyHours
         }
     }
 }
