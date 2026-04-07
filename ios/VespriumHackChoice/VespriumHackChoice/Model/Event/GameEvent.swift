@@ -2,7 +2,7 @@
 
 import Foundation
 
-struct GameEvent: Sendable, Codable {
+struct GameEvent: Sendable, Codable, Equatable {
     let text: String
     let cards: [GameCard]
     let skippable: Bool

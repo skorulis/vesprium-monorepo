@@ -43,4 +43,8 @@ final class GameViewModel {
     func togglePlayback() {
         gameService.toggle()
     }
+
+    func resolvePendingEvent(selecting card: GameCard?) {
+        gameService.resolvePendingEvent(selecting: card)
+    }
 }
