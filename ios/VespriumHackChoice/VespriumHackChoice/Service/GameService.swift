@@ -45,7 +45,7 @@ final class GameService: ObservableObject {
             }
         }
     }
-    
+
     private func executeMonthChanges() {
         var player = self.store.player
         player.money += player.job.monthlyIncome

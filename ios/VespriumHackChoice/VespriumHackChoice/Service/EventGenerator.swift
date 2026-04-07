@@ -5,9 +5,9 @@ import Knit
 import KnitMacros
 
 struct EventGenerator {
-    
+
     let mainStore: MainStore
-    
+
     @Resolvable<Resolver>
     init(mainStore: MainStore) {
         self.mainStore = mainStore

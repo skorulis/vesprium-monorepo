@@ -182,7 +182,6 @@ import SwiftUI
 {% endif %}
 {% if not param.bundle %}
 
-// swiftlint:disable convenience_type
 private final class BundleToken {
   static let bundle: Bundle = {
     #if SWIFT_PACKAGE
@@ -192,7 +191,7 @@ private final class BundleToken {
     #endif
   }()
 }
-// swiftlint:enable convenience_type
+// swiftlint:enable all
 {% endif %}
 {% else %}
 // No assets found
