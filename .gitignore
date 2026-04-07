@@ -1,2 +1,3 @@
 swift-modules/*/.build
 swift-modules/CharacterImageGenerator/.swiftpm
+ios/**/project.xcworkspace/xcuserdata

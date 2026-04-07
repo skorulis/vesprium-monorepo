@@ -23,3 +23,7 @@ Setting and design documents in [`docs/`](../README.md) remain **setting-first**
 ## Where concrete rules live
 
 **Concrete rules**—the precise, enforceable definitions that software can rely on—are stored in **Swift packages** as the **primary source of truth** under the swift-modules folder. Markdown in `docs/` can explain intent and narrative; when behavior must be unambiguous (parameters, constraints, generation logic, validation), it belongs in package code so it stays **testable**, **versioned with the toolchain**, and **single-sourced** for any tool that imports those modules.
+
+## Repository layout
+
+Where things live in the monorepo—`docs/`, `swift-modules/`, `ios/`—is documented in **[Folder structure](folder-structure.md)**.

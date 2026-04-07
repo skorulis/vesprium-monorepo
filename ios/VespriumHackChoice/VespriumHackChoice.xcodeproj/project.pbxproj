@@ -7,26 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		039FF3E386FF8573A78F03C4 /* VespriumHackChoiceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA0C0A7591631670E0DDE3 /* VespriumHackChoiceAssembly.swift */; };
 		03C2F1D47B16CA17B7ABF3EE /* Knit in Frameworks */ = {isa = PBXBuildFile; productRef = 1494521E44132FE3A3E3E69A /* Knit */; };
-		0590096E90593D956E8670C8 /* ModelPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE8D8B5B866A12DE93950E2 /* ModelPlaceholder.swift */; };
 		0D7FA47C130171A2608BAE24 /* KnitMacros in Frameworks */ = {isa = PBXBuildFile; productRef = 08974BE33FD6E57B96804857 /* KnitMacros */; };
-		1A43B5434A02870E16E5DEB9 /* CoordinatorView+VespriumHackChoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A9864B5E6C3867FCB3E7E7 /* CoordinatorView+VespriumHackChoice.swift */; };
-		283F8DE1B8133C6945EAB51C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05AEC503B9F7EDE6D11506AE /* ContentView.swift */; };
 		2EFA2F93ACEFED91F2DD5F82 /* ASKCore in Frameworks */ = {isa = PBXBuildFile; productRef = 20D372E0555CCA553C173077 /* ASKCore */; };
-		2F1E9648225C5BB59F07AC9C /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3531B52F75D70F836C17D21 /* XCAssets+Generated.swift */; };
-		34D871B1863F901EB81D0D22 /* DesignSystemPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC18EE5E67261F58AC2635A /* DesignSystemPlaceholder.swift */; };
-		39A70E1E79816DB0763041A9 /* UtilPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC506BFA7DE06A3A4F5D1104 /* UtilPlaceholder.swift */; };
 		42B8FC004FA9F2B6A8D0809E /* knitconfig.json in Resources */ = {isa = PBXBuildFile; fileRef = F9143ACADEDA160BCD96DEF0 /* knitconfig.json */; };
-		4371C1F5FBE5D0E4B7ED12BE /* MainPathRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29869D9ADAE5803E140D758B /* MainPathRenderer.swift */; };
-		54B7F02C47FE313B28438E0D /* VespriumHackChoiceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357B0631A78CFA4E1DD01E77 /* VespriumHackChoiceApp.swift */; };
 		68DCDD32F76E6A6BBD5CBFA8 /* ASKCoordinator in Frameworks */ = {isa = PBXBuildFile; productRef = 2DA5FBB0E2EE2B5064749DDD /* ASKCoordinator */; };
-		751F4354741AEE2C525EE61E /* VespriumHackChoiceUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158DF5917A771FF31469F2A0 /* VespriumHackChoiceUnitTests.swift */; };
-		78AE17CA9171633E29CD1186 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 108F303EBC57DF03CB0E5B5F /* PrivacyInfo.xcprivacy */; };
-		847EABC33202378617F7A807 /* StorePlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D7E463241A982414405685 /* StorePlaceholder.swift */; };
-		A800F876437FA29664411CC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E66779B1E7CBC443BCAE45C4 /* Assets.xcassets */; };
-		ED9837447472B6863AE1B37F /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B3C545C333AB4AE4822EC2 /* ContentViewModel.swift */; };
-		F00DCAAAA8295792FEA09160 /* MainPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCD035BCE71B5A5E76D2FCE /* MainPath.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,25 +25,23 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		05AEC503B9F7EDE6D11506AE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
-		108F303EBC57DF03CB0E5B5F /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
-		158DF5917A771FF31469F2A0 /* VespriumHackChoiceUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VespriumHackChoiceUnitTests.swift; sourceTree = "<group>"; };
-		29869D9ADAE5803E140D758B /* MainPathRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPathRenderer.swift; sourceTree = "<group>"; };
-		357B0631A78CFA4E1DD01E77 /* VespriumHackChoiceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VespriumHackChoiceApp.swift; sourceTree = "<group>"; };
-		5FCD035BCE71B5A5E76D2FCE /* MainPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPath.swift; sourceTree = "<group>"; };
-		71D7E463241A982414405685 /* StorePlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePlaceholder.swift; sourceTree = "<group>"; };
-		8FE8D8B5B866A12DE93950E2 /* ModelPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPlaceholder.swift; sourceTree = "<group>"; };
-		95A9864B5E6C3867FCB3E7E7 /* CoordinatorView+VespriumHackChoice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoordinatorView+VespriumHackChoice.swift"; sourceTree = "<group>"; };
-		B2BA0C0A7591631670E0DDE3 /* VespriumHackChoiceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VespriumHackChoiceAssembly.swift; sourceTree = "<group>"; };
-		B3531B52F75D70F836C17D21 /* XCAssets+Generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCAssets+Generated.swift"; sourceTree = "<group>"; };
-		BC506BFA7DE06A3A4F5D1104 /* UtilPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilPlaceholder.swift; sourceTree = "<group>"; };
-		CCC18EE5E67261F58AC2635A /* DesignSystemPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystemPlaceholder.swift; sourceTree = "<group>"; };
 		D6F1BFC0B86E06968BD081D9 /* VespriumHackChoice.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = VespriumHackChoice.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D7264D01D4B570C7CCB0FE5F /* VespriumHackChoiceUnitTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = VespriumHackChoiceUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E4B3C545C333AB4AE4822EC2 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
-		E66779B1E7CBC443BCAE45C4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		F9143ACADEDA160BCD96DEF0 /* knitconfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = knitconfig.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		FAB02BD12F8489BB0089B681 /* VespriumHackChoice */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = VespriumHackChoice;
+			sourceTree = "<group>";
+		};
+		FAB02BE32F8489C00089B681 /* VespriumHackChoiceUnitTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = VespriumHackChoiceUnitTests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		77D22F39B9252AF0BF37D408 /* Frameworks */ = {
@@ -75,80 +58,12 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		15B0D900917379DA79E7FEB5 /* VespriumHackChoice */ = {
-			isa = PBXGroup;
-			children = (
-				108F303EBC57DF03CB0E5B5F /* PrivacyInfo.xcprivacy */,
-				70885CCBA201BDC65E8843AF /* DesignSystem */,
-				E6A030A5EC71AA7E0517E7E3 /* Model */,
-				39EA89A5EAFD1171E536C709 /* Resource */,
-				F2BDB720C5451778CF1D9809 /* Scene */,
-				756E9EDAE7CAF4CD6F0E09C5 /* Service */,
-				FE3FB77CF2BDC9A1B041AD8A /* Store */,
-				583CB3A122C1FF13F2AA8C40 /* Util */,
-			);
-			path = VespriumHackChoice;
-			sourceTree = "<group>";
-		};
 		22E25A35AF59D5EFF84F5812 /* Config */ = {
 			isa = PBXGroup;
 			children = (
 				F9143ACADEDA160BCD96DEF0 /* knitconfig.json */,
 			);
 			name = Config;
-			sourceTree = "<group>";
-		};
-		39EA89A5EAFD1171E536C709 /* Resource */ = {
-			isa = PBXGroup;
-			children = (
-				E66779B1E7CBC443BCAE45C4 /* Assets.xcassets */,
-				B3531B52F75D70F836C17D21 /* XCAssets+Generated.swift */,
-			);
-			path = Resource;
-			sourceTree = "<group>";
-		};
-		583CB3A122C1FF13F2AA8C40 /* Util */ = {
-			isa = PBXGroup;
-			children = (
-				BC506BFA7DE06A3A4F5D1104 /* UtilPlaceholder.swift */,
-			);
-			path = Util;
-			sourceTree = "<group>";
-		};
-		62A828F093CF5DE64F00D1B2 /* Coordinator */ = {
-			isa = PBXGroup;
-			children = (
-				95A9864B5E6C3867FCB3E7E7 /* CoordinatorView+VespriumHackChoice.swift */,
-				5FCD035BCE71B5A5E76D2FCE /* MainPath.swift */,
-				29869D9ADAE5803E140D758B /* MainPathRenderer.swift */,
-			);
-			path = Coordinator;
-			sourceTree = "<group>";
-		};
-		70885CCBA201BDC65E8843AF /* DesignSystem */ = {
-			isa = PBXGroup;
-			children = (
-				CCC18EE5E67261F58AC2635A /* DesignSystemPlaceholder.swift */,
-			);
-			path = DesignSystem;
-			sourceTree = "<group>";
-		};
-		756E9EDAE7CAF4CD6F0E09C5 /* Service */ = {
-			isa = PBXGroup;
-			children = (
-				D96FEFFB8E1E2848B59B91B6 /* App */,
-			);
-			path = Service;
-			sourceTree = "<group>";
-		};
-		8A751B2AAE753680C5B7175B /* App */ = {
-			isa = PBXGroup;
-			children = (
-				05AEC503B9F7EDE6D11506AE /* ContentView.swift */,
-				E4B3C545C333AB4AE4822EC2 /* ContentViewModel.swift */,
-				357B0631A78CFA4E1DD01E77 /* VespriumHackChoiceApp.swift */,
-			);
-			path = App;
 			sourceTree = "<group>";
 		};
 		B0B5E1C7CD7D6D75E5D3611A /* Products */ = {
@@ -160,55 +75,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		D4E92B8223078E78053DC3BA /* VespriumHackChoiceUnitTests */ = {
-			isa = PBXGroup;
-			children = (
-				158DF5917A771FF31469F2A0 /* VespriumHackChoiceUnitTests.swift */,
-			);
-			path = VespriumHackChoiceUnitTests;
-			sourceTree = "<group>";
-		};
-		D96FEFFB8E1E2848B59B91B6 /* App */ = {
-			isa = PBXGroup;
-			children = (
-				B2BA0C0A7591631670E0DDE3 /* VespriumHackChoiceAssembly.swift */,
-			);
-			path = App;
-			sourceTree = "<group>";
-		};
-		E6A030A5EC71AA7E0517E7E3 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				8FE8D8B5B866A12DE93950E2 /* ModelPlaceholder.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		F2BDB720C5451778CF1D9809 /* Scene */ = {
-			isa = PBXGroup;
-			children = (
-				8A751B2AAE753680C5B7175B /* App */,
-				62A828F093CF5DE64F00D1B2 /* Coordinator */,
-			);
-			path = Scene;
-			sourceTree = "<group>";
-		};
 		F83B01A273A05666473074A6 = {
 			isa = PBXGroup;
 			children = (
 				22E25A35AF59D5EFF84F5812 /* Config */,
-				15B0D900917379DA79E7FEB5 /* VespriumHackChoice */,
-				D4E92B8223078E78053DC3BA /* VespriumHackChoiceUnitTests */,
+				FAB02BD12F8489BB0089B681 /* VespriumHackChoice */,
+				FAB02BE32F8489C00089B681 /* VespriumHackChoiceUnitTests */,
 				B0B5E1C7CD7D6D75E5D3611A /* Products */,
 			);
-			sourceTree = "<group>";
-		};
-		FE3FB77CF2BDC9A1B041AD8A /* Store */ = {
-			isa = PBXGroup;
-			children = (
-				71D7E463241A982414405685 /* StorePlaceholder.swift */,
-			);
-			path = Store;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -224,6 +98,9 @@
 			);
 			dependencies = (
 				12E5C8DEBB07217841CA2829 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				FAB02BE32F8489C00089B681 /* VespriumHackChoiceUnitTests */,
 			);
 			name = VespriumHackChoiceUnitTests;
 			packageProductDependencies = (
@@ -246,6 +123,9 @@
 				F4A0918EC4D5479C69C5D626 /* PBXTargetDependency */,
 				CB61DE47385465AE9AA55866 /* PBXTargetDependency */,
 			);
+			fileSystemSynchronizedGroups = (
+				FAB02BD12F8489BB0089B681 /* VespriumHackChoice */,
+			);
 			name = VespriumHackChoice;
 			packageProductDependencies = (
 				2DA5FBB0E2EE2B5064749DDD /* ASKCoordinator */,
@@ -265,8 +145,6 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastUpgradeCheck = 1430;
-				TargetAttributes = {
-				};
 			};
 			buildConfigurationList = 8A0223655BE95DD37211558D /* Build configuration list for PBXProject "VespriumHackChoice" */;
 			developmentRegion = en;
@@ -299,8 +177,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A800F876437FA29664411CC5 /* Assets.xcassets in Resources */,
-				78AE17CA9171633E29CD1186 /* PrivacyInfo.xcprivacy in Resources */,
 				42B8FC004FA9F2B6A8D0809E /* knitconfig.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -312,7 +188,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				751F4354741AEE2C525EE61E /* VespriumHackChoiceUnitTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,18 +195,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				283F8DE1B8133C6945EAB51C /* ContentView.swift in Sources */,
-				ED9837447472B6863AE1B37F /* ContentViewModel.swift in Sources */,
-				1A43B5434A02870E16E5DEB9 /* CoordinatorView+VespriumHackChoice.swift in Sources */,
-				34D871B1863F901EB81D0D22 /* DesignSystemPlaceholder.swift in Sources */,
-				F00DCAAAA8295792FEA09160 /* MainPath.swift in Sources */,
-				4371C1F5FBE5D0E4B7ED12BE /* MainPathRenderer.swift in Sources */,
-				0590096E90593D956E8670C8 /* ModelPlaceholder.swift in Sources */,
-				847EABC33202378617F7A807 /* StorePlaceholder.swift in Sources */,
-				39A70E1E79816DB0763041A9 /* UtilPlaceholder.swift in Sources */,
-				54B7F02C47FE313B28438E0D /* VespriumHackChoiceApp.swift in Sources */,
-				039FF3E386FF8573A78F03C4 /* VespriumHackChoiceAssembly.swift in Sources */,
-				2F1E9648225C5BB59F07AC9C /* XCAssets+Generated.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -5,6 +5,7 @@ This folder holds design notes, worldbuilding, and reference material for Vespri
 Start here:
 
 - [Technical direction](technical-direction/README.md) — Vesprium as world and as project; weekly, incremental delivery
+- [Folder structure](technical-direction/folder-structure.md) — how `docs/`, `swift-modules/`, and `ios/` fit together
 - [Premise](premise.md) — what the world is, and what makes it distinct
 - [Political landscape](political-landscape.md) — power, inequality, instability, and long horizons
 - [Biohacking methods](biohacking-methods/README.md) — catalog of approaches (with subpages per method)
