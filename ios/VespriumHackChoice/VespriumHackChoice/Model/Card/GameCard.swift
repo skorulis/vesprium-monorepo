@@ -18,7 +18,7 @@ enum GameCard: Codable, Sendable, Equatable {
             return Image(systemName: "photo.artframe")
         }
     }
-    
+
     var dailyHours: Int {
         switch self {
         case let .job(job): return job.dailyHours

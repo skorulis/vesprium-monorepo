@@ -5,4 +5,6 @@ public enum VespriumCalendar: Sendable {
     public static let daysPerMonth = daysPerWeek * weeksPerMonth
     public static let monthsPerYear = 10
     public static let daysPerYear = daysPerMonth * monthsPerYear
+    
+    public static let hoursPerDay: Int = 24
 }

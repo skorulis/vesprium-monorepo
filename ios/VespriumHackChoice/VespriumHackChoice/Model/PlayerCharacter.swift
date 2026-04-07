@@ -3,19 +3,16 @@ import BioStats
 struct PlayerCharacter: Codable, Sendable, Equatable {
     var attributes: AttributeValues
     var money: Int
-    var job: Job
     var dateOfBirth: VespriumDate
     var cards: PlayerCards
 
     init(
         attributes: AttributeValues = AttributeValues(),
         money: Int = 200,
-        job: Job = .farming,
         dateOfBirth: VespriumDate
     ) {
         self.attributes = attributes
         self.money = money
-        self.job = job
         self.dateOfBirth = dateOfBirth
         self.cards = .init()
     }
@@ -31,5 +28,9 @@ struct PlayerCharacter: Codable, Sendable, Equatable {
             years -= 1
         }
         return max(0, years)
+    }
+    
+    var job: Job? {
+        return cards.job
     }
 }

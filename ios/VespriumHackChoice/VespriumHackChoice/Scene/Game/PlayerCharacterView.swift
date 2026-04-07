@@ -1,7 +1,8 @@
 import BioStats
 import SwiftUI
 
-/// Presents the full player profile: vitals, birth date, resources, profession, and attribute scores.
+/// Presents the full player profile: vitals, daily time allocation, birth date, resources, profession, and
+/// attribute scores.
 struct PlayerCharacterView: View {
     let player: PlayerCharacter
     let currentGameDate: VespriumDate
@@ -17,7 +18,14 @@ struct PlayerCharacterView: View {
                     Text(player.money, format: .number)
                         .monospacedDigit()
                 }
-                LabeledContent("Job", value: jobLabel(player.job))
+                if let job = player.job {
+                    LabeledContent("Job", value: job.name)
+                }
+            }
+
+            Section("Daily time") {
+                DailyTimeAllocationView(playerCards: player.cards)
+                    .listRowInsets(EdgeInsets(top: 10, leading: 16, bottom: 14, trailing: 16))
             }
 
             Section("Birth") {
@@ -40,13 +48,6 @@ struct PlayerCharacterView: View {
         "\(date.year) \(date.month.displayName) \(date.day)"
     }
 
-    private func jobLabel(_ job: Job) -> String {
-        switch job {
-        case .farming:
-            "Farming"
-        }
-    }
-
     private func attributeLabel(_ attribute: Attribute) -> String {
         switch attribute {
         case .strength:
@@ -66,19 +67,27 @@ struct PlayerCharacterView: View {
 }
 
 #Preview {
+    NavigationStack {
+        PlayerCharacterView(
+            player: playerCharacterPreview,
+            currentGameDate: playerCharacterPreviewDate
+        )
+        .navigationTitle("Player")
+    }
+}
+
+private let playerCharacterPreviewDate = VespriumDate(year: 5, month: .ember, day: 14)!
+
+private let playerCharacterPreview: PlayerCharacter = {
     let birth = VespriumDate(year: 1, month: .thaw, day: 1)!
     var attrs = AttributeValues()
     attrs[.strength] = 10
     attrs[.intelligence] = 7
-    let player = PlayerCharacter(
+    var player = PlayerCharacter(
         attributes: attrs,
         money: 1_250,
-        job: .farming,
         dateOfBirth: birth
     )
-    let now = VespriumDate(year: 5, month: .ember, day: 14)!
-    return NavigationStack {
-        PlayerCharacterView(player: player, currentGameDate: now)
-            .navigationTitle("Player")
-    }
-}
+    player.cards = PlayerCards(job: .farming)
+    return player
+}()
