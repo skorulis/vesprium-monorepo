@@ -1,8 +1,7 @@
 import BioStats
 import SwiftUI
 
-/// Presents the full player profile: vitals, daily time allocation, birth date, resources, profession, and
-/// attribute scores.
+/// Presents the full player profile: vitals, finance, daily time allocation, birth date, and attribute scores.
 struct PlayerCharacterView: View {
     let player: PlayerCharacter
     let currentGameDate: VespriumDate
@@ -14,12 +13,19 @@ struct PlayerCharacterView: View {
                     Text(ageLabel)
                         .monospacedDigit()
                 }
-                LabeledContent("Money") {
+                if let job = player.job {
+                    LabeledContent("Job", value: job.name)
+                }
+            }
+
+            Section("Finance") {
+                LabeledContent("Current money") {
                     Text(player.money, format: .number)
                         .monospacedDigit()
                 }
-                if let job = player.job {
-                    LabeledContent("Job", value: job.name)
+                LabeledContent("Monthly change") {
+                    Text(monthlyBalanceChangeLabel)
+                        .monospacedDigit()
                 }
             }
 
@@ -48,6 +54,18 @@ struct PlayerCharacterView: View {
         let years = player.ageInFullYears(on: currentGameDate)
         let months = player.ageExtraMonths(on: currentGameDate)
         return "\(years) years, \(months) months"
+    }
+
+    /// Net cash flow from jobs and activities for the upcoming month (matches `GameService` month ticks).
+    private var monthlyBalanceChangeLabel: String {
+        let change = player.cards.monthlyBalanceChange
+        if change > 0 {
+            return "+\(change)"
+        } else if change < 0 {
+            return "-\(change)"
+        } else {
+            return "0"
+        }
     }
 
     private func formattedDate(_ date: VespriumDate) -> String {
