@@ -24,6 +24,8 @@ struct MainPathContentView: View {
             GameView(viewModel: resolver.gameViewModel())
         case .character:
             PlayerCharacterWrapperView(viewModel: resolver.playerCharacterWrapperViewModel())
+        case .cards:
+            PlayerCardsView(viewModel: resolver.playerCardsViewModel())
         }
     }
 }
