@@ -8,7 +8,7 @@ struct PlayerCharacter: Codable, Sendable, Equatable {
 
     init(
         attributes: AttributeValues = AttributeValues(),
-        money: Int = 0,
+        money: Int = 200,
         job: Job = .farming,
         dateOfBirth: VespriumDate
     ) {

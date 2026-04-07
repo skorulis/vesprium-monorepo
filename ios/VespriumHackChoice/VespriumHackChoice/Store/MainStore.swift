@@ -28,7 +28,9 @@ final class MainStore: ObservableObject {
     @Resolvable<Resolver>
     init(keyValueStore: PKeyValueStore) {
         self.keyValueStore = keyValueStore
-        gameState = (try? keyValueStore.codable(forKey: Self.gameStateKey)) ?? .init(currentGameDate: SetupConstants.gameStartTime)
-        player = (try? keyValueStore.codable(forKey: Self.playerKey)) ?? .init(dateOfBirth: SetupConstants.defaultPlayerDOB)
+        gameState = (try? keyValueStore.codable(forKey: Self.gameStateKey))
+            ?? .init(currentGameDate: SetupConstants.gameStartTime)
+        player = (try? keyValueStore.codable(forKey: Self.playerKey))
+            ?? .init(dateOfBirth: SetupConstants.defaultPlayerDOB)
     }
 }

@@ -33,6 +33,8 @@ final class VespriumHackChoiceAssembly: AutoInitModuleAssembly {
     private func registerServices(container: Container<TargetResolver>) {
         container.register(GameService.self) { GameService.make(resolver: $0) }
             .inObjectScope(.container)
+
+        container.register(EventGenerator.self) { EventGenerator.make(resolver: $0) }
     }
 
     @MainActor
