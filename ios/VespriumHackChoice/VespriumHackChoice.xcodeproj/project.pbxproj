@@ -12,6 +12,7 @@
 		2EFA2F93ACEFED91F2DD5F82 /* ASKCore in Frameworks */ = {isa = PBXBuildFile; productRef = 20D372E0555CCA553C173077 /* ASKCore */; };
 		42B8FC004FA9F2B6A8D0809E /* knitconfig.json in Resources */ = {isa = PBXBuildFile; fileRef = F9143ACADEDA160BCD96DEF0 /* knitconfig.json */; };
 		68DCDD32F76E6A6BBD5CBFA8 /* ASKCoordinator in Frameworks */ = {isa = PBXBuildFile; productRef = 2DA5FBB0E2EE2B5064749DDD /* ASKCoordinator */; };
+		FAB02BEA2F848A7C0089B681 /* BioEnhancements in Frameworks */ = {isa = PBXBuildFile; productRef = FAB02BE92F848A7C0089B681 /* BioEnhancements */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +49,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FAB02BEA2F848A7C0089B681 /* BioEnhancements in Frameworks */,
 				68DCDD32F76E6A6BBD5CBFA8 /* ASKCoordinator in Frameworks */,
 				2EFA2F93ACEFED91F2DD5F82 /* ASKCore in Frameworks */,
 				03C2F1D47B16CA17B7ABF3EE /* Knit in Frameworks */,
@@ -132,6 +134,7 @@
 				20D372E0555CCA553C173077 /* ASKCore */,
 				1494521E44132FE3A3E3E69A /* Knit */,
 				08974BE33FD6E57B96804857 /* KnitMacros */,
+				FAB02BE92F848A7C0089B681 /* BioEnhancements */,
 			);
 			productName = VespriumHackChoice;
 			productReference = D6F1BFC0B86E06968BD081D9 /* VespriumHackChoice.app */;
@@ -160,6 +163,7 @@
 				374B9680E0B7B20007941E96 /* XCRemoteSwiftPackageReference "ASKCore" */,
 				932C01F3554D37C6434A4E42 /* XCRemoteSwiftPackageReference "knit" */,
 				BCE9A71EFAC2492044D5ECD4 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
+				FAB02BE82F848A7C0089B681 /* XCLocalSwiftPackageReference "../../swift-modules/BioEnhancements" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B0B5E1C7CD7D6D75E5D3611A /* Products */;
@@ -450,6 +454,13 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCLocalSwiftPackageReference section */
+		FAB02BE82F848A7C0089B681 /* XCLocalSwiftPackageReference "../../swift-modules/BioEnhancements" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../../swift-modules/BioEnhancements";
+		};
+/* End XCLocalSwiftPackageReference section */
+
 /* Begin XCRemoteSwiftPackageReference section */
 		374B9680E0B7B20007941E96 /* XCRemoteSwiftPackageReference "ASKCore" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -515,6 +526,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BCE9A71EFAC2492044D5ECD4 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */;
 			productName = "plugin:SwiftLintBuildToolPlugin";
+		};
+		FAB02BE92F848A7C0089B681 /* BioEnhancements */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BioEnhancements;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
