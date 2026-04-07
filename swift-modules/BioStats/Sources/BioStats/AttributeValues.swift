@@ -2,17 +2,24 @@
 ///
 /// A missing key means no value is set (distinct from zero when that distinction matters).
 public struct AttributeValues: Codable, Sendable, Equatable {
-    private var storage: [Attribute: Double]
+    private var storage: [Attribute: Int]
 
-    public init(values: [Attribute: Double] = [:]) {
+    public init(values: [Attribute: Int] = [:]) {
         self.storage = values
     }
+    
+    public init(all: Int) {
+        self.storage = [:]
+        for att in Attribute.allCases {
+            storage[att] = all
+        }
+    }
 
-    public var allValues: [Attribute: Double] {
+    public var allValues: [Attribute: Int] {
         storage
     }
 
-    public subscript(_ attribute: Attribute) -> Double? {
+    public subscript(_ attribute: Attribute) -> Int? {
         get { storage[attribute] }
         set {
             if let newValue {
