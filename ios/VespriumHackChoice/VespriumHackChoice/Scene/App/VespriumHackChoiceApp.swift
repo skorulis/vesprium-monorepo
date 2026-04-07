@@ -19,9 +19,8 @@ struct VespriumHackChoiceApp: App {
             if ProcessInfo.isRunningTests {
                 Color.clear
             } else {
-                CoordinatorView(coordinator: Coordinator(root: MainPath.content))
-                    .withRenderers(resolver: assembler.resolver)
-                    .environment(\.resolver, assembler.resolver as Resolver?)
+                ContentView(model: assembler.resolver.contentViewModel())
+                    .environment(\.resolver, assembler.resolver)
             }
         }
     }

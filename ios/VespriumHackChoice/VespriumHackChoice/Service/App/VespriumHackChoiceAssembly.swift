@@ -30,7 +30,10 @@ final class VespriumHackChoiceAssembly: AutoInitModuleAssembly {
     }
 
     @MainActor
-    private func registerServices(container: Container<TargetResolver>) {}
+    private func registerServices(container: Container<TargetResolver>) {
+        container.register(GameService.self) { GameService.make(resolver: $0) }
+            .inObjectScope(.container)
+    }
 
     @MainActor
     private func registerStores(container: Container<TargetResolver>) {
@@ -41,6 +44,7 @@ final class VespriumHackChoiceAssembly: AutoInitModuleAssembly {
     @MainActor
     private func registerViewModels(container: Container<TargetResolver>) {
         container.register(ContentViewModel.self) { ContentViewModel.make(resolver: $0) }
+        container.register(GameViewModel.self) { GameViewModel.make(resolver: $0) }
     }
 }
 

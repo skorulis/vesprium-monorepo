@@ -1,12 +1,12 @@
 import ASKCoordinator
 
 enum MainPath: CoordinatorPath {
-    case content
+    case game
 
     var id: String {
         switch self {
-        case .content:
-            "content"
+        case .game:
+            "game"
         }
     }
 }

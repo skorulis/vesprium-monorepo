@@ -1,17 +1,12 @@
+import ASKCoordinator
 import SwiftUI
 
 struct ContentView: View {
-    @Bindable var model: ContentViewModel
+    @State var model: ContentViewModel
+    @Environment(\.resolver) private var resolver
 
     var body: some View {
-        VStack(spacing: 16) {
-            Text(model.title)
-                .font(.title2)
-            Button("Refresh") {
-                model.refreshTitle()
-            }
-            .buttonStyle(.borderedProminent)
-        }
-        .padding()
+        CoordinatorView(coordinator: Coordinator(root: MainPath.game))
+            .withRenderers(resolver: resolver!)
     }
 }

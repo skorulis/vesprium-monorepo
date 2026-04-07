@@ -4,15 +4,15 @@ import SwiftUI
 
 struct MainPathRenderer: CoordinatorPathRenderer {
     typealias PathType = MainPath
-    typealias ViewType = ContentView
+    typealias ViewType = GameView
 
     let resolver: Resolver
 
     @MainActor
-    func render(path: MainPath, in coordinator: Coordinator) -> ContentView {
+    func render(path: MainPath, in coordinator: Coordinator) -> GameView {
         switch path {
-        case .content:
-            ContentView(model: ContentViewModel.make(resolver: resolver))
+        case .game:
+            GameView(viewModel: resolver.gameViewModel())
         }
     }
 }
