@@ -30,19 +30,35 @@ final class GameService: ObservableObject {
         isPlaying = true
         tickTask = Task { @MainActor in
             while !Task.isCancelled {
-                try? await Task.sleep(for: .seconds(1))
+                try? await Task.sleep(for: .seconds(0.5))
                 guard !Task.isCancelled else { break }
                 guard self.isPlaying else { break }
                 var state = self.store.gameState
-                state.currentGameDate = state.currentGameDate.adding(days: 1)
+                let previousDate = state.currentGameDate
+                let newDate = previousDate.adding(days: 1)
+                state.currentGameDate = newDate
                 self.store.gameState = state
+
+                if Self.hasCrossedIntoNewMonth(from: previousDate, to: newDate) {
+                    executeMonthChanges()
+                }
             }
         }
+    }
+    
+    private func executeMonthChanges() {
+        var player = self.store.player
+        player.money += player.job.monthlyIncome
+        self.store.player = player
     }
 
     func stop() {
         isPlaying = false
         tickTask?.cancel()
         tickTask = nil
+    }
+
+    private static func hasCrossedIntoNewMonth(from previous: VespriumDate, to next: VespriumDate) -> Bool {
+        previous.year != next.year || previous.month != next.month
     }
 }

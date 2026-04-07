@@ -28,8 +28,7 @@ final class MainStore: ObservableObject {
     @Resolvable<Resolver>
     init(keyValueStore: PKeyValueStore) {
         self.keyValueStore = keyValueStore
-        let defaultDate = VespriumDate(year: 1, month: .thaw, day: 1)!
-        gameState = (try? keyValueStore.codable(forKey: Self.gameStateKey)) ?? .init(currentGameDate: defaultDate)
-        player = (try? keyValueStore.codable(forKey: Self.playerKey)) ?? .init(dateOfBirth: defaultDate)
+        gameState = (try? keyValueStore.codable(forKey: Self.gameStateKey)) ?? .init(currentGameDate: SetupConstants.gameStartTime)
+        player = (try? keyValueStore.codable(forKey: Self.playerKey)) ?? .init(dateOfBirth: SetupConstants.defaultPlayerDOB)
     }
 }

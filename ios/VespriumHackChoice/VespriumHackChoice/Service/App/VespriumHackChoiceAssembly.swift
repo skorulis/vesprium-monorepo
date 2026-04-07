@@ -45,6 +45,7 @@ final class VespriumHackChoiceAssembly: AutoInitModuleAssembly {
     private func registerViewModels(container: Container<TargetResolver>) {
         container.register(ContentViewModel.self) { ContentViewModel.make(resolver: $0) }
         container.register(GameViewModel.self) { GameViewModel.make(resolver: $0) }
+        container.register(PlayerCharacterWrapperViewModel.self) { PlayerCharacterWrapperViewModel.make(resolver: $0) }
     }
 }
 
