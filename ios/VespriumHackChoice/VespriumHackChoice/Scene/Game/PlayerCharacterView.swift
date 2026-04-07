@@ -11,7 +11,7 @@ struct PlayerCharacterView: View {
         List {
             Section("Vitals") {
                 LabeledContent("Age") {
-                    Text("\(player.ageInFullYears(on: currentGameDate)) years")
+                    Text(ageLabel)
                         .monospacedDigit()
                 }
                 LabeledContent("Money") {
@@ -42,6 +42,12 @@ struct PlayerCharacterView: View {
                 }
             }
         }
+    }
+
+    private var ageLabel: String {
+        let years = player.ageInFullYears(on: currentGameDate)
+        let months = player.ageExtraMonths(on: currentGameDate)
+        return "\(years) years, \(months) months"
     }
 
     private func formattedDate(_ date: VespriumDate) -> String {

@@ -41,9 +41,9 @@ final class GameService: ObservableObject {
                 state.currentGameDate = newDate
                 self.store.gameState = state
                 self.executeMonthChanges()
-                if self.store.player.job == nil {
+                if let event = self.eventGenerator.nextEvent() {
                     state = self.store.gameState
-                    state.pendingEvent = self.eventGenerator.firstJobOfferEvent()
+                    state.pendingEvent = event
                     self.store.gameState = state
                     self.stop()
                     break

@@ -30,6 +30,15 @@ struct PlayerCharacter: Codable, Sendable, Equatable {
         return max(0, years)
     }
 
+    /// Full calendar months since the last completed birthday (after ``ageInFullYears``), relative to `currentGameDate`.
+    func ageExtraMonths(on currentGameDate: VespriumDate) -> Int {
+        guard currentGameDate >= dateOfBirth else { return 0 }
+        let years = ageInFullYears(on: currentGameDate)
+        let anniversary = dateOfBirth.adding(years: years)
+        guard currentGameDate >= anniversary else { return 0 }
+        return currentGameDate.daysSince(anniversary) / VespriumCalendar.daysPerMonth
+    }
+
     var job: Job? {
         return cards.job
     }
