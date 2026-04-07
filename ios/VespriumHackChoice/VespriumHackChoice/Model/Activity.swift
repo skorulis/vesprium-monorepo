@@ -3,7 +3,7 @@
 import Foundation
 
 // Things that can be done outside of work
-enum Activity: Codable, Sendable, Equatable {
+enum Activity: Codable, Sendable, Equatable, CaseIterable {
     case gym
     case school
     case meditation
