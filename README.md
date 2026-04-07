@@ -2,4 +2,4 @@
 
 Monorepo for all vesprium related content.
 
-Worldbuilding and design notes live in [`docs/`](docs/README.md).
+Worldbuilding, design notes, and [technical direction](docs/technical-direction/README.md) live in [`docs/`](docs/README.md).
