@@ -2,17 +2,12 @@ import Foundation
 import Testing
 @testable import BioStats
 
-@Test func subscriptGetSetAndRemove() {
+@Test func subscriptGetSet() {
     var values = AttributeValues()
-    #expect(values[.strength] == nil)
+    #expect(values[.strength] == 10)
 
     values[.strength] = 42
     #expect(values[.strength] == 42)
-    #expect(values.allValues == [.strength: 42])
-
-    values[.strength] = nil
-    #expect(values[.strength] == nil)
-    #expect(values.allValues.isEmpty)
 }
 
 @Test func codableRoundTrip() throws {
@@ -25,5 +20,4 @@ import Testing
 
     #expect(decoded[.intelligence] == 7)
     #expect(decoded[.strength] == 0)
-    #expect(decoded[.vitality] == nil)
 }

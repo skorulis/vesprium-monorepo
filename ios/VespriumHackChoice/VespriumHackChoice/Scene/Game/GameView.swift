@@ -6,21 +6,24 @@ struct GameView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            HStack {
-                Spacer(minLength: 0)
+            HStack(alignment: .firstTextBaseline) {
                 Text(formattedDate(viewModel.gameState.currentGameDate))
                     .font(.headline.monospacedDigit())
-                    .padding(.horizontal, 20)
-                    .padding(.vertical, 12)
+                Spacer(minLength: 0)
+                Text(viewModel.player.money, format: .number)
+                    .font(.headline.monospacedDigit())
+                    .accessibilityLabel("Money")
             }
+            .padding(.horizontal, 20)
+            .padding(.vertical, 12)
             Spacer(minLength: 0)
             Button {
                 viewModel.togglePlayback()
             } label: {
-                Image(systemName: viewModel.gameService.isPlaying ? "pause.circle.fill" : "play.circle.fill")
+                Image(systemName: viewModel.isPlaying ? "pause.circle.fill" : "play.circle.fill")
                     .font(.system(size: 120))
                     .symbolRenderingMode(.hierarchical)
-                    .accessibilityLabel(viewModel.gameService.isPlaying ? "Pause" : "Play")
+                    .accessibilityLabel(viewModel.isPlaying ? "Pause" : "Play")
             }
             .buttonStyle(.plain)
             Spacer(minLength: 0)

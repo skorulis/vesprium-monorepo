@@ -19,4 +19,6 @@ public enum Attribute: String, Codable, CaseIterable, Hashable, Sendable {
 
     /// Coherence of body and mind under stress—resilience to shock, integration strain, and destabilizing change.
     case stability
+    
+    public static let defaultValue: Int = 10
 }

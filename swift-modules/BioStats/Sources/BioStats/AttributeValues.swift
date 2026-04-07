@@ -3,12 +3,8 @@
 /// A missing key means no value is set (distinct from zero when that distinction matters).
 public struct AttributeValues: Codable, Sendable, Equatable {
     private var storage: [Attribute: Int]
-
-    public init(values: [Attribute: Int] = [:]) {
-        self.storage = values
-    }
     
-    public init(all: Int) {
+    public init(all: Int = Attribute.defaultValue) {
         self.storage = [:]
         for att in Attribute.allCases {
             storage[att] = all
@@ -19,14 +15,10 @@ public struct AttributeValues: Codable, Sendable, Equatable {
         storage
     }
 
-    public subscript(_ attribute: Attribute) -> Int? {
-        get { storage[attribute] }
+    public subscript(_ attribute: Attribute) -> Int {
+        get { storage[attribute] ?? Attribute.defaultValue }
         set {
-            if let newValue {
-                storage[attribute] = newValue
-            } else {
-                storage.removeValue(forKey: attribute)
-            }
+            storage[attribute] = newValue
         }
     }
 }
