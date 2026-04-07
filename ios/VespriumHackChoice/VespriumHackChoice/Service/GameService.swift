@@ -30,18 +30,15 @@ final class GameService: ObservableObject {
         isPlaying = true
         tickTask = Task { @MainActor in
             while !Task.isCancelled {
-                try? await Task.sleep(for: .seconds(0.5))
+                try? await Task.sleep(for: .seconds(5))
                 guard !Task.isCancelled else { break }
                 guard self.isPlaying else { break }
                 var state = self.store.gameState
                 let previousDate = state.currentGameDate
-                let newDate = previousDate.adding(days: 1)
+                let newDate = previousDate.adding(months: 1)
                 state.currentGameDate = newDate
                 self.store.gameState = state
-
-                if Self.hasCrossedIntoNewMonth(from: previousDate, to: newDate) {
-                    executeMonthChanges()
-                }
+                executeMonthChanges()
             }
         }
     }
