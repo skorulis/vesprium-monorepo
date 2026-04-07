@@ -23,7 +23,7 @@ final class VespriumHackChoiceAssembly: AutoInitModuleAssembly {
         ASKCoreAssembly(purpose: purpose).assemble(container: container)
 
         container.register(MainPathRenderer.self) { MainPathRenderer(resolver: $0) }
-        
+
         registerServices(container: container)
         registerStores(container: container)
         registerViewModels(container: container)
@@ -33,7 +33,10 @@ final class VespriumHackChoiceAssembly: AutoInitModuleAssembly {
     private func registerServices(container: Container<TargetResolver>) {}
 
     @MainActor
-    private func registerStores(container: Container<TargetResolver>) {}
+    private func registerStores(container: Container<TargetResolver>) {
+        container.register(MainStore.self) { MainStore.make(resolver: $0) }
+            .inObjectScope(.container)
+    }
 
     @MainActor
     private func registerViewModels(container: Container<TargetResolver>) {
