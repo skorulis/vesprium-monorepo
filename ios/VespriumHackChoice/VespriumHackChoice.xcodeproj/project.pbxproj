@@ -1,0 +1,659 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		039FF3E386FF8573A78F03C4 /* VespriumHackChoiceAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA0C0A7591631670E0DDE3 /* VespriumHackChoiceAssembly.swift */; };
+		03C2F1D47B16CA17B7ABF3EE /* Knit in Frameworks */ = {isa = PBXBuildFile; productRef = 1494521E44132FE3A3E3E69A /* Knit */; };
+		0590096E90593D956E8670C8 /* ModelPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FE8D8B5B866A12DE93950E2 /* ModelPlaceholder.swift */; };
+		0D7FA47C130171A2608BAE24 /* KnitMacros in Frameworks */ = {isa = PBXBuildFile; productRef = 08974BE33FD6E57B96804857 /* KnitMacros */; };
+		1A43B5434A02870E16E5DEB9 /* CoordinatorView+VespriumHackChoice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 95A9864B5E6C3867FCB3E7E7 /* CoordinatorView+VespriumHackChoice.swift */; };
+		283F8DE1B8133C6945EAB51C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05AEC503B9F7EDE6D11506AE /* ContentView.swift */; };
+		2EFA2F93ACEFED91F2DD5F82 /* ASKCore in Frameworks */ = {isa = PBXBuildFile; productRef = 20D372E0555CCA553C173077 /* ASKCore */; };
+		2F1E9648225C5BB59F07AC9C /* XCAssets+Generated.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3531B52F75D70F836C17D21 /* XCAssets+Generated.swift */; };
+		34D871B1863F901EB81D0D22 /* DesignSystemPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CCC18EE5E67261F58AC2635A /* DesignSystemPlaceholder.swift */; };
+		39A70E1E79816DB0763041A9 /* UtilPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC506BFA7DE06A3A4F5D1104 /* UtilPlaceholder.swift */; };
+		42B8FC004FA9F2B6A8D0809E /* knitconfig.json in Resources */ = {isa = PBXBuildFile; fileRef = F9143ACADEDA160BCD96DEF0 /* knitconfig.json */; };
+		4371C1F5FBE5D0E4B7ED12BE /* MainPathRenderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 29869D9ADAE5803E140D758B /* MainPathRenderer.swift */; };
+		54B7F02C47FE313B28438E0D /* VespriumHackChoiceApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 357B0631A78CFA4E1DD01E77 /* VespriumHackChoiceApp.swift */; };
+		68DCDD32F76E6A6BBD5CBFA8 /* ASKCoordinator in Frameworks */ = {isa = PBXBuildFile; productRef = 2DA5FBB0E2EE2B5064749DDD /* ASKCoordinator */; };
+		751F4354741AEE2C525EE61E /* VespriumHackChoiceUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158DF5917A771FF31469F2A0 /* VespriumHackChoiceUnitTests.swift */; };
+		78AE17CA9171633E29CD1186 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 108F303EBC57DF03CB0E5B5F /* PrivacyInfo.xcprivacy */; };
+		847EABC33202378617F7A807 /* StorePlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71D7E463241A982414405685 /* StorePlaceholder.swift */; };
+		A800F876437FA29664411CC5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E66779B1E7CBC443BCAE45C4 /* Assets.xcassets */; };
+		ED9837447472B6863AE1B37F /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B3C545C333AB4AE4822EC2 /* ContentViewModel.swift */; };
+		F00DCAAAA8295792FEA09160 /* MainPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FCD035BCE71B5A5E76D2FCE /* MainPath.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		AFFCCF9E5B86EE2823E6E037 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7E468078C2D430EE5C5E411F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EDF3A57991474D6B636CA12A;
+			remoteInfo = VespriumHackChoice;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		05AEC503B9F7EDE6D11506AE /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		108F303EBC57DF03CB0E5B5F /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
+		158DF5917A771FF31469F2A0 /* VespriumHackChoiceUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VespriumHackChoiceUnitTests.swift; sourceTree = "<group>"; };
+		29869D9ADAE5803E140D758B /* MainPathRenderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPathRenderer.swift; sourceTree = "<group>"; };
+		357B0631A78CFA4E1DD01E77 /* VespriumHackChoiceApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VespriumHackChoiceApp.swift; sourceTree = "<group>"; };
+		5FCD035BCE71B5A5E76D2FCE /* MainPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPath.swift; sourceTree = "<group>"; };
+		71D7E463241A982414405685 /* StorePlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorePlaceholder.swift; sourceTree = "<group>"; };
+		8FE8D8B5B866A12DE93950E2 /* ModelPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelPlaceholder.swift; sourceTree = "<group>"; };
+		95A9864B5E6C3867FCB3E7E7 /* CoordinatorView+VespriumHackChoice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CoordinatorView+VespriumHackChoice.swift"; sourceTree = "<group>"; };
+		B2BA0C0A7591631670E0DDE3 /* VespriumHackChoiceAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VespriumHackChoiceAssembly.swift; sourceTree = "<group>"; };
+		B3531B52F75D70F836C17D21 /* XCAssets+Generated.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCAssets+Generated.swift"; sourceTree = "<group>"; };
+		BC506BFA7DE06A3A4F5D1104 /* UtilPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilPlaceholder.swift; sourceTree = "<group>"; };
+		CCC18EE5E67261F58AC2635A /* DesignSystemPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystemPlaceholder.swift; sourceTree = "<group>"; };
+		D6F1BFC0B86E06968BD081D9 /* VespriumHackChoice.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = VespriumHackChoice.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D7264D01D4B570C7CCB0FE5F /* VespriumHackChoiceUnitTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = VespriumHackChoiceUnitTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4B3C545C333AB4AE4822EC2 /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
+		E66779B1E7CBC443BCAE45C4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F9143ACADEDA160BCD96DEF0 /* knitconfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = knitconfig.json; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		77D22F39B9252AF0BF37D408 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				68DCDD32F76E6A6BBD5CBFA8 /* ASKCoordinator in Frameworks */,
+				2EFA2F93ACEFED91F2DD5F82 /* ASKCore in Frameworks */,
+				03C2F1D47B16CA17B7ABF3EE /* Knit in Frameworks */,
+				0D7FA47C130171A2608BAE24 /* KnitMacros in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		15B0D900917379DA79E7FEB5 /* VespriumHackChoice */ = {
+			isa = PBXGroup;
+			children = (
+				108F303EBC57DF03CB0E5B5F /* PrivacyInfo.xcprivacy */,
+				70885CCBA201BDC65E8843AF /* DesignSystem */,
+				E6A030A5EC71AA7E0517E7E3 /* Model */,
+				39EA89A5EAFD1171E536C709 /* Resource */,
+				F2BDB720C5451778CF1D9809 /* Scene */,
+				756E9EDAE7CAF4CD6F0E09C5 /* Service */,
+				FE3FB77CF2BDC9A1B041AD8A /* Store */,
+				583CB3A122C1FF13F2AA8C40 /* Util */,
+			);
+			path = VespriumHackChoice;
+			sourceTree = "<group>";
+		};
+		22E25A35AF59D5EFF84F5812 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				F9143ACADEDA160BCD96DEF0 /* knitconfig.json */,
+			);
+			name = Config;
+			sourceTree = "<group>";
+		};
+		39EA89A5EAFD1171E536C709 /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				E66779B1E7CBC443BCAE45C4 /* Assets.xcassets */,
+				B3531B52F75D70F836C17D21 /* XCAssets+Generated.swift */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		583CB3A122C1FF13F2AA8C40 /* Util */ = {
+			isa = PBXGroup;
+			children = (
+				BC506BFA7DE06A3A4F5D1104 /* UtilPlaceholder.swift */,
+			);
+			path = Util;
+			sourceTree = "<group>";
+		};
+		62A828F093CF5DE64F00D1B2 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				95A9864B5E6C3867FCB3E7E7 /* CoordinatorView+VespriumHackChoice.swift */,
+				5FCD035BCE71B5A5E76D2FCE /* MainPath.swift */,
+				29869D9ADAE5803E140D758B /* MainPathRenderer.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		70885CCBA201BDC65E8843AF /* DesignSystem */ = {
+			isa = PBXGroup;
+			children = (
+				CCC18EE5E67261F58AC2635A /* DesignSystemPlaceholder.swift */,
+			);
+			path = DesignSystem;
+			sourceTree = "<group>";
+		};
+		756E9EDAE7CAF4CD6F0E09C5 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				D96FEFFB8E1E2848B59B91B6 /* App */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		8A751B2AAE753680C5B7175B /* App */ = {
+			isa = PBXGroup;
+			children = (
+				05AEC503B9F7EDE6D11506AE /* ContentView.swift */,
+				E4B3C545C333AB4AE4822EC2 /* ContentViewModel.swift */,
+				357B0631A78CFA4E1DD01E77 /* VespriumHackChoiceApp.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		B0B5E1C7CD7D6D75E5D3611A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D6F1BFC0B86E06968BD081D9 /* VespriumHackChoice.app */,
+				D7264D01D4B570C7CCB0FE5F /* VespriumHackChoiceUnitTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D4E92B8223078E78053DC3BA /* VespriumHackChoiceUnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				158DF5917A771FF31469F2A0 /* VespriumHackChoiceUnitTests.swift */,
+			);
+			path = VespriumHackChoiceUnitTests;
+			sourceTree = "<group>";
+		};
+		D96FEFFB8E1E2848B59B91B6 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				B2BA0C0A7591631670E0DDE3 /* VespriumHackChoiceAssembly.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		E6A030A5EC71AA7E0517E7E3 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				8FE8D8B5B866A12DE93950E2 /* ModelPlaceholder.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		F2BDB720C5451778CF1D9809 /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				8A751B2AAE753680C5B7175B /* App */,
+				62A828F093CF5DE64F00D1B2 /* Coordinator */,
+			);
+			path = Scene;
+			sourceTree = "<group>";
+		};
+		F83B01A273A05666473074A6 = {
+			isa = PBXGroup;
+			children = (
+				22E25A35AF59D5EFF84F5812 /* Config */,
+				15B0D900917379DA79E7FEB5 /* VespriumHackChoice */,
+				D4E92B8223078E78053DC3BA /* VespriumHackChoiceUnitTests */,
+				B0B5E1C7CD7D6D75E5D3611A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FE3FB77CF2BDC9A1B041AD8A /* Store */ = {
+			isa = PBXGroup;
+			children = (
+				71D7E463241A982414405685 /* StorePlaceholder.swift */,
+			);
+			path = Store;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		B255579A29DD93040B1DBAFE /* VespriumHackChoiceUnitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8C5FFC3D1B0496166D8CA445 /* Build configuration list for PBXNativeTarget "VespriumHackChoiceUnitTests" */;
+			buildPhases = (
+				A493F3B1E1E2072FB2E25FE8 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				12E5C8DEBB07217841CA2829 /* PBXTargetDependency */,
+			);
+			name = VespriumHackChoiceUnitTests;
+			packageProductDependencies = (
+			);
+			productName = VespriumHackChoiceUnitTests;
+			productReference = D7264D01D4B570C7CCB0FE5F /* VespriumHackChoiceUnitTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		EDF3A57991474D6B636CA12A /* VespriumHackChoice */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D8900DEEFD09C9F28EB93239 /* Build configuration list for PBXNativeTarget "VespriumHackChoice" */;
+			buildPhases = (
+				E431EAFA829466D0F7FFD48E /* Sources */,
+				B54CED85C5DAFB3010DD5FD1 /* Resources */,
+				77D22F39B9252AF0BF37D408 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F4A0918EC4D5479C69C5D626 /* PBXTargetDependency */,
+				CB61DE47385465AE9AA55866 /* PBXTargetDependency */,
+			);
+			name = VespriumHackChoice;
+			packageProductDependencies = (
+				2DA5FBB0E2EE2B5064749DDD /* ASKCoordinator */,
+				20D372E0555CCA553C173077 /* ASKCore */,
+				1494521E44132FE3A3E3E69A /* Knit */,
+				08974BE33FD6E57B96804857 /* KnitMacros */,
+			);
+			productName = VespriumHackChoice;
+			productReference = D6F1BFC0B86E06968BD081D9 /* VespriumHackChoice.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7E468078C2D430EE5C5E411F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+				};
+			};
+			buildConfigurationList = 8A0223655BE95DD37211558D /* Build configuration list for PBXProject "VespriumHackChoice" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = F83B01A273A05666473074A6;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				FDB5825996809303715338AF /* XCRemoteSwiftPackageReference "ASKCoordinator" */,
+				374B9680E0B7B20007941E96 /* XCRemoteSwiftPackageReference "ASKCore" */,
+				932C01F3554D37C6434A4E42 /* XCRemoteSwiftPackageReference "knit" */,
+				BCE9A71EFAC2492044D5ECD4 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = B0B5E1C7CD7D6D75E5D3611A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EDF3A57991474D6B636CA12A /* VespriumHackChoice */,
+				B255579A29DD93040B1DBAFE /* VespriumHackChoiceUnitTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		B54CED85C5DAFB3010DD5FD1 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A800F876437FA29664411CC5 /* Assets.xcassets in Resources */,
+				78AE17CA9171633E29CD1186 /* PrivacyInfo.xcprivacy in Resources */,
+				42B8FC004FA9F2B6A8D0809E /* knitconfig.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A493F3B1E1E2072FB2E25FE8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				751F4354741AEE2C525EE61E /* VespriumHackChoiceUnitTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E431EAFA829466D0F7FFD48E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				283F8DE1B8133C6945EAB51C /* ContentView.swift in Sources */,
+				ED9837447472B6863AE1B37F /* ContentViewModel.swift in Sources */,
+				1A43B5434A02870E16E5DEB9 /* CoordinatorView+VespriumHackChoice.swift in Sources */,
+				34D871B1863F901EB81D0D22 /* DesignSystemPlaceholder.swift in Sources */,
+				F00DCAAAA8295792FEA09160 /* MainPath.swift in Sources */,
+				4371C1F5FBE5D0E4B7ED12BE /* MainPathRenderer.swift in Sources */,
+				0590096E90593D956E8670C8 /* ModelPlaceholder.swift in Sources */,
+				847EABC33202378617F7A807 /* StorePlaceholder.swift in Sources */,
+				39A70E1E79816DB0763041A9 /* UtilPlaceholder.swift in Sources */,
+				54B7F02C47FE313B28438E0D /* VespriumHackChoiceApp.swift in Sources */,
+				039FF3E386FF8573A78F03C4 /* VespriumHackChoiceAssembly.swift in Sources */,
+				2F1E9648225C5BB59F07AC9C /* XCAssets+Generated.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		12E5C8DEBB07217841CA2829 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EDF3A57991474D6B636CA12A /* VespriumHackChoice */;
+			targetProxy = AFFCCF9E5B86EE2823E6E037 /* PBXContainerItemProxy */;
+		};
+		CB61DE47385465AE9AA55866 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = 46AD56C7216618677361F7B4 /* KnitBuildPlugin */;
+		};
+		F4A0918EC4D5479C69C5D626 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = EF551FE850EE7BEE4D91167C /* SwiftLintBuildToolPlugin */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		2FC5ECF7ECEC567BA31FCBCE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = VespriumHackChoice;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.vesprium.VespriumHackChoice;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		4D7CE83AE2C9EDCBEE462A68 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		5F9F053E7CA16FA20812BFFC /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = VespriumHackChoice;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.vesprium.VespriumHackChoice;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A9A9A9C67E3B447FCE09852B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.vesprium.VespriumHackChoiceUnitTests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VespriumHackChoice.app/VespriumHackChoice";
+			};
+			name = Debug;
+		};
+		C6830BDBDE0D6C7CADE44C8C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		CF31F355D9D97D4ECE2D9914 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.vesprium.VespriumHackChoiceUnitTests;
+				SDKROOT = iphoneos;
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/VespriumHackChoice.app/VespriumHackChoice";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		8A0223655BE95DD37211558D /* Build configuration list for PBXProject "VespriumHackChoice" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C6830BDBDE0D6C7CADE44C8C /* Debug */,
+				4D7CE83AE2C9EDCBEE462A68 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		8C5FFC3D1B0496166D8CA445 /* Build configuration list for PBXNativeTarget "VespriumHackChoiceUnitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9A9A9C67E3B447FCE09852B /* Debug */,
+				CF31F355D9D97D4ECE2D9914 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		D8900DEEFD09C9F28EB93239 /* Build configuration list for PBXNativeTarget "VespriumHackChoice" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5F9F053E7CA16FA20812BFFC /* Debug */,
+				2FC5ECF7ECEC567BA31FCBCE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		374B9680E0B7B20007941E96 /* XCRemoteSwiftPackageReference "ASKCore" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/skorulis/ASKCore";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		932C01F3554D37C6434A4E42 /* XCRemoteSwiftPackageReference "knit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/cashapp/knit";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		BCE9A71EFAC2492044D5ECD4 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SimplyDanny/SwiftLintPlugins";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.60.0;
+			};
+		};
+		FDB5825996809303715338AF /* XCRemoteSwiftPackageReference "ASKCoordinator" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/skorulis/ASKCoordinator";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		08974BE33FD6E57B96804857 /* KnitMacros */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 932C01F3554D37C6434A4E42 /* XCRemoteSwiftPackageReference "knit" */;
+			productName = KnitMacros;
+		};
+		1494521E44132FE3A3E3E69A /* Knit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 932C01F3554D37C6434A4E42 /* XCRemoteSwiftPackageReference "knit" */;
+			productName = Knit;
+		};
+		20D372E0555CCA553C173077 /* ASKCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 374B9680E0B7B20007941E96 /* XCRemoteSwiftPackageReference "ASKCore" */;
+			productName = ASKCore;
+		};
+		2DA5FBB0E2EE2B5064749DDD /* ASKCoordinator */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FDB5825996809303715338AF /* XCRemoteSwiftPackageReference "ASKCoordinator" */;
+			productName = ASKCoordinator;
+		};
+		46AD56C7216618677361F7B4 /* KnitBuildPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 932C01F3554D37C6434A4E42 /* XCRemoteSwiftPackageReference "knit" */;
+			productName = "plugin:KnitBuildPlugin";
+		};
+		EF551FE850EE7BEE4D91167C /* SwiftLintBuildToolPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BCE9A71EFAC2492044D5ECD4 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */;
+			productName = "plugin:SwiftLintBuildToolPlugin";
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 7E468078C2D430EE5C5E411F /* Project object */;
+}

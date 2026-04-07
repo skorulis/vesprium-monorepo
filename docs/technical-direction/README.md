@@ -19,3 +19,7 @@ Over time, those increments stack into the full result: tools, experiences, and 
 Code, assets, and worldbuilding notes may live in different corners of the monorepo, but they share one principle: **prefer shipping a thin vertical slice** over maintaining a long-running “big bang” branch. Technical decisions should stay compatible with frequent integration and visible progress.
 
 Setting and design documents in [`docs/`](../README.md) remain **setting-first**; this folder is the place for **how we build** Vesprium as a project.
+
+## Where concrete rules live
+
+**Concrete rules**—the precise, enforceable definitions that software can rely on—are stored in **Swift packages** as the **primary source of truth** under the swift-modules folder. Markdown in `docs/` can explain intent and narrative; when behavior must be unambiguous (parameters, constraints, generation logic, validation), it belongs in package code so it stays **testable**, **versioned with the toolchain**, and **single-sourced** for any tool that imports those modules.

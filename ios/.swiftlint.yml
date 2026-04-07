@@ -1,0 +1,24 @@
+excluded:
+  - VespriumHackChoice/Resource/XCAssets+Generated.swift
+
+strict: false
+
+trailing_comma:
+    mandatory_comma: true
+
+line_length:
+  warning: 120
+  error: 200
+  ignores_urls: true
+  ignores_comments: true
+
+identifier_name:
+  min_length: 2
+  excluded:
+    - i
+    - j
+    - k
+    - t
+    - u
+    - x
+    - y
