@@ -19,6 +19,12 @@ enum GameCard: Codable, Sendable, Equatable {
         }
     }
 
+    var monthlyMoneyChange: Int {
+        switch self {
+        case let .job(job): return job.monthlyIncome
+        }
+    }
+
     var dailyHours: Int {
         switch self {
         case let .job(job): return job.dailyHours

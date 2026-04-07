@@ -29,7 +29,7 @@ struct PlayerCharacter: Codable, Sendable, Equatable {
         }
         return max(0, years)
     }
-    
+
     var job: Job? {
         return cards.job
     }

@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Renders a `GameCard` with a 2:1 aspect ratio: title, centered artwork, and a reserved footer for future metadata.
+/// Renders a `GameCard` with title, centered artwork, and optional footer metadata (e.g. daily hours).
 struct GameCardView: View {
     let card: GameCard
 
@@ -12,9 +12,8 @@ struct GameCardView: View {
                 .lineLimit(2)
                 .minimumScaleFactor(0.75)
                 .frame(maxWidth: .infinity)
-            Color.clear
-                .frame(minHeight: GameCardView.footerReservedHeight)
-                .accessibilityHidden(true)
+            Spacer()
+            footer
         }
         .background {
             backgroundImage
@@ -30,7 +29,38 @@ struct GameCardView: View {
                 .strokeBorder(.separator.opacity(0.35), lineWidth: 1)
         }
         .accessibilityElement(children: .ignore)
-        .accessibilityLabel(card.name)
+        .accessibilityLabel(accessibilityTitle)
+    }
+
+    @ViewBuilder
+    private var footer: some View {
+        HStack(spacing: 4) {
+            maybeHours
+
+            Spacer()
+        }
+        .foregroundStyle(.secondary)
+        .frame(maxWidth: .infinity)
+    }
+
+    @ViewBuilder
+    private var maybeHours: some View {
+        if card.dailyHours != 0 {
+            Image(systemName: "clock.fill")
+                .font(.caption.weight(.semibold))
+                .imageScale(.small)
+            Text("\(card.dailyHours)")
+                .font(.caption.monospacedDigit().weight(.medium))
+        }
+
+    }
+
+    private var accessibilityTitle: String {
+        if card.dailyHours > 0 {
+            "\(card.name), \(card.dailyHours) hours per day"
+        } else {
+            card.name
+        }
     }
 
     private var backgroundImage: some View {
