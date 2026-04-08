@@ -23,7 +23,11 @@ final class GameService: ObservableObject {
         state.currentGameDate = newDate
         self.store.gameState = state
         self.executeMonthChanges(previousDate: previousDate, newDate: newDate)
-        if let event = self.eventGenerator.nextEvent() {
+        if previousDate.year != newDate.year, let yearly = self.eventGenerator.yearlyCardChoiceEvent() {
+            state = self.store.gameState
+            state.pendingEvent = yearly
+            self.store.gameState = state
+        } else if let event = self.eventGenerator.nextEvent() {
             state = self.store.gameState
             state.pendingEvent = event
             self.store.gameState = state

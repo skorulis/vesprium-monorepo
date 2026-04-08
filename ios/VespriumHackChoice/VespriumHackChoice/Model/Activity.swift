@@ -45,7 +45,7 @@ enum Activity: String, Codable, Sendable, Equatable, CaseIterable {
                 activity: self,
                 monthlyCost: 5,
                 dailyHours: 1,
-                yearlyAttributeBonuses: [.stability: 1]
+                yearlyAttributeBonuses: [:]
             )
         case .running:
             ActivityDetails(

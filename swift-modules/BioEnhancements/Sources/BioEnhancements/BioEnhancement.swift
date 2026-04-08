@@ -3,7 +3,7 @@
 import Foundation
 import BioStats
 
-public enum BioEnhancement: String, Codable, Sendable, Equatable {
+public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
     case chlorophyllSkin
     case barometricEars
     
