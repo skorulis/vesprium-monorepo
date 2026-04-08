@@ -1,6 +1,7 @@
 //  Created by Alex Skorulis on 8/4/2026.
 
 import BioStats
+import BioEnhancements
 import Foundation
 
 struct PlayerCards: Codable, Sendable, Equatable {
@@ -37,6 +38,15 @@ struct PlayerCards: Codable, Sendable, Equatable {
 
     var monthlyBalanceChange: Int {
         allCards.map { $0.monthlyMoneyChange }.reduce(0, +)
+    }
+
+    func hasEnhancement(_ enhancement: BioEnhancement) -> Bool {
+        bodyEnhancementCards.contains { card in
+            if case .bodyEnhancement(let installed) = card {
+                return installed == enhancement
+            }
+            return false
+        }
     }
 
     init(
