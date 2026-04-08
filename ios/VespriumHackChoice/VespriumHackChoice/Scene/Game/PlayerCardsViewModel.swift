@@ -7,20 +7,17 @@ import Observation
 @MainActor
 @Observable
 final class PlayerCardsViewModel {
-    var player: PlayerCharacter
-
+    
+    var model: PlayerCardsView.Model
+    
     private var cancellables: Set<AnyCancellable> = []
-
-    var equippedCards: [GameCard] {
-        player.cards.allCards
-    }
 
     @Resolvable<Resolver>
     init(mainStore: MainStore) {
-        self.player = mainStore.player
+        self.model = .init(player: mainStore.player)
 
         mainStore.$player.sink { [unowned self] in
-            self.player = $0
+            self.model.player = $0
         }
         .store(in: &cancellables)
     }
