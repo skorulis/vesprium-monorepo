@@ -3,7 +3,6 @@ import SwiftUI
 /// Lists every card the player currently has equipped (job, activities, etc.).
 struct PlayerCardsView: View {
     @State var viewModel: PlayerCardsViewModel
-    @State private var presentedCardDetail: PresentedCardDetail?
     var model: Model { viewModel.model }
 
     var body: some View {

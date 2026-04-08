@@ -37,11 +37,11 @@ public struct VespriumDate: Codable, Sendable, Equatable, Hashable, Comparable {
     public func adding(days: Int) -> VespriumDate {
         VespriumDate(daysSinceEpoch: daysSinceEpoch + days)
     }
-    
+
     public func adding(years: Int) -> VespriumDate {
         adding(days: years * VespriumCalendar.daysPerYear)
     }
-    
+
     public func adding(months: Int) -> VespriumDate {
         adding(days: months * VespriumCalendar.daysPerMonth)
     }

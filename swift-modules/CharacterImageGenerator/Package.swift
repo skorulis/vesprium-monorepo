@@ -7,17 +7,17 @@ let package = Package(
     name: "CharacterImageGenerator",
     platforms: [
         .macOS(.v13),
-        .iOS(.v16),
+        .iOS(.v16)
     ],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
         .library(
             name: "CharacterImageGenerator",
             targets: ["CharacterImageGenerator"]
-        ),
+        )
     ],
     dependencies: [
-        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.19.0"),
+        .package(url: "https://github.com/pointfreeco/swift-snapshot-testing", from: "1.19.0")
     ],
     targets: [
         // Targets are the basic building blocks of a package, defining a module or a test suite.
@@ -29,9 +29,9 @@ let package = Package(
             name: "CharacterImageGeneratorTests",
             dependencies: [
                 "CharacterImageGenerator",
-                .product(name: "SnapshotTesting", package: "swift-snapshot-testing"),
+                .product(name: "SnapshotTesting", package: "swift-snapshot-testing")
             ],
             exclude: ["__Snapshots__"]
-        ),
+        )
     ]
 )

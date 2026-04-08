@@ -37,7 +37,7 @@ import Testing
         (1, .thaw, 28),
         (1, .stir, 1),
         (3, .deep, 28),
-        (42, .haze, 14),
+        (42, .haze, 14)
     ]
     for (y, m, day) in samples {
         let date = VespriumDate(year: y, month: m, day: day)!

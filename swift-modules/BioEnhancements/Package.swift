@@ -7,27 +7,27 @@ let package = Package(
     name: "BioEnhancements",
     platforms: [
         .macOS(.v13),
-        .iOS(.v16),
+        .iOS(.v16)
     ],
     products: [
         .library(
             name: "BioEnhancements",
             targets: ["BioEnhancements"]
-        ),
+        )
     ],
     dependencies: [
-        .package(path: "../BioStats"),
+        .package(path: "../BioStats")
     ],
     targets: [
         .target(
             name: "BioEnhancements",
             dependencies: [
-                .product(name: "BioStats", package: "BioStats"),
+                .product(name: "BioStats", package: "BioStats")
             ]
         ),
         .testTarget(
             name: "BioEnhancementsTests",
             dependencies: ["BioEnhancements"]
-        ),
+        )
     ]
 )

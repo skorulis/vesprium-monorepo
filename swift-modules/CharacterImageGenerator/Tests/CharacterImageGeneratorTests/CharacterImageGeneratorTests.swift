@@ -304,7 +304,7 @@ private func assertSnapshotMatchesCharacter(
         nude(shortHeavyFemale),
         nude(longArmsUnspecified),
         nude(largeHeadFemale),
-        nude(customEyeColor),
+        nude(customEyeColor)
     ])
 }
 
@@ -316,6 +316,6 @@ private func assertSnapshotMatchesCharacter(
         withTopWear(shortHeavyFemale, .shirt),
         withTopWear(largeHeadFemale, .singlet),
         withTopWear(tallShortsMale, .tShirt),
-        withTopWear(bareLegsMale, .shirt),
+        withTopWear(bareLegsMale, .shirt)
     ])
 }

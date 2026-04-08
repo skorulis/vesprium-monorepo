@@ -7,13 +7,13 @@ let package = Package(
     name: "BioStats",
     platforms: [
         .macOS(.v13),
-        .iOS(.v16),
+        .iOS(.v16)
     ],
     products: [
         .library(
             name: "BioStats",
             targets: ["BioStats"]
-        ),
+        )
     ],
     targets: [
         .target(
@@ -22,6 +22,6 @@ let package = Package(
         .testTarget(
             name: "BioStatsTests",
             dependencies: ["BioStats"]
-        ),
+        )
     ]
 )

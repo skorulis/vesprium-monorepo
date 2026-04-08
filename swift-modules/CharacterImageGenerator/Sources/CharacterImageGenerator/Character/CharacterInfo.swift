@@ -39,7 +39,7 @@ public struct CharacterInfo: Equatable, Sendable {
         self.body = body
         self.clothes = clothes
     }
-    
+
     func with(clothes: Clothes) -> CharacterInfo {
         var result = self
         result.clothes = clothes

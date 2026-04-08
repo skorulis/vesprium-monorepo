@@ -15,4 +15,3 @@ public enum HairStyle: Equatable, Sendable, CaseIterable {
     /// Narrow strip on top, extending above the head outline.
     case mohawk
 }
-

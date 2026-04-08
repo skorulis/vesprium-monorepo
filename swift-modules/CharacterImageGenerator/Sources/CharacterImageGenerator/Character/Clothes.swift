@@ -9,7 +9,7 @@ public struct Clothes: Equatable, Sendable {
         self.legWear = legWear
         self.topWear = topWear
     }
-    
+
     static func nude() -> Clothes {
         .init()
     }

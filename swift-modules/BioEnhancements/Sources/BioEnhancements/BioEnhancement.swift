@@ -6,11 +6,11 @@ import BioStats
 public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
     case chlorophyllSkin
     case barometricEars
-    
+
     public var name: String {
         rawValue.capitalized
     }
-    
+
     public var text: String {
         switch self {
         case .chlorophyllSkin:
@@ -19,7 +19,7 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
             return "Eardrums sensitive enough to detect changes in barometric pressure"
         }
     }
-    
+
     public var baseCost: Int {
         switch self {
         case .chlorophyllSkin:
@@ -28,7 +28,7 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
             return 100
         }
     }
-    
+
     public var attributeBonuses: [AttributeBonus] {
         switch self {
         case .chlorophyllSkin:

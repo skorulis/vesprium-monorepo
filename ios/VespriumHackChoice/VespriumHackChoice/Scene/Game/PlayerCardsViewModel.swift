@@ -9,7 +9,7 @@ import Observation
 @Observable
 final class PlayerCardsViewModel: CoordinatorViewModel {
     weak var coordinator: ASKCoordinator.Coordinator?
-    
+
     var model: PlayerCardsView.Model
 
     private var cancellables: Set<AnyCancellable> = []
