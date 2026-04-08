@@ -1,5 +1,6 @@
 //  Created by Alex Skorulis on 8/4/2026.
 
+import BioEnhancements
 import BioStats
 import Foundation
 import Knit
@@ -16,15 +17,22 @@ struct CalculationsService {
 
     /// Monthly coins from a job: base ``Job/monthlyIncome`` plus each ``Job/incomeBonuses`` entry
     /// (`coefficient ×` current value for that ``Attribute``).
+    ///
+    /// Farming only: if the player has ``BioEnhancement/barometricEars``, the result is 50% higher
+    /// (×1.5, rounded down).
     @MainActor
     func monthlyJobEarnings(for job: Job) -> Int {
-        monthlyJobEarnings(for: job, attributes: mainStore.player.attributes)
+        monthlyJobEarnings(for: job, attributes: mainStore.player.attributes, cards: mainStore.player.cards)
     }
 
-    func monthlyJobEarnings(for job: Job, attributes: AttributeValues) -> Int {
+    func monthlyJobEarnings(for job: Job, attributes: AttributeValues, cards: PlayerCards = PlayerCards()) -> Int {
         let fromAttributes = job.incomeBonuses.reduce(0) { total, entry in
             total + entry.value * attributes[entry.key]
         }
-        return job.monthlyIncome + fromAttributes
+        var total = job.monthlyIncome + fromAttributes
+        if job == .farming, cards.hasEnhancement(.barometricEars) {
+            total = (total * 3) / 2
+        }
+        return total
     }
 }
