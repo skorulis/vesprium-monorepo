@@ -16,7 +16,7 @@ struct GameServiceTests {
             job: .farming,
             addedOn: SetupConstants.gameStartTime,
             activities: [
-                GameCardInstance(date: SetupConstants.gameStartTime, card: .activity(.gym)),
+                GameCardInstance(date: SetupConstants.gameStartTime, card: .activity(.gym))
             ]
         )
         let strengthBefore = player.attributes[.strength]
@@ -44,7 +44,7 @@ struct GameServiceTests {
             job: .farming,
             addedOn: SetupConstants.gameStartTime,
             activities: [
-                GameCardInstance(date: SetupConstants.gameStartTime, card: .activity(.meditation)),
+                GameCardInstance(date: SetupConstants.gameStartTime, card: .activity(.meditation))
             ]
         )
         let stabilityBefore = player.attributes[.stability]

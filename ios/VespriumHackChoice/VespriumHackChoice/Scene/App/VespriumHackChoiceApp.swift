@@ -19,7 +19,7 @@ struct VespriumHackChoiceApp: App {
             if ProcessInfo.isRunningTests {
                 Color.clear
             } else {
-                ContentView(model: assembler.resolver.contentViewModel())
+                ContentView(viewModel: assembler.resolver.contentViewModel())
                     .environment(\.resolver, assembler.resolver)
             }
         }

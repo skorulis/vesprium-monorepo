@@ -8,6 +8,7 @@ import Observation
 @Observable
 final class GameViewModel {
     let gameService: GameService
+    private let mainStore: MainStore
 
     var gameState: GameState
     var player: PlayerCharacter
@@ -17,6 +18,7 @@ final class GameViewModel {
     @Resolvable<Resolver>
     init(gameService: GameService, mainStore: MainStore) {
         self.gameService = gameService
+        self.mainStore = mainStore
         self.gameState = mainStore.gameState
         self.player = mainStore.player
 
@@ -41,5 +43,9 @@ final class GameViewModel {
 
     func resolveYearReview() {
         gameService.resolveYearReview()
+    }
+
+    func exitToMenu() {
+        mainStore.exitToMenu()
     }
 }

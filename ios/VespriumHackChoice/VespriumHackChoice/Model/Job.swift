@@ -16,7 +16,7 @@ enum Job: String, Codable, CaseIterable, Hashable, Sendable {
         case .shopKeeper: 100
         }
     }
-    
+
     var incomeBonuses: [Attribute: Int] {
         switch self {
         case .farming:

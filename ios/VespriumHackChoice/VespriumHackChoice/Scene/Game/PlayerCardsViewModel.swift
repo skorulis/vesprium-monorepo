@@ -7,9 +7,9 @@ import Observation
 @MainActor
 @Observable
 final class PlayerCardsViewModel {
-    
+
     var model: PlayerCardsView.Model
-    
+
     private var cancellables: Set<AnyCancellable> = []
 
     @Resolvable<Resolver>

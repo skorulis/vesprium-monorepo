@@ -1,18 +1,25 @@
 import ASKCore
+import Combine
 import Knit
 import KnitMacros
 import Observation
 
-@Observable
+@MainActor @Observable
 final class ContentViewModel {
-    var title: String
+
+    var showMainMenu: Bool = false
+
+    let mainStore: MainStore
+
+    private var cancellables: Set<AnyCancellable> = []
 
     @Resolvable<Resolver>
-    init() {
-        title = "VespriumHackChoice"
-    }
+    init(mainStore: MainStore) {
+        self.mainStore = mainStore
 
-    func refreshTitle() {
-        title = "VespriumHackChoice (updated)"
+        mainStore.$showMainMenu.sink { [unowned self] in
+            self.showMainMenu = $0
+        }
+        .store(in: &cancellables)
     }
 }

@@ -1,0 +1,35 @@
+---
+description: Do not use @ObservedObject in SwiftUI views — prefer @Observable with @Bindable or @State
+globs: "**/*View.swift"
+alwaysApply: false
+---
+
+# SwiftUI: avoid `@ObservedObject`
+
+- **Do not** declare `@ObservedObject` on views in this project. It couples views to `ObservableObject`, obscures ownership, and fights the **`@Observable`** + **`Observation`** pattern used elsewhere.
+
+## What to use instead
+
+- **Parent-created / injected model** — take **`@Bindable var model: SomeModel`** (or plain `let model` when the view only reads) where `SomeModel` is **`@Observable`**.
+- **View-owned model** — use **`@State private var model = SomeModel()`** for `@Observable` types.
+- If you must interoperate with legacy **`ObservableObject`** types temporarily, prefer **`@StateObject`** only where the view **owns** the object, or lift the instance to **`@Observable`** and pass **`@Bindable`** — do not add new `@ObservedObject` usage.
+
+```swift
+// ❌ BAD
+struct GameView: View {
+    @ObservedObject var viewModel: GameViewModel
+    var body: some View { /* ... */ }
+}
+
+// ✅ GOOD — @Observable view model + @Bindable
+struct GameView: View {
+    @Bindable var viewModel: GameViewModel
+    var body: some View { /* ... */ }
+}
+
+// ✅ GOOD — view owns the model
+struct GameView: View {
+    @State private var viewModel = GameViewModel()
+    var body: some View { /* ... */ }
+}
+```

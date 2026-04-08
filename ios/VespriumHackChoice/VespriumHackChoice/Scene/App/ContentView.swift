@@ -2,10 +2,20 @@ import ASKCoordinator
 import SwiftUI
 
 struct ContentView: View {
-    @State var model: ContentViewModel
+    @State var viewModel: ContentViewModel
     @Environment(\.resolver) private var resolver
 
     var body: some View {
+        Group {
+            if viewModel.showMainMenu {
+                MainMenuView(mainStore: viewModel.mainStore)
+            } else {
+                gameTabs
+            }
+        }
+    }
+
+    private var gameTabs: some View {
         TabView {
             CoordinatorView(coordinator: Coordinator(root: MainPath.game))
                 .withRenderers(resolver: resolver!)

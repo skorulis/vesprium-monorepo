@@ -17,7 +17,7 @@ extension PlayerCharacterWrapperView {
     struct Model {
         var gameState: GameState
         var player: PlayerCharacter
-        
+
         var monthlyBalanceChange: Int {
             GameCalculator(player: player).monthlyBalanceChange()
         }
