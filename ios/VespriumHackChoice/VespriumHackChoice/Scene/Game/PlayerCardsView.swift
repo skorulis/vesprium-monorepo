@@ -24,7 +24,10 @@ struct PlayerCardsView: View {
                                 ScrollView(.horizontal, showsIndicators: false) {
                                     HStack(spacing: 12) {
                                         ForEach(Array(cards.enumerated()), id: \.offset) { _, card in
-                                            GameCardView(card: card)
+                                            GameCardView(
+                                                card: card,
+                                                monthlyMoneyChangeOverride: model.monthlyMoneyChangeOverride(for: card)
+                                            )
                                         }
                                     }
                                 }
@@ -62,9 +65,20 @@ struct PlayerCardsView: View {
 extension PlayerCardsView {
     struct Model {
         var player: PlayerCharacter
-        
+
         var equippedCards: [GameCard] {
             player.cards.allCards
+        }
+
+        /// For job cards, monthly income from ``GameCalculator`` (includes attribute and enhancement bonuses).
+        /// For other cards, `nil` so ``GameCardView`` uses ``GameCard/monthlyMoneyChange``.
+        func monthlyMoneyChangeOverride(for card: GameCard) -> Int? {
+            switch card {
+            case .job(let job):
+                return GameCalculator(player: player).monthlyJobEarnings(for: job)
+            default:
+                return nil
+            }
         }
     }
 }

@@ -3,6 +3,12 @@ import SwiftUI
 /// Renders a `GameCard` with title, centered artwork, and optional footer metadata (e.g. daily hours).
 struct GameCardView: View {
     let card: GameCard
+    /// When set, replaces ``GameCard/monthlyMoneyChange`` in the footer (e.g. job income from ``GameCalculator``).
+    var monthlyMoneyChangeOverride: Int?
+
+    private var effectiveMonthlyMoneyChange: Int {
+        monthlyMoneyChangeOverride ?? card.monthlyMoneyChange
+    }
 
     var body: some View {
         VStack(spacing: 12) {
@@ -58,7 +64,7 @@ struct GameCardView: View {
 
     @ViewBuilder
     private var maybeMoney: some View {
-        if card.monthlyMoneyChange != 0 {
+        if effectiveMonthlyMoneyChange != 0 {
             HStack(spacing: 4) {
                 Image(systemName: "dollarsign.circle.fill")
                     .font(.caption.weight(.semibold))
@@ -78,7 +84,7 @@ struct GameCardView: View {
     }
 
     private var moneyChangeLabel: String {
-        let change = card.monthlyMoneyChange
+        let change = effectiveMonthlyMoneyChange
         if change > 0 {
             return "+\(change)"
         }
@@ -90,7 +96,7 @@ struct GameCardView: View {
         if card.dailyHours != 0 {
             parts.append("\(card.dailyHours) hours per day")
         }
-        if card.monthlyMoneyChange != 0 {
+        if effectiveMonthlyMoneyChange != 0 {
             parts.append("\(moneyChangeLabel) per month")
         }
         return parts.joined(separator: ", ")
