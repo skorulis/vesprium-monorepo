@@ -7,7 +7,8 @@ struct PlayerCharacterWrapperView: View {
     var body: some View {
         PlayerCharacterView(
             player: viewModel.player,
-            currentGameDate: viewModel.gameState.currentGameDate
+            currentGameDate: viewModel.gameState.currentGameDate,
+            monthlyBalanceChange: viewModel.monthlyBalanceChange
         )
     }
 }

@@ -36,10 +36,6 @@ struct PlayerCards: Codable, Sendable, Equatable {
         allCards.reduce(0) { $0 + $1.dailyHours }
     }
 
-    var monthlyBalanceChange: Int {
-        allCards.map { $0.monthlyMoneyChange }.reduce(0, +)
-    }
-
     func hasEnhancement(_ enhancement: BioEnhancement) -> Bool {
         bodyEnhancementCards.contains { card in
             if case .bodyEnhancement(let installed) = card {

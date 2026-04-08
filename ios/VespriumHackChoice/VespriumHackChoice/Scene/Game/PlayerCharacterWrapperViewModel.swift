@@ -10,12 +10,19 @@ final class PlayerCharacterWrapperViewModel {
     var gameState: GameState
     var player: PlayerCharacter
 
+    private let calculationsService: CalculationsService
+
     private var cancellables: Set<AnyCancellable> = []
 
+    var monthlyBalanceChange: Int {
+        calculationsService.monthlyBalanceChange()
+    }
+
     @Resolvable<Resolver>
-    init(mainStore: MainStore) {
+    init(mainStore: MainStore, calculationsService: CalculationsService) {
         self.gameState = mainStore.gameState
         self.player = mainStore.player
+        self.calculationsService = calculationsService
 
         mainStore.$gameState.sink { [unowned self] in
             self.gameState = $0

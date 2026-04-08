@@ -77,4 +77,20 @@ struct CalculationServiceTests {
         // (120 + 2*11 + 2*9) * 3/2
         #expect(earnings == 240)
     }
+
+    @Test func monthlyBalanceChangeCombinesJobBonusesAndActivityCosts() {
+        var attributes = AttributeValues()
+        attributes[.strength] = 12
+        attributes[.vitality] = 10
+        let cards = PlayerCards(
+            job: .farming,
+            addedOn: SetupConstants.gameStartTime,
+            activities: [
+                GameCardInstance(date: SetupConstants.gameStartTime, card: .activity(.gym)),
+            ]
+        )
+        let net = CalculationsService.monthlyBalanceChange(attributes: attributes, cards: cards)
+        // farming 164 − gym 20
+        #expect(net == 144)
+    }
 }

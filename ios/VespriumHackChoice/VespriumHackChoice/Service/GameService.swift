@@ -9,11 +9,13 @@ import KnitMacros
 final class GameService: ObservableObject {
     private let store: MainStore
     private let eventGenerator: EventGenerator
+    private let calculationsService: CalculationsService
 
     @Resolvable<Resolver>
-    init(store: MainStore, eventGenerator: EventGenerator) {
+    init(store: MainStore, eventGenerator: EventGenerator, calculationsService: CalculationsService) {
         self.store = store
         self.eventGenerator = eventGenerator
+        self.calculationsService = calculationsService
     }
 
     func advanceTime() {
@@ -31,7 +33,7 @@ final class GameService: ObservableObject {
 
     private func executeMonthChanges() {
         var player = self.store.player
-        player.money += player.cards.monthlyBalanceChange
+        player.money += calculationsService.monthlyBalanceChange()
         self.store.player = player
     }
 

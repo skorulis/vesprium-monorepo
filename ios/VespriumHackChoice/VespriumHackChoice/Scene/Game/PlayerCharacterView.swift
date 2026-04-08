@@ -5,6 +5,7 @@ import SwiftUI
 struct PlayerCharacterView: View {
     let player: PlayerCharacter
     let currentGameDate: VespriumDate
+    let monthlyBalanceChange: Int
 
     var body: some View {
         List {
@@ -58,7 +59,7 @@ struct PlayerCharacterView: View {
 
     /// Net cash flow from jobs and activities for the upcoming month (matches `GameService` month ticks).
     private var monthlyBalanceChangeLabel: String {
-        let change = player.cards.monthlyBalanceChange
+        let change = monthlyBalanceChange
         if change > 0 {
             return "+\(change)"
         } else if change < 0 {
@@ -77,7 +78,11 @@ struct PlayerCharacterView: View {
     NavigationStack {
         PlayerCharacterView(
             player: playerCharacterPreview,
-            currentGameDate: playerCharacterPreviewDate
+            currentGameDate: playerCharacterPreviewDate,
+            monthlyBalanceChange: CalculationsService.monthlyBalanceChange(
+                attributes: playerCharacterPreview.attributes,
+                cards: playerCharacterPreview.cards
+            )
         )
         .navigationTitle("Player")
     }
