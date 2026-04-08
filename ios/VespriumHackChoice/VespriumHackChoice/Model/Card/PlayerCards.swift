@@ -1,15 +1,23 @@
 //  Created by Alex Skorulis on 8/4/2026.
 
+import BioStats
 import Foundation
 
 struct PlayerCards: Codable, Sendable, Equatable {
-    var job: Job?
-    var activities: [Activity] = []
+    /// Current job, if any, with the in-game date it was added.
+    var equippedJob: GameCardInstance?
+    var activities: [GameCardInstance] = []
 
-    var jobCard: GameCard? { return job.map { .job($0) } }
+    var job: Job? {
+        guard let equippedJob else { return nil }
+        if case .job(let occupation) = equippedJob.card { return occupation }
+        return nil
+    }
+
+    var jobCard: GameCard? { equippedJob?.card }
 
     var activityCards: [GameCard] {
-        return activities.map { .activity($0) }
+        activities.map(\.card)
     }
 
     var allCards: [GameCard] {
@@ -26,12 +34,28 @@ struct PlayerCards: Codable, Sendable, Equatable {
         allCards.map { $0.monthlyMoneyChange }.reduce(0, +)
     }
 
-    mutating func add(card: GameCard) {
+    init(equippedJob: GameCardInstance? = nil, activities: [GameCardInstance] = []) {
+        self.equippedJob = equippedJob
+        self.activities = activities
+    }
+
+    /// Convenience for previews and tests: wrap a job with its add date.
+    init(job: Job?, addedOn date: VespriumDate, activities: [GameCardInstance] = []) {
+        if let job {
+            self.equippedJob = GameCardInstance(date: date, card: .job(job))
+        } else {
+            self.equippedJob = nil
+        }
+        self.activities = activities
+    }
+
+    mutating func add(card: GameCard, on date: VespriumDate) {
+        let instance = GameCardInstance(date: date, card: card)
         switch card {
-        case .job(let job):
-            self.job = job
-        case .activity(let activity):
-            self.activities.append(activity)
+        case .job:
+            equippedJob = instance
+        case .activity:
+            activities.append(instance)
         }
     }
 }

@@ -95,6 +95,6 @@ private let playerCharacterPreview: PlayerCharacter = {
         money: 1_250,
         dateOfBirth: birth
     )
-    player.cards = PlayerCards(job: .farming)
+    player.cards = PlayerCards(job: .farming, addedOn: playerCharacterPreviewDate)
     return player
 }()

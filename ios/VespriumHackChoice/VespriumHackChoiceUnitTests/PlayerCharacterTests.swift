@@ -2,10 +2,10 @@ import BioStats
 import Testing
 @testable import VespriumHackChoice
 
-@Test func defaultJobIsFarming() {
+@Test func defaultPlayerHasNoJob() {
     let dob = VespriumDate(year: 20, month: .surge, day: 15)!
     let player = PlayerCharacter(dateOfBirth: dob)
-    #expect(player.job == .farming)
+    #expect(player.job == nil)
 }
 
 @Test func ageOnBirthday() {

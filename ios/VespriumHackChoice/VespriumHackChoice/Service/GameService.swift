@@ -1,4 +1,5 @@
 import ASKCore
+import BioStats
 import Combine
 import Foundation
 import Knit
@@ -36,19 +37,22 @@ final class GameService: ObservableObject {
                 guard !Task.isCancelled else { break }
                 guard self.isPlaying else { break }
                 guard self.store.gameState.pendingEvent == nil else { break }
-                var state = self.store.gameState
-                let newDate = state.currentGameDate.adding(months: 1)
-                state.currentGameDate = newDate
-                self.store.gameState = state
-                self.executeMonthChanges()
-                if let event = self.eventGenerator.nextEvent() {
-                    state = self.store.gameState
-                    state.pendingEvent = event
-                    self.store.gameState = state
-                    self.stop()
-                    break
-                }
+                advanceTime()
             }
+        }
+    }
+
+    func advanceTime() {
+        var state = self.store.gameState
+        let newDate = state.currentGameDate.adding(months: 1)
+        state.currentGameDate = newDate
+        self.store.gameState = state
+        self.executeMonthChanges()
+        if let event = self.eventGenerator.nextEvent() {
+            state = self.store.gameState
+            state.pendingEvent = event
+            self.store.gameState = state
+            self.stop()
         }
     }
 
@@ -68,7 +72,7 @@ final class GameService: ObservableObject {
         guard let event = store.gameState.pendingEvent else { return }
         if let card {
             var player = store.player
-            player.cards.add(card: card)
+            player.cards.add(card: card, on: store.gameState.currentGameDate)
             store.player = player
         } else {
             guard event.skippable else { return }

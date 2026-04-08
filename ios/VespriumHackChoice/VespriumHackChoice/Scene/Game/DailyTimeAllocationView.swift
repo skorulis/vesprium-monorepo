@@ -57,11 +57,11 @@ struct DailyTimeAllocationView: View {
 }
 
 #Preview("With job") {
-    DailyTimeAllocationView(playerCards: PlayerCards(job: .farming))
+    DailyTimeAllocationView(playerCards: PlayerCards(job: .farming, addedOn: SetupConstants.gameStartTime))
         .padding()
 }
 
 #Preview("No cards") {
-    DailyTimeAllocationView(playerCards: PlayerCards(job: nil))
+    DailyTimeAllocationView(playerCards: PlayerCards(job: nil, addedOn: SetupConstants.gameStartTime))
         .padding()
 }
