@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct MainMenuView: View {
-    @ObservedObject var mainStore: MainStore
+    @State var viewModel: MainMenuViewModel
 
     var body: some View {
         VStack(spacing: 24) {
@@ -11,9 +11,9 @@ struct MainMenuView: View {
                 .padding(.horizontal, 20)
 
             VStack(spacing: 12) {
-                if !mainStore.isPristine {
+                if !viewModel.isPristine {
                     Button {
-                        mainStore.showMainMenu = false
+                        viewModel.continueGame()
                     } label: {
                         Text("Continue")
                             .frame(maxWidth: .infinity)
@@ -22,10 +22,9 @@ struct MainMenuView: View {
                 }
 
                 Group {
-                    if mainStore.isPristine {
+                    if viewModel.isPristine {
                         Button {
-                            mainStore.resetToNewGame()
-                            mainStore.showMainMenu = false
+                            viewModel.startNewGame()
                         } label: {
                             Text("Start New Game")
                                 .frame(maxWidth: .infinity)
@@ -33,8 +32,7 @@ struct MainMenuView: View {
                         .buttonStyle(.borderedProminent)
                     } else {
                         Button {
-                            mainStore.resetToNewGame()
-                            mainStore.showMainMenu = false
+                            viewModel.startNewGame()
                         } label: {
                             Text("Start New Game")
                                 .frame(maxWidth: .infinity)

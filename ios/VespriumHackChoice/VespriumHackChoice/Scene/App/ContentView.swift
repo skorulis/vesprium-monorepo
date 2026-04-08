@@ -8,7 +8,7 @@ struct ContentView: View {
     var body: some View {
         Group {
             if viewModel.showMainMenu {
-                MainMenuView(mainStore: viewModel.mainStore)
+                MainMenuView(viewModel: resolver!.mainMenuViewModel())
             } else {
                 gameTabs
             }
