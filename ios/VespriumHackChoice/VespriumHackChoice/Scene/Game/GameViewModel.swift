@@ -38,4 +38,8 @@ final class GameViewModel {
     func resolvePendingEvent(selecting card: GameCard?) {
         gameService.resolvePendingEvent(selecting: card)
     }
+
+    func resolveYearReview() {
+        gameService.resolveYearReview()
+    }
 }

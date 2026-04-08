@@ -27,11 +27,15 @@ struct GameView: View {
                         .accessibilityLabel("Advance time")
                 }
                 .buttonStyle(.plain)
-                .disabled(viewModel.gameState.pendingEvent != nil)
+                .disabled(viewModel.gameState.pendingEvent != nil || viewModel.gameState.pendingYearReview != nil)
                 Spacer(minLength: 0)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
-            if let event = viewModel.gameState.pendingEvent {
+            if let review = viewModel.gameState.pendingYearReview {
+                YearEndReviewView(review: review) {
+                    viewModel.resolveYearReview()
+                }
+            } else if let event = viewModel.gameState.pendingEvent {
                 GameEventOfferView(
                     event: event,
                     onSelectCard: { viewModel.resolvePendingEvent(selecting: $0) },
