@@ -26,7 +26,7 @@ struct PlayerCardsView: View {
                                     HStack(spacing: 12) {
                                         ForEach(Array(cards.enumerated()), id: \.offset) { _, card in
                                             Button {
-                                                presentedCardDetail = PresentedCardDetail(card: card)
+                                                viewModel.presentDetails(card: card)
                                             } label: {
                                                 GameCardView(
                                                     card: card,
@@ -45,16 +45,6 @@ struct PlayerCardsView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .sheet(item: $presentedCardDetail) { presented in
-            NavigationStack {
-                CardDetailsView(
-                    viewModel: CardDetailsViewModel(
-                        card: presented.card,
-                        player: model.player
-                    )
-                )
-            }
-        }
     }
 
     /// Job first, then activities, then body modifications; empty types omitted.
@@ -76,11 +66,6 @@ struct PlayerCardsView: View {
         case .bodyEnhancement: return "Body modifications"
         }
     }
-}
-
-private struct PresentedCardDetail: Identifiable {
-    let id = UUID()
-    let card: GameCard
 }
 
 extension PlayerCardsView {
