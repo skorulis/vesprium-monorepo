@@ -157,6 +157,34 @@ struct GameServiceTests {
         #expect(mainStore.gameState.pendingYearReview?.totals.attributeIncreases[.vitality] == -1)
     }
 
+    @Test func selectingPricedCardDeductsCostFromMoneyAndYearTotals() {
+        var player = mainStore.player
+        player.money = 500
+        mainStore.player = player
+
+        let card = GameCard.bodyEnhancement(.chlorophyllSkin)
+        let price = card.price
+
+        var state = mainStore.gameState
+        state.currentGameDate = SetupConstants.gameStartTime
+        state.currentYear = .zero
+        state.pendingYearReview = nil
+        state.pendingEvent = GameEvent(
+            text: "Choose",
+            cards: [card],
+            skippable: true
+        )
+        mainStore.gameState = state
+
+        let moneyBefore = mainStore.player.money
+        gameService.resolvePendingEvent(selecting: card)
+
+        #expect(mainStore.player.money == moneyBefore - price)
+        #expect(mainStore.gameState.currentYear.moneyNetChange == -price)
+        #expect(mainStore.player.cards.hasEnhancement(.chlorophyllSkin))
+        #expect(mainStore.gameState.pendingEvent == nil)
+    }
+
     @Test func yearBoundaryWeaknessSuccessDoesNotReduceVitality() {
         var player = mainStore.player
         player.dateOfBirth = SetupConstants.gameStartTime.adding(years: -100)

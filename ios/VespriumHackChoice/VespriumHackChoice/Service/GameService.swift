@@ -130,14 +130,19 @@ final class GameService: ObservableObject {
 
     func resolvePendingEvent(selecting card: GameCard?) {
         guard let event = store.gameState.pendingEvent else { return }
+        var state = store.gameState
         if let card {
+            let price = card.price
             var player = store.player
+            player.money -= price
             player.cards.add(card: card, on: store.gameState.currentGameDate)
             store.player = player
+            state.currentYear.moneyNetChange -= price
         } else {
             guard event.skippable else { return }
+            var state = store.gameState
         }
-        var state = store.gameState
+        
         state.pendingEvent = nil
         store.gameState = state
     }
