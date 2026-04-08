@@ -6,8 +6,8 @@ import Observation
 
 @MainActor
 @Observable
-final class PlayerCharacterWrapperViewModel {
-    var model: PlayerCharacterWrapperView.Model
+final class PlayerCharacterViewModel {
+    var model: PlayerCharacterView.Model
 
     private var cancellables: Set<AnyCancellable> = []
 

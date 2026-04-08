@@ -13,7 +13,7 @@ struct MainPathRenderer: CoordinatorPathRenderer {
         case .game:
             GameView(viewModel: resolver.gameViewModel())
         case .character:
-            PlayerCharacterWrapperView(viewModel: resolver.playerCharacterWrapperViewModel())
+            PlayerCharacterView(viewModel: resolver.playerCharacterViewModel())
         case .cards:
             PlayerCardsView(viewModel: coordinator.apply(resolver.playerCardsViewModel()))
         case let .cardDetails(card):

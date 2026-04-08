@@ -3,9 +3,8 @@ import SwiftUI
 
 /// Presents the full player profile: vitals, finance, daily time allocation, birth date, and attribute scores.
 struct PlayerCharacterView: View {
-    let player: PlayerCharacter
-    let currentGameDate: VespriumDate
-    let monthlyBalanceChange: Int
+    @State var viewModel: PlayerCharacterViewModel
+    var model: Model { viewModel.model }
 
     var body: some View {
         List {
@@ -14,14 +13,14 @@ struct PlayerCharacterView: View {
                     Text(ageLabel)
                         .monospacedDigit()
                 }
-                if let job = player.job {
+                if let job = model.player.job {
                     LabeledContent("Job", value: job.name)
                 }
             }
 
             Section("Finance") {
                 LabeledContent("Current money") {
-                    Text(player.money, format: .number)
+                    Text(model.player.money, format: .number)
                         .monospacedDigit()
                 }
                 LabeledContent("Monthly change") {
@@ -31,18 +30,18 @@ struct PlayerCharacterView: View {
             }
 
             Section("Daily time") {
-                DailyTimeAllocationView(playerCards: player.cards)
+                DailyTimeAllocationView(playerCards: model.player.cards)
                     .listRowInsets(EdgeInsets(top: 10, leading: 16, bottom: 14, trailing: 16))
             }
 
             Section("Birth") {
-                LabeledContent("Date of birth", value: formattedDate(player.dateOfBirth))
+                LabeledContent("Date of birth", value: formattedDate(model.player.dateOfBirth))
             }
 
             Section("Attributes") {
                 ForEach(Attribute.allCases, id: \.self) { attribute in
                     LabeledContent(attribute.name) {
-                        let value = player.attributes[attribute]
+                        let value = model.player.attributes[attribute]
                         Text("\(value)")
                             .monospacedDigit()
                     }
@@ -52,14 +51,14 @@ struct PlayerCharacterView: View {
     }
 
     private var ageLabel: String {
-        let years = player.ageInFullYears(on: currentGameDate)
-        let months = player.ageExtraMonths(on: currentGameDate)
+        let years = model.player.ageInFullYears(on: model.gameState.currentGameDate)
+        let months = model.player.ageExtraMonths(on: model.gameState.currentGameDate)
         return "\(years) years, \(months) months"
     }
 
     /// Net cash flow from jobs and activities for the upcoming month (matches `GameService` month ticks).
     private var monthlyBalanceChangeLabel: String {
-        let change = monthlyBalanceChange
+        let change = model.monthlyBalanceChange
         if change > 0 {
             return "+\(change)"
         } else if change < 0 {
@@ -74,29 +73,20 @@ struct PlayerCharacterView: View {
     }
 }
 
-#Preview {
-    NavigationStack {
-        PlayerCharacterView(
-            player: playerCharacterPreview,
-            currentGameDate: playerCharacterPreviewDate,
-            monthlyBalanceChange: GameCalculator(player: playerCharacterPreview).monthlyBalanceChange()
-        )
-        .navigationTitle("Player")
+extension PlayerCharacterView {
+    struct Model {
+        var gameState: GameState
+        var player: PlayerCharacter
+
+        var monthlyBalanceChange: Int {
+            GameCalculator(player: player).monthlyBalanceChange()
+        }
     }
 }
 
-private let playerCharacterPreviewDate = VespriumDate(year: 5, month: .ember, day: 14)!
-
-private let playerCharacterPreview: PlayerCharacter = {
-    let birth = VespriumDate(year: 1, month: .thaw, day: 1)!
-    var attrs = AttributeValues()
-    attrs[.strength] = 10
-    attrs[.intelligence] = 7
-    var player = PlayerCharacter(
-        attributes: attrs,
-        money: 1_250,
-        dateOfBirth: birth
-    )
-    player.cards = PlayerCards(job: .farming, addedOn: playerCharacterPreviewDate)
-    return player
-}()
+#Preview {
+    NavigationStack {
+        PlayerCharacterView(viewModel: VespriumHackChoiceAssembly.testing().resolver.playerCharacterViewModel())
+        .navigationTitle("Player")
+    }
+}
