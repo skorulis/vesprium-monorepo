@@ -80,4 +80,17 @@ struct GameCalculator {
             }
         }
     }
+
+    /// Weakness chance from aging, offset by vitality.
+    ///
+    /// - Base chance is linearly scaled from 0 at age 20 to 100 at age 100.
+    /// - Ages below 20 use 0; ages above 100 use 100.
+    /// - Vitality is subtracted from the base chance and the result is clamped to 0...100.
+    func weaknessChance(on currentGameDate: VespriumDate) -> Int {
+        let age = player.ageInFullYears(on: currentGameDate)
+        let scaledAgeChance = ((age - 20) * 100) / 80
+        let baseChance = min(100, max(0, scaledAgeChance))
+        let adjustedChance = baseChance - player.attributes[.vitality]
+        return min(100, max(0, adjustedChance))
+    }
 }
