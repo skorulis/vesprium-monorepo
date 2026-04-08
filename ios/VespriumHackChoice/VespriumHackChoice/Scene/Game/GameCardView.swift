@@ -26,7 +26,7 @@ struct GameCardView: View {
         }
         .overlay {
             RoundedRectangle(cornerRadius: 12, style: .continuous)
-                .strokeBorder(.separator.opacity(0.35), lineWidth: 1)
+                .strokeBorder(borderColor, lineWidth: 1)
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(accessibilityTitle)
@@ -66,6 +66,13 @@ struct GameCardView: View {
                 Text(moneyChangeLabel)
                     .font(.caption.monospacedDigit().weight(.medium))
             }
+        }
+    }
+
+    private var borderColor: Color {
+        switch card.type {
+        case .job: return Color.blue.opacity(0.65)
+        case .activity: return Color.purple.opacity(0.65)
         }
     }
 

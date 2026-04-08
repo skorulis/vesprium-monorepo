@@ -25,7 +25,7 @@ struct PlayerCards: Codable, Sendable, Equatable {
     var monthlyBalanceChange: Int {
         allCards.map { $0.monthlyMoneyChange }.reduce(0, +)
     }
-    
+
     mutating func add(card: GameCard) {
         switch card {
         case .job(let job):

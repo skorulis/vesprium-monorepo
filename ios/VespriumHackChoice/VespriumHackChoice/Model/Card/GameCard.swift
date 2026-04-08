@@ -34,7 +34,7 @@ enum GameCard: Codable, Sendable, Equatable {
         case let .activity(activity): return activity.dailyHours
         }
     }
-    
+
     var type: GameCardType {
         switch self {
         case .job: return .job
