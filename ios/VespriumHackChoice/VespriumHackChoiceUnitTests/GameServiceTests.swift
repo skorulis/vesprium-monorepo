@@ -135,4 +135,46 @@ struct GameServiceTests {
         gameService.resolveYearReview()
         #expect(mainStore.gameState.pendingYearReview == nil)
     }
+
+    @Test func yearBoundaryWeaknessFailureReducesVitalityByOne() {
+        var player = mainStore.player
+        player.attributes[.vitality] = 10
+        mainStore.player = player
+
+        var state = mainStore.gameState
+        state.currentGameDate = SetupConstants.gameStartTime
+        state.currentYear = .zero
+        state.pendingYearReview = nil
+        state.pendingEvent = nil
+        mainStore.gameState = state
+
+        // Age is <= 20 by default, so weakness chance is 0 and the check always fails.
+        for _ in 0..<10 {
+            gameService.advanceTime()
+        }
+
+        #expect(mainStore.player.attributes[.vitality] == 9)
+        #expect(mainStore.gameState.pendingYearReview?.totals.attributeIncreases[.vitality] == -1)
+    }
+
+    @Test func yearBoundaryWeaknessSuccessDoesNotReduceVitality() {
+        var player = mainStore.player
+        player.dateOfBirth = SetupConstants.gameStartTime.adding(years: -100)
+        player.attributes[.vitality] = 0
+        mainStore.player = player
+
+        var state = mainStore.gameState
+        state.currentGameDate = SetupConstants.gameStartTime
+        state.currentYear = .zero
+        state.pendingYearReview = nil
+        state.pendingEvent = nil
+        mainStore.gameState = state
+
+        // At age 100+ with zero vitality, weakness chance is 100 and the check always succeeds.
+        for _ in 0..<10 {
+            gameService.advanceTime()
+        }
+
+        #expect(mainStore.player.attributes[.vitality] == 0)
+    }
 }

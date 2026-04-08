@@ -25,6 +25,7 @@ final class GameService: ObservableObject {
         self.store.gameState = state
         self.executeMonthChanges(previousDate: previousDate, newDate: newDate)
         if crossedYear {
+            self.applyYearlyWeaknessCheck(on: newDate)
             state = self.store.gameState
             state.pendingYearReview = YearEndReview(year: previousDate.year, totals: state.currentYear)
             state.currentYear = .zero
@@ -110,6 +111,21 @@ final class GameService: ObservableObject {
                 }
             }
         }
+    }
+
+    /// At each year boundary, roll against the player's weakness chance.
+    /// A failed roll reduces vitality by 1.
+    private func applyYearlyWeaknessCheck(on currentGameDate: VespriumDate) {
+        var player = self.store.player
+        let weakness = GameCalculator(player: player).weaknessChance(on: currentGameDate)
+        let survivesYear = Chance(percent: weakness).check()
+        guard survivesYear == false else { return }
+        player.attributes[.vitality] = max(0, player.attributes[.vitality] - 1)
+        self.store.player = player
+
+        var state = self.store.gameState
+        state.currentYear.attributeIncreases[.vitality, default: 0] -= 1
+        self.store.gameState = state
     }
 
     func resolvePendingEvent(selecting card: GameCard?) {

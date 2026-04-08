@@ -1,7 +1,7 @@
 import BioStats
 import Foundation
 
-/// Accumulators for the in-game calendar year (money and positive stat changes).
+/// Accumulators for the in-game calendar year (money and net stat changes).
 struct CurrentYear: Codable, Sendable, Equatable {
     var moneyNetChange: Int
     var attributeIncreases: [Attribute: Int]

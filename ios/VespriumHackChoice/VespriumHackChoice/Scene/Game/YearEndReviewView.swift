@@ -15,16 +15,17 @@ struct YearEndReviewView: View {
                 Text("Net money this year: \(review.totals.moneyNetChange, format: .number)")
                     .font(.body.monospacedDigit())
                 if review.totals.attributeIncreases.isEmpty {
-                    Text("No stat increases from activities this year.")
+                    Text("No stat changes this year.")
                         .font(.subheadline)
                         .foregroundStyle(.secondary)
                 } else {
-                    Text("Stat increases")
+                    Text("Stat changes")
                         .font(.subheadline.weight(.medium))
                     VStack(alignment: .leading, spacing: 6) {
                         ForEach(sortedAttributes(review.totals.attributeIncreases), id: \.self) { attribute in
                             if let delta = review.totals.attributeIncreases[attribute], delta != 0 {
-                                Text("\(attribute.name): +\(delta)")
+                                let prefix = delta > 0 ? "+" : ""
+                                Text("\(attribute.name): \(prefix)\(delta)")
                                     .font(.body.monospacedDigit())
                             }
                         }
