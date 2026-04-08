@@ -5,12 +5,29 @@ struct GameCardView: View {
     let card: GameCard
     /// When set, replaces ``GameCard/monthlyMoneyChange`` in the footer (e.g. job income from ``GameCalculator``).
     var monthlyMoneyChangeOverride: Int?
+    /// When `true`, one-time purchase cost (e.g. body mods) is shown above the card, outside the border.
+    var showsPrice: Bool = false
 
     private var effectiveMonthlyMoneyChange: Int {
         monthlyMoneyChangeOverride ?? card.monthlyMoneyChange
     }
 
     var body: some View {
+        VStack(spacing: 8) {
+            if showsPrice {
+                Text("\(card.price) coins")
+                    .font(.caption.weight(.semibold))
+                    .foregroundStyle(.secondary)
+                    .multilineTextAlignment(.center)
+                    .frame(maxWidth: 150)
+            }
+            cardFace
+        }
+        .accessibilityElement(children: .ignore)
+        .accessibilityLabel(accessibilityTitle)
+    }
+
+    private var cardFace: some View {
         VStack(spacing: 12) {
             Text(card.name)
                 .font(.headline)
@@ -34,8 +51,6 @@ struct GameCardView: View {
             RoundedRectangle(cornerRadius: 12, style: .continuous)
                 .strokeBorder(borderColor, lineWidth: 1)
         }
-        .accessibilityElement(children: .ignore)
-        .accessibilityLabel(accessibilityTitle)
     }
 
     @ViewBuilder
@@ -92,7 +107,11 @@ struct GameCardView: View {
     }
 
     private var accessibilityTitle: String {
-        var parts: [String] = [card.name]
+        var parts: [String] = []
+        if showsPrice, card.price > 0 {
+            parts.append("\(card.price) coins")
+        }
+        parts.append(card.name)
         if card.dailyHours != 0 {
             parts.append("\(card.dailyHours) hours per day")
         }

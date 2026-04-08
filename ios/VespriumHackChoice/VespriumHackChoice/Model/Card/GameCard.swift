@@ -28,7 +28,7 @@ enum GameCard: Codable, Sendable, Equatable {
         switch self {
         case let .job(job): return job.monthlyIncome
         case let .activity(activity): return -activity.details.monthlyCost
-        case let .bodyEnhancement(mod): return 0
+        case .bodyEnhancement: return 0
         }
     }
 
@@ -36,7 +36,7 @@ enum GameCard: Codable, Sendable, Equatable {
         switch self {
         case let .job(job): return job.dailyHours
         case let .activity(activity): return activity.details.dailyHours
-        case let .bodyEnhancement(mod): return 0
+        case .bodyEnhancement: return 0
         }
     }
 
@@ -45,6 +45,15 @@ enum GameCard: Codable, Sendable, Equatable {
         case .job: return .job
         case .activity: return .activity
         case .bodyEnhancement: return .bodyEnhancement
+        }
+    }
+    
+    var price: Int {
+        switch self {
+        case .job, .activity:
+            return 0
+        case .bodyEnhancement(let mod):
+            return mod.baseCost
         }
     }
 }

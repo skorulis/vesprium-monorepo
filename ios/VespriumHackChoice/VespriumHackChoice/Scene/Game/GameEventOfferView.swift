@@ -21,7 +21,7 @@ struct GameEventOfferView: View {
                             Button {
                                 onSelectCard(card)
                             } label: {
-                                GameCardView(card: card)
+                                GameCardView(card: card, showsPrice: true)
                             }
                             .buttonStyle(.plain)
                         }
