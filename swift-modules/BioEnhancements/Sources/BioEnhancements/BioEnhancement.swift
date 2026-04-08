@@ -11,7 +11,7 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
         rawValue.capitalized
     }
     
-    var text: String {
+    public var text: String {
         switch self {
         case .chlorophyllSkin:
             return "Absorbs energy from the sun to reduce food needs"
@@ -20,7 +20,7 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
         }
     }
     
-    var baseCost: Int {
+    public var baseCost: Int {
         switch self {
         case .chlorophyllSkin:
             return 100
@@ -29,7 +29,7 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
         }
     }
     
-    var attributeBonuses: [AttributeBonus] {
+    public var attributeBonuses: [AttributeBonus] {
         switch self {
         case .chlorophyllSkin:
             return [AttributeBonus(attribute: .stability, value: -1)]

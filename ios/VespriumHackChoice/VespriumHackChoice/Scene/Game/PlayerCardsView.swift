@@ -3,6 +3,7 @@ import SwiftUI
 /// Lists every card the player currently has equipped (job, activities, etc.).
 struct PlayerCardsView: View {
     @State var viewModel: PlayerCardsViewModel
+    @State private var presentedCardDetail: PresentedCardDetail?
     var model: Model { viewModel.model }
 
     var body: some View {
@@ -24,10 +25,15 @@ struct PlayerCardsView: View {
                                 ScrollView(.horizontal, showsIndicators: false) {
                                     HStack(spacing: 12) {
                                         ForEach(Array(cards.enumerated()), id: \.offset) { _, card in
-                                            GameCardView(
-                                                card: card,
-                                                monthlyMoneyChangeOverride: model.monthlyMoneyChangeOverride(for: card)
-                                            )
+                                            Button {
+                                                presentedCardDetail = PresentedCardDetail(card: card)
+                                            } label: {
+                                                GameCardView(
+                                                    card: card,
+                                                    monthlyMoneyChangeOverride: model.monthlyMoneyChangeOverride(for: card)
+                                                )
+                                            }
+                                            .buttonStyle(.plain)
                                         }
                                     }
                                 }
@@ -39,6 +45,16 @@ struct PlayerCardsView: View {
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .sheet(item: $presentedCardDetail) { presented in
+            NavigationStack {
+                CardDetailsView(
+                    viewModel: CardDetailsViewModel(
+                        card: presented.card,
+                        player: model.player
+                    )
+                )
+            }
+        }
     }
 
     /// Job first, then activities, then body modifications; empty types omitted.
@@ -60,6 +76,11 @@ struct PlayerCardsView: View {
         case .bodyEnhancement: return "Body modifications"
         }
     }
+}
+
+private struct PresentedCardDetail: Identifiable {
+    let id = UUID()
+    let card: GameCard
 }
 
 extension PlayerCardsView {
