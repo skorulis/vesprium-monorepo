@@ -13,6 +13,10 @@ struct PlayerCharacterView: View {
                     Text(ageLabel)
                         .monospacedDigit()
                 }
+                LabeledContent("Weakness chance") {
+                    Text(weaknessChanceLabel)
+                        .monospacedDigit()
+                }
                 if let job = model.player.job {
                     LabeledContent("Job", value: job.name)
                 }
@@ -70,6 +74,11 @@ struct PlayerCharacterView: View {
 
     private func formattedDate(_ date: VespriumDate) -> String {
         "\(date.year) \(date.month.displayName) \(date.day)"
+    }
+
+    private var weaknessChanceLabel: String {
+        let chance = GameCalculator(player: model.player).weaknessChance(on: model.gameState.currentGameDate)
+        return "\(chance)%"
     }
 }
 
