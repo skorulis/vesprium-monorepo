@@ -3,13 +3,20 @@
 import Foundation
 import BioStats
 
-public enum BioEnhancement {
+public enum BioEnhancement: String, Codable, Sendable, Equatable {
     case chlorophyllSkin
+    case barometricEars
+    
+    public var name: String {
+        rawValue.capitalized
+    }
     
     var text: String {
         switch self {
         case .chlorophyllSkin:
             return "Absorbs energy from the sun to reduce food needs"
+        case .barometricEars:
+            return "Eardrums sensitive enough to detect changes in barometric pressure"
         }
     }
     
@@ -17,13 +24,17 @@ public enum BioEnhancement {
         switch self {
         case .chlorophyllSkin:
             return 100
+        case .barometricEars:
+            return 100
         }
     }
     
-    var bonuses: [AttributeBonus] {
+    var attributeBonuses: [AttributeBonus] {
         switch self {
         case .chlorophyllSkin:
             return [AttributeBonus(attribute: .stability, value: -1)]
+        default:
+            return []
         }
     }
 }

@@ -1,3 +1,5 @@
+import BioStats
+
 /// Player profession; raw values are stable for persistence.
 enum Job: String, Codable, CaseIterable, Hashable, Sendable {
     case farming
@@ -12,6 +14,15 @@ enum Job: String, Codable, CaseIterable, Hashable, Sendable {
         switch self {
         case .farming: 120
         case .shopKeeper: 100
+        }
+    }
+    
+    var incomeBonuses: [Attribute: Int] {
+        switch self {
+        case .farming:
+            return [.strength: 2, .vitality: 2]
+        case .shopKeeper:
+            return [.charisma: 2, .intelligence: 2]
         }
     }
 

@@ -35,6 +35,8 @@ final class VespriumHackChoiceAssembly: AutoInitModuleAssembly {
             .inObjectScope(.container)
 
         container.register(EventGenerator.self) { EventGenerator.make(resolver: $0) }
+
+        container.register(CalculationsService.self) { CalculationsService.make(resolver: $0) }
     }
 
     @MainActor

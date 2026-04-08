@@ -37,13 +37,15 @@ struct PlayerCardsView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
 
-    /// Job first, then activities; empty types omitted.
+    /// Job first, then activities, then body modifications; empty types omitted.
     private var groupedCards: [(GameCardType, [GameCard])] {
         let jobs = viewModel.equippedCards.filter { $0.type == .job }
         let activities = viewModel.equippedCards.filter { $0.type == .activity }
+        let bodyMods = viewModel.equippedCards.filter { $0.type == .bodyEnhancement }
         var sections: [(GameCardType, [GameCard])] = []
         if !jobs.isEmpty { sections.append((.job, jobs)) }
         if !activities.isEmpty { sections.append((.activity, activities)) }
+        if !bodyMods.isEmpty { sections.append((.bodyEnhancement, bodyMods)) }
         return sections
     }
 
@@ -51,6 +53,7 @@ struct PlayerCardsView: View {
         switch type {
         case .job: return "Job"
         case .activity: return "Activities"
+        case .bodyEnhancement: return "Body modifications"
         }
     }
 }

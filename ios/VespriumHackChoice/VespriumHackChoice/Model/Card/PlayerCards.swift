@@ -7,6 +7,7 @@ struct PlayerCards: Codable, Sendable, Equatable {
     /// Current job, if any, with the in-game date it was added.
     var equippedJob: GameCardInstance?
     var activities: [GameCardInstance] = []
+    var bodyEnhancements: [GameCardInstance] = []
 
     var job: Job? {
         guard let equippedJob else { return nil }
@@ -20,9 +21,13 @@ struct PlayerCards: Codable, Sendable, Equatable {
         activities.map(\.card)
     }
 
+    var bodyEnhancementCards: [GameCard] {
+        bodyEnhancements.map(\.card)
+    }
+
     var allCards: [GameCard] {
         let jobs = [jobCard].compactMap(\.self)
-        return jobs + activityCards
+        return jobs + activityCards + bodyEnhancementCards
     }
 
     /// Sum of `dailyHours` across active cards (tasks, employment, etc.).
@@ -34,9 +39,14 @@ struct PlayerCards: Codable, Sendable, Equatable {
         allCards.map { $0.monthlyMoneyChange }.reduce(0, +)
     }
 
-    init(equippedJob: GameCardInstance? = nil, activities: [GameCardInstance] = []) {
+    init(
+        equippedJob: GameCardInstance? = nil,
+        activities: [GameCardInstance] = [],
+        bodyEnhancements: [GameCardInstance] = []
+    ) {
         self.equippedJob = equippedJob
         self.activities = activities
+        self.bodyEnhancements = bodyEnhancements
     }
 
     /// Convenience for previews and tests: wrap a job with its add date.
@@ -56,6 +66,8 @@ struct PlayerCards: Codable, Sendable, Equatable {
             equippedJob = instance
         case .activity:
             activities.append(instance)
+        case .bodyEnhancement:
+            bodyEnhancements.append(instance)
         }
     }
 }

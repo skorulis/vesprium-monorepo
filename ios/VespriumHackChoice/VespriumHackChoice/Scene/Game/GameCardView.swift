@@ -73,6 +73,7 @@ struct GameCardView: View {
         switch card.type {
         case .job: return Color.blue.opacity(0.65)
         case .activity: return Color.purple.opacity(0.65)
+        case .bodyEnhancement: return Color.teal.opacity(0.65)
         }
     }
 
