@@ -1,5 +1,6 @@
 //  Created by Alex Skorulis on 8/4/2026.
 
+import BioStats
 import Foundation
 
 // Things that can be done outside of work
@@ -25,6 +26,15 @@ enum Activity: Codable, Sendable, Equatable, CaseIterable {
         case .gym: return 2
         case .school: return 3
         case .meditation: return 1
+        }
+    }
+    
+    var yearlyAttributeBonuses: [Attribute: Int] {
+        switch self {
+        case .gym: return [.strength: 1]
+        case .school: return [.intelligence: 1]
+        default:
+            return [:]
         }
     }
 }

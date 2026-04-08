@@ -9,21 +9,20 @@ import KnitMacros
 final class GameService: ObservableObject {
     private let store: MainStore
     private let eventGenerator: EventGenerator
-    private let calculationsService: CalculationsService
 
     @Resolvable<Resolver>
-    init(store: MainStore, eventGenerator: EventGenerator, calculationsService: CalculationsService) {
+    init(store: MainStore, eventGenerator: EventGenerator) {
         self.store = store
         self.eventGenerator = eventGenerator
-        self.calculationsService = calculationsService
     }
 
     func advanceTime() {
         var state = self.store.gameState
-        let newDate = state.currentGameDate.adding(months: 1)
+        let previousDate = state.currentGameDate
+        let newDate = previousDate.adding(months: 1)
         state.currentGameDate = newDate
         self.store.gameState = state
-        self.executeMonthChanges()
+        self.executeMonthChanges(previousDate: previousDate, newDate: newDate)
         if let event = self.eventGenerator.nextEvent() {
             state = self.store.gameState
             state.pendingEvent = event
@@ -31,10 +30,44 @@ final class GameService: ObservableObject {
         }
     }
 
-    private func executeMonthChanges() {
+    private func executeMonthChanges(previousDate: VespriumDate, newDate: VespriumDate) {
         var player = self.store.player
-        player.money += calculationsService.monthlyBalanceChange()
+        applyActivityYearlyAttributeBonuses(player: &player, previousDate: previousDate, newDate: newDate)
+        player.money += GameCalculator(player: player).monthlyBalanceChange()
         self.store.player = player
+    }
+
+    /// Full Vesprium calendar years completed since `start` relative to `current`
+    /// (same rules as ``PlayerCharacter/ageInFullYears``).
+    private func fullCalendarYearsHeld(since start: VespriumDate, on current: VespriumDate) -> Int {
+        guard current >= start else { return 0 }
+        var years = current.year - start.year
+        let startMonth = start.month.rawValue
+        let nowMonth = current.month.rawValue
+        if nowMonth < startMonth
+            || (nowMonth == startMonth && current.day < start.day) {
+            years -= 1
+        }
+        return max(0, years)
+    }
+
+    private func applyActivityYearlyAttributeBonuses(
+        player: inout PlayerCharacter,
+        previousDate: VespriumDate,
+        newDate: VespriumDate
+    ) {
+        for instance in player.cards.activities {
+            guard case .activity(let activity) = instance.card else { continue }
+            let bonuses = activity.yearlyAttributeBonuses
+            if bonuses.isEmpty { continue }
+            let before = fullCalendarYearsHeld(since: instance.date, on: previousDate)
+            let after = fullCalendarYearsHeld(since: instance.date, on: newDate)
+            let steps = after - before
+            guard steps > 0 else { continue }
+            for (attribute, deltaPerYear) in bonuses {
+                player.attributes[attribute] += deltaPerYear * steps
+            }
+        }
     }
 
     func resolvePendingEvent(selecting card: GameCard?) {
