@@ -76,4 +76,15 @@ struct PlayerCards: Codable, Sendable, Equatable {
             bodyEnhancements.append(instance)
         }
     }
+    
+    mutating func remove(card: GameCard) {
+        switch card {
+        case .job:
+            equippedJob = nil
+        case .activity:
+            activities = activities.filter { $0.card != card }
+        case .bodyEnhancement:
+            bodyEnhancements = bodyEnhancements.filter { $0.card != card }
+        }
+    }
 }

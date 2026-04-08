@@ -16,8 +16,8 @@ struct MainPathRenderer: CoordinatorPathRenderer {
             PlayerCharacterWrapperView(viewModel: resolver.playerCharacterWrapperViewModel())
         case .cards:
             PlayerCardsView(viewModel: coordinator.apply(resolver.playerCardsViewModel()))
-        case let .cardDetails(model):
-            CardDetailsView(viewModel: model)
+        case let .cardDetails(card):
+            CardDetailsView(viewModel: resolver.cardDetailsViewModel(card: card))
         }
     }
 }

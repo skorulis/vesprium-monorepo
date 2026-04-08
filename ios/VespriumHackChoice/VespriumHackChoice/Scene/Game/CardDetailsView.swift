@@ -53,6 +53,18 @@ struct CardDetailsView: View {
                     }
                 }
             }
+
+            Section("Actions") {
+                if viewModel.canRemove {
+                    Button("Remove card", role: .destructive) {
+                        viewModel.remove()
+                        dismiss()
+                    }
+                } else {
+                    Label("Locked", systemImage: "lock.fill")
+                        .foregroundStyle(.secondary)
+                }
+            }
         }
         .navigationTitle(viewModel.title)
         .navigationBarTitleDisplayMode(.inline)
@@ -68,33 +80,9 @@ struct CardDetailsView: View {
 
 #Preview("Job") {
     NavigationStack {
+        let assembly = VespriumHackChoiceAssembly.testing()
         CardDetailsView(
-            viewModel: CardDetailsViewModel(
-                card: .job(.farming),
-                player: PlayerCharacter(dateOfBirth: .init(year: 10, month: .deep, day: 1)!)
-            )
-        )
-    }
-}
-
-#Preview("Activity") {
-    NavigationStack {
-        CardDetailsView(
-            viewModel: CardDetailsViewModel(
-                card: .activity(.school),
-                player: PlayerCharacter(dateOfBirth: .init(year: 10, month: .dusk, day: 1)!)
-            )
-        )
-    }
-}
-
-#Preview("Body modification") {
-    NavigationStack {
-        CardDetailsView(
-            viewModel: CardDetailsViewModel(
-                card: .bodyEnhancement(.chlorophyllSkin),
-                player: PlayerCharacter(dateOfBirth: .init(year: 10, month: .dusk, day: 1)!)
-            )
+            viewModel: assembly.resolver.cardDetailsViewModel(card: .job(.farming))
         )
     }
 }

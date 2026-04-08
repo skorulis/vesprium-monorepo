@@ -52,6 +52,10 @@ final class VespriumHackChoiceAssembly: AutoInitModuleAssembly {
         container.register(GameViewModel.self) { GameViewModel.make(resolver: $0) }
         container.register(PlayerCharacterWrapperViewModel.self) { PlayerCharacterWrapperViewModel.make(resolver: $0) }
         container.register(PlayerCardsViewModel.self) { PlayerCardsViewModel.make(resolver: $0) }
+        
+        container.register(CardDetailsViewModel.self) { (resolver: Resolver, card: GameCard) in
+            CardDetailsViewModel.make(resolver: resolver, card: card)
+        }
     }
 }
 

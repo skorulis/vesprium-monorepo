@@ -29,7 +29,6 @@ final class PlayerCardsViewModel: CoordinatorViewModel {
 
 extension PlayerCardsViewModel {
     func presentDetails(card: GameCard) {
-        let viewModel = CardDetailsViewModel(card: card, player: model.player)
-        coordinator?.present(MainPath.cardDetails(viewModel), style: .sheet)
+        coordinator?.present(MainPath.cardDetails(card), style: .sheet)
     }
 }

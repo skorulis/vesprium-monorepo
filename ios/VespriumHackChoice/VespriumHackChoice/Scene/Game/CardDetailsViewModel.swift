@@ -1,3 +1,5 @@
+import Knit
+import KnitMacros
 import Observation
 import SwiftUI
 
@@ -12,10 +14,27 @@ final class CardDetailsViewModel {
     }
 
     let card: GameCard
+    let mainStore: MainStore
 
-    init(card: GameCard, player: PlayerCharacter) {
+    @Resolvable<Resolver>
+    init(@Argument card: GameCard, mainStore: MainStore) {
         self.card = card
-        self.player = player
+        self.player = mainStore.player
+        self.mainStore = mainStore
+    }
+
+    var canRemove: Bool {
+        switch card.type {
+        case .job, .activity:
+            return true
+        case .bodyEnhancement:
+            return false
+        }
+    }
+
+    func remove() {
+        guard canRemove else { return }
+        mainStore.player.cards.remove(card: card)
     }
 
     var title: String {
