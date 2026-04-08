@@ -3,38 +3,44 @@
 import BioStats
 import Foundation
 
+struct ActivityDetails: Sendable, Equatable {
+    let activity: Activity
+    var monthlyCost: Int
+    var dailyHours: Int
+    var yearlyAttributeBonuses: [Attribute: Int]
+
+    var name: String { activity.rawValue.capitalized }
+}
+
 // Things that can be done outside of work
-enum Activity: Codable, Sendable, Equatable, CaseIterable {
+enum Activity: String, Codable, Sendable, Equatable, CaseIterable {
     case gym
     case school
     case meditation
 
-    var name: String {
-        String(describing: self).capitalized
-    }
-
-    var monthlyCost: Int {
+    var details: ActivityDetails {
         switch self {
-        case .gym: return 20
-        case .school: return 50
-        case .meditation: return 5
-        }
-    }
-
-    var dailyHours: Int {
-        switch self {
-        case .gym: return 2
-        case .school: return 3
-        case .meditation: return 1
-        }
-    }
-    
-    var yearlyAttributeBonuses: [Attribute: Int] {
-        switch self {
-        case .gym: return [.strength: 1]
-        case .school: return [.intelligence: 1]
-        default:
-            return [:]
+        case .gym:
+            ActivityDetails(
+                activity: self,
+                monthlyCost: 20,
+                dailyHours: 2,
+                yearlyAttributeBonuses: [.strength: 1]
+            )
+        case .school:
+            ActivityDetails(
+                activity: self,
+                monthlyCost: 50,
+                dailyHours: 3,
+                yearlyAttributeBonuses: [.intelligence: 1]
+            )
+        case .meditation:
+            ActivityDetails(
+                activity: self,
+                monthlyCost: 5,
+                dailyHours: 1,
+                yearlyAttributeBonuses: [:]
+            )
         }
     }
 }

@@ -58,7 +58,7 @@ final class GameService: ObservableObject {
     ) {
         for instance in player.cards.activities {
             guard case .activity(let activity) = instance.card else { continue }
-            let bonuses = activity.yearlyAttributeBonuses
+            let bonuses = activity.details.yearlyAttributeBonuses
             if bonuses.isEmpty { continue }
             let before = fullCalendarYearsHeld(since: instance.date, on: previousDate)
             let after = fullCalendarYearsHeld(since: instance.date, on: newDate)
