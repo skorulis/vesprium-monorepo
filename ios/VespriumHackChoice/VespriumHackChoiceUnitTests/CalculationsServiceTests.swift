@@ -11,43 +11,43 @@ struct CalculationServiceTests {
     var service: CalculationsService { assembly.resolver.calculationsService() }
 
     @Test @MainActor func farmingMonthlyEarningsSumsBaseAndIncomeBonuses() {
-        var attributes = AttributeValues()
-        attributes[.strength] = 12
-        attributes[.vitality] = 10
-        let earnings = service.monthlyJobEarnings(for: .farming, attributes: attributes)
+        var player = PlayerCharacter(dateOfBirth: SetupConstants.defaultPlayerDOB)
+        player.attributes[.strength] = 12
+        player.attributes[.vitality] = 10
+        let earnings = GameCalculator(player: player).monthlyJobEarnings(for: .farming)
         // 120 + 2*12 + 2*10
         #expect(earnings == 164)
     }
 
     @Test @MainActor func farmingWithBarometricEarsIncreasesEarningsByFiftyPercent() {
-        var attributes = AttributeValues()
-        attributes[.strength] = 12
-        attributes[.vitality] = 10
-        let cards = PlayerCards(bodyEnhancements: [
+        var player = PlayerCharacter(dateOfBirth: SetupConstants.defaultPlayerDOB)
+        player.attributes[.strength] = 12
+        player.attributes[.vitality] = 10
+        player.cards = PlayerCards(bodyEnhancements: [
             GameCardInstance(date: SetupConstants.gameStartTime, card: .bodyEnhancement(.barometricEars)),
         ])
-        let earnings = service.monthlyJobEarnings(for: .farming, attributes: attributes, cards: cards)
+        let earnings = GameCalculator(player: player).monthlyJobEarnings(for: .farming)
         // (120 + 2*12 + 2*10) * 3/2
         #expect(earnings == 246)
     }
 
     @Test @MainActor func shopKeeperMonthlyEarningsUsesCharismaAndIntelligence() {
-        var attributes = AttributeValues()
-        attributes[.charisma] = 15
-        attributes[.intelligence] = 8
-        let earnings = service.monthlyJobEarnings(for: .shopKeeper, attributes: attributes)
+        var player = PlayerCharacter(dateOfBirth: SetupConstants.defaultPlayerDOB)
+        player.attributes[.charisma] = 15
+        player.attributes[.intelligence] = 8
+        let earnings = GameCalculator(player: player).monthlyJobEarnings(for: .shopKeeper)
         // 100 + 2*15 + 2*8
         #expect(earnings == 146)
     }
 
     @Test @MainActor func shopKeeperIgnoresBarometricEars() {
-        var attributes = AttributeValues()
-        attributes[.charisma] = 15
-        attributes[.intelligence] = 8
-        let cards = PlayerCards(bodyEnhancements: [
+        var player = PlayerCharacter(dateOfBirth: SetupConstants.defaultPlayerDOB)
+        player.attributes[.charisma] = 15
+        player.attributes[.intelligence] = 8
+        player.cards = PlayerCards(bodyEnhancements: [
             GameCardInstance(date: SetupConstants.gameStartTime, card: .bodyEnhancement(.barometricEars)),
         ])
-        let earnings = service.monthlyJobEarnings(for: .shopKeeper, attributes: attributes, cards: cards)
+        let earnings = GameCalculator(player: player).monthlyJobEarnings(for: .shopKeeper)
         #expect(earnings == 146)
     }
 
@@ -79,17 +79,17 @@ struct CalculationServiceTests {
     }
 
     @Test func monthlyBalanceChangeCombinesJobBonusesAndActivityCosts() {
-        var attributes = AttributeValues()
-        attributes[.strength] = 12
-        attributes[.vitality] = 10
-        let cards = PlayerCards(
+        var player = PlayerCharacter(dateOfBirth: SetupConstants.defaultPlayerDOB)
+        player.attributes[.strength] = 12
+        player.attributes[.vitality] = 10
+        player.cards = PlayerCards(
             job: .farming,
             addedOn: SetupConstants.gameStartTime,
             activities: [
                 GameCardInstance(date: SetupConstants.gameStartTime, card: .activity(.gym)),
             ]
         )
-        let net = CalculationsService.monthlyBalanceChange(attributes: attributes, cards: cards)
+        let net = GameCalculator(player: player).monthlyBalanceChange()
         // farming 164 − gym 20
         #expect(net == 144)
     }

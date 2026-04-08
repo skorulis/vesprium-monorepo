@@ -79,10 +79,7 @@ struct PlayerCharacterView: View {
         PlayerCharacterView(
             player: playerCharacterPreview,
             currentGameDate: playerCharacterPreviewDate,
-            monthlyBalanceChange: CalculationsService.monthlyBalanceChange(
-                attributes: playerCharacterPreview.attributes,
-                cards: playerCharacterPreview.cards
-            )
+            monthlyBalanceChange: GameCalculator(player: playerCharacterPreview).monthlyBalanceChange()
         )
         .navigationTitle("Player")
     }

@@ -7,30 +7,21 @@ import Observation
 @MainActor
 @Observable
 final class PlayerCharacterWrapperViewModel {
-    var gameState: GameState
-    var player: PlayerCharacter
-
-    private let calculationsService: CalculationsService
+    var model: PlayerCharacterWrapperView.Model
 
     private var cancellables: Set<AnyCancellable> = []
 
-    var monthlyBalanceChange: Int {
-        calculationsService.monthlyBalanceChange()
-    }
-
     @Resolvable<Resolver>
-    init(mainStore: MainStore, calculationsService: CalculationsService) {
-        self.gameState = mainStore.gameState
-        self.player = mainStore.player
-        self.calculationsService = calculationsService
+    init(mainStore: MainStore) {
+        self.model = .init(gameState: mainStore.gameState, player: mainStore.player)
 
         mainStore.$gameState.sink { [unowned self] in
-            self.gameState = $0
+            self.model.gameState = $0
         }
         .store(in: &cancellables)
 
         mainStore.$player.sink { [unowned self] in
-            self.player = $0
+            self.model.player = $0
         }
         .store(in: &cancellables)
     }

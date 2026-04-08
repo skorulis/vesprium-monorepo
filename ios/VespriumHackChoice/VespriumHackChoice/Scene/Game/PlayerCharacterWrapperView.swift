@@ -6,9 +6,20 @@ struct PlayerCharacterWrapperView: View {
 
     var body: some View {
         PlayerCharacterView(
-            player: viewModel.player,
-            currentGameDate: viewModel.gameState.currentGameDate,
-            monthlyBalanceChange: viewModel.monthlyBalanceChange
+            player: viewModel.model.player,
+            currentGameDate: viewModel.model.gameState.currentGameDate,
+            monthlyBalanceChange: viewModel.model.monthlyBalanceChange
         )
+    }
+}
+
+extension PlayerCharacterWrapperView {
+    struct Model {
+        var gameState: GameState
+        var player: PlayerCharacter
+        
+        var monthlyBalanceChange: Int {
+            GameCalculator(player: player).monthlyBalanceChange()
+        }
     }
 }
