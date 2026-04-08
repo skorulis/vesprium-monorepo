@@ -19,12 +19,12 @@ struct GameView: View {
                 .padding(.vertical, 12)
                 Spacer(minLength: 0)
                 Button {
-                    viewModel.togglePlayback()
+                    viewModel.advanceTime()
                 } label: {
-                    Image(systemName: viewModel.isPlaying ? "pause.circle.fill" : "play.circle.fill")
+                    Image(systemName: "forward.circle.fill")
                         .font(.system(size: 120))
                         .symbolRenderingMode(.hierarchical)
-                        .accessibilityLabel(viewModel.isPlaying ? "Pause" : "Play")
+                        .accessibilityLabel("Advance time")
                 }
                 .buttonStyle(.plain)
                 .disabled(viewModel.gameState.pendingEvent != nil)

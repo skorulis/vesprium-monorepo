@@ -9,37 +9,11 @@ import KnitMacros
 final class GameService: ObservableObject {
     private let store: MainStore
     private let eventGenerator: EventGenerator
-    private var tickTask: Task<Void, Never>?
-
-    @Published private(set) var isPlaying = false
 
     @Resolvable<Resolver>
     init(store: MainStore, eventGenerator: EventGenerator) {
         self.store = store
         self.eventGenerator = eventGenerator
-    }
-
-    func toggle() {
-        if isPlaying {
-            stop()
-        } else {
-            start()
-        }
-    }
-
-    func start() {
-        guard !isPlaying else { return }
-        guard store.gameState.pendingEvent == nil else { return }
-        isPlaying = true
-        tickTask = Task { @MainActor in
-            while !Task.isCancelled {
-                try? await Task.sleep(for: .seconds(5))
-                guard !Task.isCancelled else { break }
-                guard self.isPlaying else { break }
-                guard self.store.gameState.pendingEvent == nil else { break }
-                advanceTime()
-            }
-        }
     }
 
     func advanceTime() {
@@ -52,7 +26,6 @@ final class GameService: ObservableObject {
             state = self.store.gameState
             state.pendingEvent = event
             self.store.gameState = state
-            self.stop()
         }
     }
 
@@ -60,12 +33,6 @@ final class GameService: ObservableObject {
         var player = self.store.player
         player.money += player.cards.monthlyBalanceChange
         self.store.player = player
-    }
-
-    func stop() {
-        isPlaying = false
-        tickTask?.cancel()
-        tickTask = nil
     }
 
     func resolvePendingEvent(selecting card: GameCard?) {
@@ -80,6 +47,5 @@ final class GameService: ObservableObject {
         var state = store.gameState
         state.pendingEvent = nil
         store.gameState = state
-        self.start()
     }
 }

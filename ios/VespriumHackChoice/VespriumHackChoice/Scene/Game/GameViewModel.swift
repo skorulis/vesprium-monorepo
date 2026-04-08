@@ -14,20 +14,11 @@ final class GameViewModel {
 
     private var cancellables: Set<AnyCancellable> = []
 
-    var isPlaying: Bool
-
     @Resolvable<Resolver>
     init(gameService: GameService, mainStore: MainStore) {
         self.gameService = gameService
         self.gameState = mainStore.gameState
         self.player = mainStore.player
-
-        self.isPlaying = gameService.isPlaying
-
-        gameService.$isPlaying.sink { [unowned self] in
-            self.isPlaying = $0
-        }
-        .store(in: &cancellables)
 
         mainStore.$gameState.sink { [unowned self] in
             self.gameState = $0
@@ -40,8 +31,8 @@ final class GameViewModel {
         .store(in: &cancellables)
     }
 
-    func togglePlayback() {
-        gameService.toggle()
+    func advanceTime() {
+        gameService.advanceTime()
     }
 
     func resolvePendingEvent(selecting card: GameCard?) {
