@@ -33,7 +33,7 @@ struct GameCalculator {
             JobIncomeContribution(
                 attribute: entry.key,
                 coefficient: entry.value,
-                attributeValue: player.attributes[entry.key]
+                attributeValue: player.effectiveAttributes[entry.key]
             )
         }
         let fromAttributes = contributions.reduce(0) { $0 + $1.amount }
@@ -83,7 +83,7 @@ struct GameCalculator {
 
     /// Fixed monthly costs: food scales with strength; housing is flat; activity row sums equipped activities’ costs.
     func monthlyLivingExpensesBreakdown() -> MonthlyLivingExpensesBreakdown {
-        let strength = player.attributes[.strength]
+        let strength = player.effectiveAttributes[.strength]
         let food = 20 + strength
         return MonthlyLivingExpensesBreakdown(
             food: food,
@@ -121,7 +121,7 @@ struct GameCalculator {
         let age = player.ageInFullYears(on: currentGameDate)
         let scaledAgeChance = ((age - 20) * 100) / 80
         let baseChance = min(100, max(0, scaledAgeChance))
-        let adjustedChance = baseChance - player.attributes[.vitality]
+        let adjustedChance = baseChance - player.effectiveAttributes[.vitality]
         return min(100, max(0, adjustedChance))
     }
 }

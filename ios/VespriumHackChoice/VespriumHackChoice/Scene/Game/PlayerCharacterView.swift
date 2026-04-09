@@ -1,3 +1,4 @@
+import BioEnhancements
 import BioStats
 import SwiftUI
 
@@ -67,9 +68,12 @@ struct PlayerCharacterView: View {
             Section("Attributes") {
                 ForEach(Attribute.allCases, id: \.self) { attribute in
                     LabeledContent(attribute.name) {
-                        let value = model.player.attributes[attribute]
-                        Text("\(value)")
+                        let base = model.player.attributes[attribute]
+                        let effective = model.player.effectiveAttributes[attribute]
+                        let delta = effective - base
+                        Text("\(effective)")
                             .monospacedDigit()
+                            .foregroundStyle(delta > 0 ? Color.green : delta < 0 ? Color.red : Color.primary)
                     }
                 }
             }

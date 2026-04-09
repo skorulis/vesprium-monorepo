@@ -29,7 +29,7 @@ struct MonthlyChoiceCatalogEntry: Sendable {
         case .moneyAtLeast(let threshold):
             return player.money >= threshold
         case .vitalityAtMost(let threshold):
-            return player.attributes[.vitality] <= threshold
+            return player.effectiveAttributes[.vitality] <= threshold
         case .activityCountAtLeast(let count):
             return player.cards.activities.count >= count
         }

@@ -1,6 +1,7 @@
 //  Created by Alex Skorulis on 8/4/2026.
 
 import BioEnhancements
+import BioStats
 import Foundation
 
 struct PlayerCards: Codable, Sendable, Equatable {
@@ -62,6 +63,16 @@ struct PlayerCards: Codable, Sendable, Equatable {
         }
         self.activities = activities
         self.bodyEnhancements = bodyEnhancements
+    }
+    
+    /// All `AttributeBonus` values contributed by currently equipped body enhancements.
+    var equippedAttributeBonuses: [AttributeBonus] {
+        bodyEnhancementCards.flatMap { card -> [AttributeBonus] in
+            if case .bodyEnhancement(let enhancement) = card {
+                return enhancement.attributeBonuses
+            }
+            return []
+        }
     }
 
     mutating func add(card: GameCard) {

@@ -6,6 +6,7 @@ import BioStats
 public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
     case chlorophyllSkin
     case barometricEars
+    case muscleEnergyImplants
 
     public var name: String {
         rawValue.capitalized
@@ -17,6 +18,8 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
             return "Absorbs energy from the sun to reduce food needs"
         case .barometricEars:
             return "Eardrums sensitive enough to detect changes in barometric pressure"
+        case .muscleEnergyImplants:
+            return "Implants that hold energy that give a boost to strength when needed "
         }
     }
 
@@ -26,6 +29,8 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
             return 100
         case .barometricEars:
             return 100
+        case .muscleEnergyImplants:
+            return 200
         }
     }
 
@@ -33,6 +38,8 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
         switch self {
         case .chlorophyllSkin:
             return [AttributeBonus(attribute: .stability, value: -1)]
+        case .muscleEnergyImplants:
+            return [AttributeBonus(attribute: .strength, value: 50, kind: .multiplicative)]
         default:
             return []
         }

@@ -42,4 +42,9 @@ struct PlayerCharacter: Codable, Sendable, Equatable {
     var job: Job? {
         return cards.job
     }
+    
+    /// Base attribute values with all equipped body enhancement bonuses applied.
+    var effectiveAttributes: AttributeValues {
+        attributes.applyingBonuses(cards.equippedAttributeBonuses)
+    }
 }
