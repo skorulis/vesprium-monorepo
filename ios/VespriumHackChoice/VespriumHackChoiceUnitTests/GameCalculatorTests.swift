@@ -52,7 +52,21 @@ struct GameCalculatorTests {
         let breakdown = GameCalculator(player: player).monthlyLivingExpensesBreakdown()
         #expect(breakdown.food == 32)
         #expect(breakdown.housing == 30)
+        #expect(breakdown.activityCards == 0)
         #expect(breakdown.total == 62)
+    }
+
+    @Test func monthlyLivingExpensesBreakdownIncludesActivityCardCostsInTotal() {
+        var player = PlayerCharacter(dateOfBirth: VespriumDate(year: 20, month: .stir, day: 1)!)
+        player.attributes[.strength] = 12
+        player.cards = PlayerCards(
+            activities: [
+                .activity(.gym)
+            ]
+        )
+        let breakdown = GameCalculator(player: player).monthlyLivingExpensesBreakdown()
+        #expect(breakdown.activityCards == 20)
+        #expect(breakdown.total == 82)
     }
 
     @Test func monthlyBalanceChangeSubtractsLivingExpensesFromCardNet() {

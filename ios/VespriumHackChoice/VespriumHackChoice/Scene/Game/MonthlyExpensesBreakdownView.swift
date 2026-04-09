@@ -18,6 +18,11 @@ struct MonthlyExpensesBreakdownView: View {
                         .monospacedDigit()
                 }
 
+                LabeledContent("Activities") {
+                    Text(viewModel.breakdown.activityCards, format: .number)
+                        .monospacedDigit()
+                }
+
                 LabeledContent("Total") {
                     Text(viewModel.breakdown.total, format: .number)
                         .monospacedDigit()

@@ -27,6 +27,15 @@ struct PlayerCharacterView: View {
                     Text(model.player.money, format: .number)
                         .monospacedDigit()
                 }
+                LabeledContent("Job income") {
+                    if let income = model.monthlyJobIncome {
+                        Text(income, format: .number)
+                            .monospacedDigit()
+                    } else {
+                        Text("—")
+                            .foregroundStyle(.secondary)
+                    }
+                }
                 LabeledContent("Monthly expenses") {
                     HStack(spacing: 8) {
                         Text(model.monthlyLivingExpensesBreakdown.total, format: .number)
@@ -106,6 +115,12 @@ extension PlayerCharacterView {
 
         var monthlyLivingExpensesBreakdown: GameCalculator.MonthlyLivingExpensesBreakdown {
             GameCalculator(player: player).monthlyLivingExpensesBreakdown()
+        }
+
+        /// Monthly earnings from the equipped job (including attribute bonuses), or `nil` if unemployed.
+        var monthlyJobIncome: Int? {
+            guard let job = player.job else { return nil }
+            return GameCalculator(player: player).monthlyJobEarnings(for: job)
         }
     }
 }

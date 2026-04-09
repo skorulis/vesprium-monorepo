@@ -72,22 +72,35 @@ struct GameCalculator {
         /// `20 + 1 × strength`
         var food: Int
         var housing: Int
+        /// Sum of monthly costs for equipped activity cards (same magnitude as negative `monthlyMoneyChange` on cards).
+        var activityCards: Int
 
+        /// Food, housing, and activity card costs combined (for expense breakdown UI).
         var total: Int {
-            food + housing
+            food + housing + activityCards
         }
     }
 
-    /// Fixed monthly costs: food scales with strength; housing is flat.
+    /// Fixed monthly costs: food scales with strength; housing is flat; activity row sums equipped activities’ costs.
     func monthlyLivingExpensesBreakdown() -> MonthlyLivingExpensesBreakdown {
         let strength = player.attributes[.strength]
         let food = 20 + strength
-        return MonthlyLivingExpensesBreakdown(food: food, housing: 30)
+        return MonthlyLivingExpensesBreakdown(
+            food: food,
+            housing: 30,
+            activityCards: monthlyActivityCardsCost()
+        )
+    }
+
+    /// Sum of monthly costs from equipped activity cards (`max(0, -monthlyMoneyChange)` each).
+    private func monthlyActivityCardsCost() -> Int {
+        player.cards.activityCards.reduce(0) { $0 + max(0, -$1.monthlyMoneyChange) }
     }
 
     /// Net monthly coins: job earnings (including attribute and enhancement bonuses) plus activity costs and other
-    /// card effects, minus monthly living expenses (food and housing).
+    /// card effects, minus monthly living expenses (food and housing only—activities are already in the card sum).
     func monthlyBalanceChange() -> Int {
+        let living = monthlyLivingExpensesBreakdown()
         let fromCards = player.cards.allCards.reduce(0) { total, card in
             switch card {
             case .job(let job):
@@ -96,7 +109,7 @@ struct GameCalculator {
                 return total + card.monthlyMoneyChange
             }
         }
-        return fromCards - monthlyLivingExpensesBreakdown().total
+        return fromCards - living.food - living.housing
     }
 
     /// Weakness chance from aging, offset by vitality.
