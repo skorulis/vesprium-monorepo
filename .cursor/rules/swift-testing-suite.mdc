@@ -1,0 +1,34 @@
+---
+description: Swift Testing — @Test must live inside a struct; no top-level @Test in test files
+globs: "**/Tests/**/*.swift"
+alwaysApply: false
+---
+
+# Swift Testing: tests belong in a suite
+
+Swift unit tests that use Swift Testing must be **grouped in a suite**. **`@Test` must not appear at file top level.**
+
+- Declare a **`@Suite`** type (struct or enum) and put **`@Test`** methods or static functions **inside** that type.
+- Do not place **`@Test`** on free functions or properties at the root of the file.
+
+```swift
+// ❌ BAD — top-level @Test
+import Testing
+
+@Test func example() {
+  #expect(true)
+}
+```
+
+```swift
+// ✅ GOOD — @Test inside @Suite
+import Testing
+
+struct ExampleTests {
+  @Test func example() {
+    #expect(true)
+  }
+}
+```
+
+If you need shared setup, use suite types with initializers, nested types, or suite-scoped helpers as appropriate to existing project patterns.

@@ -21,4 +21,14 @@ public struct AttributeValues: Codable, Sendable, Equatable {
             storage[attribute] = newValue
         }
     }
+
+    /// Returns a copy with ``AttributeBonus/adjustedValue(base:bonuses:attribute:)`` applied per attribute.
+    public func applyingBonuses(_ bonuses: [AttributeBonus]) -> AttributeValues {
+        var result = self
+        for attribute in Attribute.allCases {
+            let base = self[attribute]
+            result[attribute] = AttributeBonus.adjustedValue(base: base, bonuses: bonuses, attribute: attribute)
+        }
+        return result
+    }
 }
