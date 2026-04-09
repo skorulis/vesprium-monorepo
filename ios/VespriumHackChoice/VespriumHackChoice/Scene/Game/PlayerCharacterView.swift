@@ -27,6 +27,19 @@ struct PlayerCharacterView: View {
                     Text(model.player.money, format: .number)
                         .monospacedDigit()
                 }
+                LabeledContent("Monthly expenses") {
+                    HStack(spacing: 8) {
+                        Text(model.monthlyLivingExpensesBreakdown.total, format: .number)
+                            .monospacedDigit()
+                        Button {
+                            viewModel.presentMonthlyExpensesBreakdown()
+                        } label: {
+                            Image(systemName: "info.circle")
+                        }
+                        .buttonStyle(.borderless)
+                        .accessibilityLabel("Monthly expenses breakdown")
+                    }
+                }
                 LabeledContent("Monthly change") {
                     Text(monthlyBalanceChangeLabel)
                         .monospacedDigit()
@@ -60,7 +73,7 @@ struct PlayerCharacterView: View {
         return "\(years) years, \(months) months"
     }
 
-    /// Net cash flow from jobs and activities for the upcoming month (matches `GameService` month ticks).
+    /// Net cash flow after jobs, cards, and living expenses (matches `GameService` month ticks).
     private var monthlyBalanceChangeLabel: String {
         let change = model.monthlyBalanceChange
         if change > 0 {
@@ -89,6 +102,10 @@ extension PlayerCharacterView {
 
         var monthlyBalanceChange: Int {
             GameCalculator(player: player).monthlyBalanceChange()
+        }
+
+        var monthlyLivingExpensesBreakdown: GameCalculator.MonthlyLivingExpensesBreakdown {
+            GameCalculator(player: player).monthlyLivingExpensesBreakdown()
         }
     }
 }

@@ -45,4 +45,27 @@ struct GameCalculatorTests {
         // Base chance clamps to 100 before vitality subtraction.
         #expect(GameCalculator(player: olderPlayer).weaknessChance(on: age120Date) == 85)
     }
+
+    @Test func monthlyLivingExpensesBreakdownUsesFoodAndHousingFormulas() {
+        var player = PlayerCharacter(dateOfBirth: VespriumDate(year: 20, month: .stir, day: 1)!)
+        player.attributes[.strength] = 12
+        let breakdown = GameCalculator(player: player).monthlyLivingExpensesBreakdown()
+        #expect(breakdown.food == 32)
+        #expect(breakdown.housing == 30)
+        #expect(breakdown.total == 62)
+    }
+
+    @Test func monthlyBalanceChangeSubtractsLivingExpensesFromCardNet() {
+        var player = PlayerCharacter(dateOfBirth: VespriumDate(year: 20, month: .stir, day: 1)!)
+        player.attributes[.strength] = 12
+        player.attributes[.vitality] = 10
+        player.cards = PlayerCards(
+            job: .farming,
+            activities: [
+                .activity(.gym)
+            ]
+        )
+        let net = GameCalculator(player: player).monthlyBalanceChange()
+        #expect(net == 82)
+    }
 }

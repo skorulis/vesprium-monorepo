@@ -89,7 +89,7 @@ struct CalculationServiceTests {
             ]
         )
         let net = GameCalculator(player: player).monthlyBalanceChange()
-        // farming 164 − gym 20
-        #expect(net == 144)
+        // farming 164 − gym 20 − living expenses (20 + 12 + 30)
+        #expect(net == 82)
     }
 }

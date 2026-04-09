@@ -68,10 +68,27 @@ struct GameCalculator {
         monthlyJobIncomeBreakdown(for: job).total
     }
 
+    struct MonthlyLivingExpensesBreakdown: Sendable, Equatable {
+        /// `20 + 1 × strength`
+        var food: Int
+        var housing: Int
+
+        var total: Int {
+            food + housing
+        }
+    }
+
+    /// Fixed monthly costs: food scales with strength; housing is flat.
+    func monthlyLivingExpensesBreakdown() -> MonthlyLivingExpensesBreakdown {
+        let strength = player.attributes[.strength]
+        let food = 20 + strength
+        return MonthlyLivingExpensesBreakdown(food: food, housing: 30)
+    }
+
     /// Net monthly coins: job earnings (including attribute and enhancement bonuses) plus activity costs and other
-    /// card effects.
+    /// card effects, minus monthly living expenses (food and housing).
     func monthlyBalanceChange() -> Int {
-        player.cards.allCards.reduce(0) { total, card in
+        let fromCards = player.cards.allCards.reduce(0) { total, card in
             switch card {
             case .job(let job):
                 return total + monthlyJobEarnings(for: job)
@@ -79,6 +96,7 @@ struct GameCalculator {
                 return total + card.monthlyMoneyChange
             }
         }
+        return fromCards - monthlyLivingExpensesBreakdown().total
     }
 
     /// Weakness chance from aging, offset by vitality.

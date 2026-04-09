@@ -1,3 +1,4 @@
+import ASKCoordinator
 import ASKCore
 import Combine
 import Knit
@@ -6,7 +7,9 @@ import Observation
 
 @MainActor
 @Observable
-final class PlayerCharacterViewModel {
+final class PlayerCharacterViewModel: CoordinatorViewModel {
+    weak var coordinator: ASKCoordinator.Coordinator?
+
     var model: PlayerCharacterView.Model
 
     private var cancellables: Set<AnyCancellable> = []
@@ -24,5 +27,11 @@ final class PlayerCharacterViewModel {
             self.model.player = $0
         }
         .store(in: &cancellables)
+    }
+}
+
+extension PlayerCharacterViewModel {
+    func presentMonthlyExpensesBreakdown() {
+        coordinator?.present(MainPath.monthlyExpensesBreakdown, style: .sheet)
     }
 }
