@@ -23,7 +23,9 @@ struct EventGenerator {
     }
 
     /// Up to four random cards from ``allOfferableCards()`` that the player does not already have.
-    func yearlyCardChoiceEvent() -> GameEvent? {
+    /// - Parameter forCompletedYear: The Vesprium calendar year that just ended (shown in ``YearEndReview``).
+    func yearlyCardChoiceEvent(forCompletedYear year: Int) -> GameEvent? {
+        guard Self.shouldOfferYearlyCardChoice(forCompletedYear: year) else { return nil }
         let owned = mainStore.player.cards.allCards
         let available = Self.allOfferableCards().filter { card in
             !owned.contains(where: { $0 == card })
@@ -38,6 +40,11 @@ struct EventGenerator {
         )
     }
 
+    /// Yearly card pick is offered on **odd** completed years only (e.g. 1251, 1253) to keep the milestone rarer.
+    static func shouldOfferYearlyCardChoice(forCompletedYear year: Int) -> Bool {
+        year % 2 == 1
+    }
+
     func nextEvent() -> GameEvent? {
         if mainStore.player.job == nil {
             return firstJobOfferEvent()
@@ -45,7 +52,22 @@ struct EventGenerator {
         if mainStore.player.cards.activities.isEmpty {
             return activityChoiceEvent()
         }
-        return nil
+        return monthlyChoiceEvent()
+    }
+
+    /// Random dilemma from ``MonthlyChoiceCatalog`` whose situation keys match the current player.
+    func monthlyChoiceEvent() -> GameEvent? {
+        let player = mainStore.player
+        let matching = MonthlyChoiceCatalog.entries.filter { $0.matches(player: player) }
+        guard let entry = matching.shuffled().first else { return nil }
+        return GameEvent(
+            text: entry.headline,
+            cards: [
+                .monthlyChoice(entry.optionA),
+                .monthlyChoice(entry.optionB)
+            ],
+            skippable: true
+        )
     }
 
     /// Offer shown when the player has no job after a month advances.

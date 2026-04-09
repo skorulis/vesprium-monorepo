@@ -63,6 +63,7 @@ struct PlayerCardsView: View {
         case .job: return "Job"
         case .activity: return "Activities"
         case .bodyEnhancement: return "Body modifications"
+        case .monthlyChoice: return "Monthly choices"
         }
     }
 }

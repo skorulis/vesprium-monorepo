@@ -23,7 +23,7 @@ final class GameService: ObservableObject {
         let crossedYear = previousDate.year != newDate.year
         state.currentGameDate = newDate
         self.store.gameState = state
-        self.executeMonthChanges(previousDate: previousDate, newDate: newDate)
+        let delta = self.executeMonthChanges(previousDate: previousDate, newDate: newDate)
         if crossedYear {
             self.applyYearlyWeaknessCheck(on: newDate)
             state = self.store.gameState
@@ -35,23 +35,39 @@ final class GameService: ObservableObject {
         }
         state = self.store.gameState
         if state.pendingYearReview != nil {
+            self.appendMonthSummary(
+                date: newDate,
+                moneyDelta: delta,
+                eventHeadline: "Year \(previousDate.year) ended — open your review.",
+                choiceSummary: nil
+            )
             return
         }
-        if let event = self.eventGenerator.nextEvent() {
-            state.pendingEvent = event
+        let queuedEvent = self.eventGenerator.nextEvent()
+        if let queuedEvent {
+            state.pendingEvent = queuedEvent
             self.store.gameState = state
+            self.appendMonthSummary(
+                date: newDate,
+                moneyDelta: delta,
+                eventHeadline: queuedEvent.text,
+                choiceSummary: nil
+            )
+        } else {
+            self.appendMonthSummary(date: newDate, moneyDelta: delta, eventHeadline: nil, choiceSummary: nil)
         }
     }
 
     func resolveYearReview() {
-        guard self.store.gameState.pendingYearReview != nil else { return }
+        guard let review = self.store.gameState.pendingYearReview else { return }
+        let completedYear = review.year
         var player = self.store.player
         self.applyActivityYearlyAttributeBonuses(to: &player)
         self.store.player = player
         var state = self.store.gameState
         state.pendingYearReview = nil
         self.store.gameState = state
-        if let yearly = self.eventGenerator.yearlyCardChoiceEvent() {
+        if let yearly = self.eventGenerator.yearlyCardChoiceEvent(forCompletedYear: completedYear) {
             state = self.store.gameState
             state.pendingEvent = yearly
             self.store.gameState = state
@@ -62,7 +78,8 @@ final class GameService: ObservableObject {
         }
     }
 
-    private func executeMonthChanges(previousDate: VespriumDate, newDate: VespriumDate) {
+    @discardableResult
+    private func executeMonthChanges(previousDate: VespriumDate, newDate: VespriumDate) -> Int {
         var player = self.store.player
         var state = self.store.gameState
         var currentYear = state.currentYear
@@ -71,6 +88,75 @@ final class GameService: ObservableObject {
         currentYear.moneyNetChange += delta
         state.currentYear = currentYear
         self.store.player = player
+        self.store.gameState = state
+        return delta
+    }
+
+    private func appendMonthSummary(
+        date: VespriumDate,
+        moneyDelta: Int,
+        eventHeadline: String?,
+        choiceSummary: String?
+    ) {
+        var state = self.store.gameState
+        state.monthLog.append(
+            MonthSummary(
+                date: date,
+                moneyDelta: moneyDelta,
+                eventHeadline: eventHeadline,
+                choiceSummary: choiceSummary
+            )
+        )
+        if state.monthLog.count > 48 {
+            state.monthLog.removeFirst(state.monthLog.count - 48)
+        }
+        self.store.gameState = state
+    }
+
+    private func recordChoiceOnLastMonthSummary(_ label: String) {
+        var state = self.store.gameState
+        guard !state.monthLog.isEmpty else { return }
+        let index = state.monthLog.count - 1
+        state.monthLog[index].choiceSummary = label
+        self.store.gameState = state
+    }
+
+    private func applyMonthlyChoiceEffect(_ effect: MonthlyChoiceEffect) {
+        var player = self.store.player
+        var state = self.store.gameState
+        var currentYear = state.currentYear
+        switch effect {
+        case .moneyDelta(let amount):
+            player.money += amount
+            currentYear.moneyNetChange += amount
+        case .vitalityDelta(let amount):
+            player.attributes[.vitality] = max(0, player.attributes[.vitality] + amount)
+            if amount != 0 {
+                currentYear.attributeIncreases[.vitality, default: 0] += amount
+            }
+        case .attributeDelta(let attribute, let amount):
+            player.attributes[attribute] += amount
+            if amount > 0 {
+                currentYear.attributeIncreases[attribute, default: 0] += amount
+            }
+        case .payTuition(let cost, let attribute, let amount):
+            player.money -= cost
+            currentYear.moneyNetChange -= cost
+            player.attributes[attribute] += amount
+            if amount > 0 {
+                currentYear.attributeIncreases[attribute, default: 0] += amount
+            }
+        case .riskMoneyOrVitality(let moneyIfSuccess, let vitalityLossIfFail, let successPercent):
+            if Chance(percent: successPercent).check() {
+                player.money += moneyIfSuccess
+                currentYear.moneyNetChange += moneyIfSuccess
+            } else {
+                player.attributes[.vitality] = max(0, player.attributes[.vitality] - vitalityLossIfFail)
+                currentYear.attributeIncreases[.vitality, default: 0] -= vitalityLossIfFail
+            }
+        }
+        self.store.player = player
+        state.currentYear = currentYear
         self.store.gameState = state
     }
 
@@ -114,18 +200,27 @@ final class GameService: ObservableObject {
 
     func resolvePendingEvent(selecting card: GameCard?) {
         guard let event = store.gameState.pendingEvent else { return }
-        var state = store.gameState
         if let card {
-            let price = card.price
-            var player = store.player
-            player.money -= price
-            player.cards.add(card: card)
-            store.player = player
-            state.currentYear.moneyNetChange -= price
+            switch card {
+            case .monthlyChoice(let option):
+                self.applyMonthlyChoiceEffect(option.effect)
+                self.recordChoiceOnLastMonthSummary(option.title)
+            default:
+                let price = card.price
+                var player = store.player
+                player.money -= price
+                player.cards.add(card: card)
+                store.player = player
+                var state = store.gameState
+                state.currentYear.moneyNetChange -= price
+                store.gameState = state
+                self.recordChoiceOnLastMonthSummary(card.name)
+            }
         } else {
             guard event.skippable else { return }
+            self.recordChoiceOnLastMonthSummary("Skipped")
         }
-
+        var state = store.gameState
         state.pendingEvent = nil
         store.gameState = state
     }

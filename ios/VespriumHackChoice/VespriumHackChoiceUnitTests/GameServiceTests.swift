@@ -190,6 +190,65 @@ struct GameServiceTests {
         #expect(mainStore.gameState.pendingEvent == nil)
     }
 
+    @Test func yearlyCardChoiceOfferedOnlyOnOddCompletedYears() {
+        #expect(EventGenerator.shouldOfferYearlyCardChoice(forCompletedYear: 1250) == false)
+        #expect(EventGenerator.shouldOfferYearlyCardChoice(forCompletedYear: 1251) == true)
+    }
+
+    @Test func advanceTimeWithJobAndActivityQueuesMonthlyEventAndMonthLog() {
+        var player = mainStore.player
+        player.cards = PlayerCards(
+            job: .farming,
+            activities: [.activity(.school)]
+        )
+        mainStore.player = player
+        var state = mainStore.gameState
+        state.currentGameDate = SetupConstants.gameStartTime
+        state.currentYear = .zero
+        state.pendingYearReview = nil
+        state.pendingEvent = nil
+        state.monthLog = []
+        mainStore.gameState = state
+
+        gameService.advanceTime()
+
+        #expect(mainStore.gameState.monthLog.count == 1)
+        #expect(mainStore.gameState.pendingEvent != nil)
+        guard let pick = mainStore.gameState.pendingEvent?.cards.first else {
+            Issue.record("Expected monthly or other event with cards")
+            return
+        }
+        gameService.resolvePendingEvent(selecting: pick)
+        #expect(mainStore.gameState.pendingEvent == nil)
+        #expect(mainStore.gameState.monthLog.last?.choiceSummary != nil)
+    }
+
+    @Test func monthlyChoiceMoneyDeltaAppliesWithoutAddingCard() {
+        let option = MonthlyChoiceOption(
+            id: "test_money",
+            title: "Coin bonus",
+            hint: "+10 coins",
+            effect: .moneyDelta(10)
+        )
+        var player = mainStore.player
+        player.cards = PlayerCards(job: .farming, activities: [.activity(.school)])
+        let moneyBefore = player.money
+        mainStore.player = player
+        var state = mainStore.gameState
+        state.currentGameDate = SetupConstants.gameStartTime
+        state.pendingEvent = GameEvent(
+            text: "Test",
+            cards: [.monthlyChoice(option)],
+            skippable: true
+        )
+        mainStore.gameState = state
+
+        gameService.resolvePendingEvent(selecting: .monthlyChoice(option))
+
+        #expect(mainStore.player.money == moneyBefore + 10)
+        #expect(mainStore.player.cards.activities.count == 1)
+    }
+
     @Test func yearBoundaryWeaknessSuccessDoesNotReduceVitality() {
         var player = mainStore.player
         player.dateOfBirth = SetupConstants.gameStartTime.adding(years: -100)

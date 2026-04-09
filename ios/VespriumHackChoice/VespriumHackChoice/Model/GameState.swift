@@ -11,16 +11,20 @@ struct GameState: Sendable, Equatable, Codable {
     var currentYear: CurrentYear
     /// When set, the player must dismiss the year summary before other pending events run.
     var pendingYearReview: YearEndReview?
+    /// Recent months for the on-screen log (newest last; capped in ``GameService``).
+    var monthLog: [MonthSummary]
 
     init(
         currentGameDate: VespriumDate,
         pendingEvent: GameEvent? = nil,
         currentYear: CurrentYear = .zero,
-        pendingYearReview: YearEndReview? = nil
+        pendingYearReview: YearEndReview? = nil,
+        monthLog: [MonthSummary] = []
     ) {
         self.currentGameDate = currentGameDate
         self.pendingEvent = pendingEvent
         self.currentYear = currentYear
         self.pendingYearReview = pendingYearReview
+        self.monthLog = monthLog
     }
 }

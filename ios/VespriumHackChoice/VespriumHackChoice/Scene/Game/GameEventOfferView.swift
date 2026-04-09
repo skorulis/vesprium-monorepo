@@ -21,7 +21,10 @@ struct GameEventOfferView: View {
                             Button {
                                 onSelectCard(card)
                             } label: {
-                                GameCardView(card: card, showsPrice: true)
+                                GameCardView(
+                                    card: card,
+                                    showsPrice: event.cards.contains { $0.showsPurchasePriceInOffer }
+                                )
                             }
                             .buttonStyle(.plain)
                         }

@@ -55,13 +55,23 @@ struct GameCardView: View {
 
     @ViewBuilder
     private var footer: some View {
-        HStack(spacing: 8) {
-            maybeHours
-            maybeMoney
-            Spacer(minLength: 0)
+        if case .monthlyChoice(let option) = card {
+            Text(option.hint)
+                .font(.caption)
+                .multilineTextAlignment(.center)
+                .lineLimit(3)
+                .minimumScaleFactor(0.8)
+                .foregroundStyle(.secondary)
+                .frame(maxWidth: .infinity)
+        } else {
+            HStack(spacing: 8) {
+                maybeHours
+                maybeMoney
+                Spacer(minLength: 0)
+            }
+            .foregroundStyle(.secondary)
+            .frame(maxWidth: .infinity)
         }
-        .foregroundStyle(.secondary)
-        .frame(maxWidth: .infinity)
     }
 
     @ViewBuilder
@@ -95,6 +105,7 @@ struct GameCardView: View {
         case .job: return Color.blue.opacity(0.65)
         case .activity: return Color.purple.opacity(0.65)
         case .bodyEnhancement: return Color.teal.opacity(0.65)
+        case .monthlyChoice: return Color.orange.opacity(0.75)
         }
     }
 
@@ -112,6 +123,10 @@ struct GameCardView: View {
             parts.append("\(card.price) coins")
         }
         parts.append(card.name)
+        if case .monthlyChoice(let option) = card {
+            parts.append(option.hint)
+            return parts.joined(separator: ", ")
+        }
         if card.dailyHours != 0 {
             parts.append("\(card.dailyHours) hours per day")
         }

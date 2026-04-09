@@ -27,7 +27,7 @@ final class CardDetailsViewModel {
         switch card.type {
         case .job, .activity:
             return true
-        case .bodyEnhancement:
+        case .bodyEnhancement, .monthlyChoice:
             return false
         }
     }
@@ -46,6 +46,7 @@ final class CardDetailsViewModel {
         case .job: return "Job"
         case .activity: return "Activity"
         case .bodyEnhancement: return "Body modification"
+        case .monthlyChoice: return "Monthly choice"
         }
     }
 
@@ -54,11 +55,16 @@ final class CardDetailsViewModel {
         case .job: return .blue
         case .activity: return .purple
         case .bodyEnhancement: return .teal
+        case .monthlyChoice: return .orange
         }
     }
 
     var summaryLines: [ValueLine] {
         switch card {
+        case .monthlyChoice(let option):
+            return [
+                ValueLine(id: "monthly-hint", label: "Effect", value: option.hint)
+            ]
         case .job(let job):
             return [
                 ValueLine(id: "job-hours", label: "Daily hours", value: "\(job.dailyHours)"),

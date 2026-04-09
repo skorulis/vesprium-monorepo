@@ -72,6 +72,8 @@ struct PlayerCards: Codable, Sendable, Equatable {
             activities.append(card)
         case .bodyEnhancement:
             bodyEnhancements.append(card)
+        case .monthlyChoice:
+            break
         }
     }
 
@@ -83,6 +85,8 @@ struct PlayerCards: Codable, Sendable, Equatable {
             activities = activities.filter { $0 != card }
         case .bodyEnhancement:
             bodyEnhancements = bodyEnhancements.filter { $0 != card }
+        case .monthlyChoice:
+            break
         }
     }
 }
