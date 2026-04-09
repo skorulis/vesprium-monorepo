@@ -1,29 +1,27 @@
 //  Created by Alex Skorulis on 8/4/2026.
 
-import BioStats
 import BioEnhancements
 import Foundation
 
 struct PlayerCards: Codable, Sendable, Equatable {
-    /// Current job, if any, with the in-game date it was added.
-    var equippedJob: GameCardInstance?
-    var activities: [GameCardInstance] = []
-    var bodyEnhancements: [GameCardInstance] = []
+    var equippedJob: GameCard?
+    var activities: [GameCard] = []
+    var bodyEnhancements: [GameCard] = []
 
     var job: Job? {
         guard let equippedJob else { return nil }
-        if case .job(let occupation) = equippedJob.card { return occupation }
+        if case .job(let occupation) = equippedJob { return occupation }
         return nil
     }
 
-    var jobCard: GameCard? { equippedJob?.card }
+    var jobCard: GameCard? { equippedJob }
 
     var activityCards: [GameCard] {
-        activities.map(\.card)
+        activities
     }
 
     var bodyEnhancementCards: [GameCard] {
-        bodyEnhancements.map(\.card)
+        bodyEnhancements
     }
 
     var allCards: [GameCard] {
@@ -46,45 +44,45 @@ struct PlayerCards: Codable, Sendable, Equatable {
     }
 
     init(
-        equippedJob: GameCardInstance? = nil,
-        activities: [GameCardInstance] = [],
-        bodyEnhancements: [GameCardInstance] = []
+        equippedJob: GameCard? = nil,
+        activities: [GameCard] = [],
+        bodyEnhancements: [GameCard] = []
     ) {
         self.equippedJob = equippedJob
         self.activities = activities
         self.bodyEnhancements = bodyEnhancements
     }
 
-    /// Convenience for previews and tests: wrap a job with its add date.
-    init(job: Job?, addedOn date: VespriumDate, activities: [GameCardInstance] = []) {
+    /// Convenience for previews and tests.
+    init(job: Job?, activities: [GameCard] = [], bodyEnhancements: [GameCard] = []) {
         if let job {
-            self.equippedJob = GameCardInstance(date: date, card: .job(job))
+            self.equippedJob = .job(job)
         } else {
             self.equippedJob = nil
         }
         self.activities = activities
+        self.bodyEnhancements = bodyEnhancements
     }
 
-    mutating func add(card: GameCard, on date: VespriumDate) {
-        let instance = GameCardInstance(date: date, card: card)
+    mutating func add(card: GameCard) {
         switch card {
         case .job:
-            equippedJob = instance
+            equippedJob = card
         case .activity:
-            activities.append(instance)
+            activities.append(card)
         case .bodyEnhancement:
-            bodyEnhancements.append(instance)
+            bodyEnhancements.append(card)
         }
     }
-    
+
     mutating func remove(card: GameCard) {
         switch card {
         case .job:
             equippedJob = nil
         case .activity:
-            activities = activities.filter { $0.card != card }
+            activities = activities.filter { $0 != card }
         case .bodyEnhancement:
-            bodyEnhancements = bodyEnhancements.filter { $0.card != card }
+            bodyEnhancements = bodyEnhancements.filter { $0 != card }
         }
     }
 }

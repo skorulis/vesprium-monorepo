@@ -27,7 +27,9 @@ final class GameService: ObservableObject {
         if crossedYear {
             self.applyYearlyWeaknessCheck(on: newDate)
             state = self.store.gameState
-            state.pendingYearReview = YearEndReview(year: previousDate.year, totals: state.currentYear)
+            var reviewTotals = state.currentYear
+            self.mergeActivityYearlyBonuses(into: &reviewTotals, player: self.store.player)
+            state.pendingYearReview = YearEndReview(year: previousDate.year, totals: reviewTotals)
             state.currentYear = .zero
             self.store.gameState = state
         }
@@ -43,6 +45,9 @@ final class GameService: ObservableObject {
 
     func resolveYearReview() {
         guard self.store.gameState.pendingYearReview != nil else { return }
+        var player = self.store.player
+        self.applyActivityYearlyAttributeBonuses(to: &player)
+        self.store.player = player
         var state = self.store.gameState
         state.pendingYearReview = nil
         self.store.gameState = state
@@ -61,12 +66,6 @@ final class GameService: ObservableObject {
         var player = self.store.player
         var state = self.store.gameState
         var currentYear = state.currentYear
-        self.applyActivityYearlyAttributeBonuses(
-            player: &player,
-            currentYear: &currentYear,
-            previousDate: previousDate,
-            newDate: newDate
-        )
         let delta = GameCalculator(player: player).monthlyBalanceChange()
         player.money += delta
         currentYear.moneyNetChange += delta
@@ -75,41 +74,26 @@ final class GameService: ObservableObject {
         self.store.gameState = state
     }
 
-    /// Full Vesprium calendar years completed since `start` relative to `current`
-    /// (same rules as ``PlayerCharacter/ageInFullYears``).
-    private func fullCalendarYearsHeld(since start: VespriumDate, on current: VespriumDate) -> Int {
-        guard current >= start else { return 0 }
-        var years = current.year - start.year
-        let startMonth = start.month.rawValue
-        let nowMonth = current.month.rawValue
-        if nowMonth < startMonth
-            || (nowMonth == startMonth && current.day < start.day) {
-            years -= 1
+    private func activityYearlyAttributeIncreases(for player: PlayerCharacter) -> [Attribute: Int] {
+        var result: [Attribute: Int] = [:]
+        for card in player.cards.activities {
+            guard case .activity(let activity) = card else { continue }
+            for (attribute, delta) in activity.details.yearlyAttributeBonuses where delta != 0 {
+                result[attribute, default: 0] += delta
+            }
         }
-        return max(0, years)
+        return result
     }
 
-    private func applyActivityYearlyAttributeBonuses(
-        player: inout PlayerCharacter,
-        currentYear: inout CurrentYear,
-        previousDate: VespriumDate,
-        newDate: VespriumDate
-    ) {
-        for instance in player.cards.activities {
-            guard case .activity(let activity) = instance.card else { continue }
-            let bonuses = activity.details.yearlyAttributeBonuses
-            if bonuses.isEmpty { continue }
-            let before = fullCalendarYearsHeld(since: instance.date, on: previousDate)
-            let after = fullCalendarYearsHeld(since: instance.date, on: newDate)
-            let steps = after - before
-            guard steps > 0 else { continue }
-            for (attribute, deltaPerYear) in bonuses {
-                let amount = deltaPerYear * steps
-                player.attributes[attribute] += amount
-                if amount > 0 {
-                    currentYear.attributeIncreases[attribute, default: 0] += amount
-                }
-            }
+    private func mergeActivityYearlyBonuses(into totals: inout CurrentYear, player: PlayerCharacter) {
+        for (attribute, amount) in self.activityYearlyAttributeIncreases(for: player) where amount > 0 {
+            totals.attributeIncreases[attribute, default: 0] += amount
+        }
+    }
+
+    private func applyActivityYearlyAttributeBonuses(to player: inout PlayerCharacter) {
+        for (attribute, amount) in self.activityYearlyAttributeIncreases(for: player) {
+            player.attributes[attribute] += amount
         }
     }
 
@@ -135,14 +119,13 @@ final class GameService: ObservableObject {
             let price = card.price
             var player = store.player
             player.money -= price
-            player.cards.add(card: card, on: store.gameState.currentGameDate)
+            player.cards.add(card: card)
             store.player = player
             state.currentYear.moneyNetChange -= price
         } else {
             guard event.skippable else { return }
-            var state = store.gameState
         }
-        
+
         state.pendingEvent = nil
         store.gameState = state
     }

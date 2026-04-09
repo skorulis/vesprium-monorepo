@@ -10,13 +10,12 @@ struct GameServiceTests {
     var mainStore: MainStore { assembly.resolver.mainStore() }
     var gameService: GameService { assembly.resolver.gameService() }
 
-    @Test func gymYearlyBonusAppliesOnEachHeldYearAnniversary() {
+    @Test func gymYearlyBonusAppliesWhenYearEndReviewIsResolved() {
         var player = mainStore.player
         player.cards = PlayerCards(
             job: .farming,
-            addedOn: SetupConstants.gameStartTime,
             activities: [
-                GameCardInstance(date: SetupConstants.gameStartTime, card: .activity(.gym))
+                .activity(.gym)
             ]
         )
         let strengthBefore = player.attributes[.strength]
@@ -35,6 +34,11 @@ struct GameServiceTests {
 
         player = mainStore.player
         #expect(mainStore.gameState.currentGameDate == SetupConstants.gameStartTime.adding(years: 1))
+        #expect(player.attributes[.strength] == strengthBefore)
+        #expect(mainStore.gameState.pendingYearReview?.totals.attributeIncreases[.strength] == 1)
+
+        gameService.resolveYearReview()
+        player = mainStore.player
         #expect(player.attributes[.strength] == strengthBefore + 1)
     }
 
@@ -42,9 +46,8 @@ struct GameServiceTests {
         var player = mainStore.player
         player.cards = PlayerCards(
             job: .farming,
-            addedOn: SetupConstants.gameStartTime,
             activities: [
-                GameCardInstance(date: SetupConstants.gameStartTime, card: .activity(.meditation))
+                .activity(.meditation)
             ]
         )
         let stabilityBefore = player.attributes[.stability]
@@ -63,13 +66,17 @@ struct GameServiceTests {
 
         player = mainStore.player
         #expect(player.attributes[.stability] == stabilityBefore)
+        #expect(mainStore.gameState.pendingYearReview?.totals.attributeIncreases[.stability] == nil)
+
+        gameService.resolveYearReview()
+        player = mainStore.player
+        #expect(player.attributes[.stability] == stabilityBefore)
     }
 
     @Test func currentYearAccumulatesNetMoneyEachMonth() {
         var player = mainStore.player
         player.cards = PlayerCards(
             job: .farming,
-            addedOn: SetupConstants.gameStartTime,
             activities: []
         )
         mainStore.player = player
@@ -89,7 +96,6 @@ struct GameServiceTests {
         var player = mainStore.player
         player.cards = PlayerCards(
             job: .farming,
-            addedOn: SetupConstants.gameStartTime,
             activities: []
         )
         mainStore.player = player
@@ -116,7 +122,6 @@ struct GameServiceTests {
         var player = mainStore.player
         player.cards = PlayerCards(
             job: .farming,
-            addedOn: SetupConstants.gameStartTime,
             activities: []
         )
         mainStore.player = player

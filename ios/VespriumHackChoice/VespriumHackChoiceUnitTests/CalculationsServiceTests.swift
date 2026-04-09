@@ -24,7 +24,7 @@ struct CalculationServiceTests {
         player.attributes[.strength] = 12
         player.attributes[.vitality] = 10
         player.cards = PlayerCards(bodyEnhancements: [
-            GameCardInstance(date: SetupConstants.gameStartTime, card: .bodyEnhancement(.barometricEars))
+            .bodyEnhancement(.barometricEars)
         ])
         let earnings = GameCalculator(player: player).monthlyJobEarnings(for: .farming)
         // (120 + 2*12 + 2*10) * 3/2
@@ -45,7 +45,7 @@ struct CalculationServiceTests {
         player.attributes[.charisma] = 15
         player.attributes[.intelligence] = 8
         player.cards = PlayerCards(bodyEnhancements: [
-            GameCardInstance(date: SetupConstants.gameStartTime, card: .bodyEnhancement(.barometricEars))
+            .bodyEnhancement(.barometricEars)
         ])
         let earnings = GameCalculator(player: player).monthlyJobEarnings(for: .shopKeeper)
         #expect(earnings == 146)
@@ -69,7 +69,7 @@ struct CalculationServiceTests {
         player.attributes[.strength] = 11
         player.attributes[.vitality] = 9
         player.cards.bodyEnhancements = [
-            GameCardInstance(date: SetupConstants.gameStartTime, card: .bodyEnhancement(.barometricEars))
+            .bodyEnhancement(.barometricEars)
         ]
         mainStore.player = player
 
@@ -84,9 +84,8 @@ struct CalculationServiceTests {
         player.attributes[.vitality] = 10
         player.cards = PlayerCards(
             job: .farming,
-            addedOn: SetupConstants.gameStartTime,
             activities: [
-                GameCardInstance(date: SetupConstants.gameStartTime, card: .activity(.gym))
+                .activity(.gym)
             ]
         )
         let net = GameCalculator(player: player).monthlyBalanceChange()
