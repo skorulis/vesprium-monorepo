@@ -2,14 +2,16 @@
 
 import Foundation
 import BioStats
+import Util
 
 public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
     case chlorophyllSkin
     case barometricEars
     case muscleEnergyImplants
+    case brainOverclock
 
     public var name: String {
-        rawValue.capitalized
+        rawValue.fromCaseName
     }
 
     public var text: String {
@@ -19,7 +21,20 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
         case .barometricEars:
             return "Eardrums sensitive enough to detect changes in barometric pressure"
         case .muscleEnergyImplants:
-            return "Implants that hold energy that give a boost to strength when needed "
+            return "Implants that hold energy that give a boost to strength when needed"
+        case .brainOverclock:
+            return "Forces the neurons in the brain to transmit faster increasing overall thought processing"
+        }
+    }
+    
+    public var technicalDetails: String? {
+        switch self {
+        case .muscleEnergyImplants:
+            return "Fairly simple biological implants which store excess energy while inactive and release it when the muscles are under high stress"
+        case .brainOverclock:
+            return "A crystal and bio battery implanted in the back of the head provides a constant pulse which forces neurons to work overtime"
+        default:
+            return nil
         }
     }
 
@@ -31,6 +46,8 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
             return 100
         case .muscleEnergyImplants:
             return 200
+        case .brainOverclock:
+            return 500
         }
     }
 
@@ -40,6 +57,11 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
             return [AttributeBonus(attribute: .stability, value: -1)]
         case .muscleEnergyImplants:
             return [AttributeBonus(attribute: .strength, value: 50, kind: .multiplicative)]
+        case .brainOverclock:
+            return [
+                AttributeBonus(attribute: .intelligence, value: 50, kind: .multiplicative),
+                AttributeBonus(attribute: .agility, value: 25, kind: .multiplicative),
+            ]
         default:
             return []
         }
@@ -53,6 +75,8 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
             return .init()
         case .muscleEnergyImplants:
             return .init(physical: 2)
+        case .brainOverclock:
+            return .init(physical: 0, mental: 1)
         }
     }
 }

@@ -84,7 +84,10 @@ struct GameCalculator {
     /// Fixed monthly costs: food scales with strength; housing is flat; activity row sums equipped activities’ costs.
     func monthlyLivingExpensesBreakdown() -> MonthlyLivingExpensesBreakdown {
         let strength = player.effectiveAttributes[.strength]
-        let food = 20 + strength
+        var food = 20 + strength
+        if player.cards.bodyEnhancements.contains(.chlorophyllSkin) {
+            food /= 2
+        }
         return MonthlyLivingExpensesBreakdown(
             food: food,
             housing: 30,

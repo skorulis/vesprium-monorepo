@@ -12,6 +12,7 @@
 		2EFA2F93ACEFED91F2DD5F82 /* ASKCore in Frameworks */ = {isa = PBXBuildFile; productRef = 20D372E0555CCA553C173077 /* ASKCore */; };
 		42B8FC004FA9F2B6A8D0809E /* knitconfig.json in Resources */ = {isa = PBXBuildFile; fileRef = F9143ACADEDA160BCD96DEF0 /* knitconfig.json */; };
 		68DCDD32F76E6A6BBD5CBFA8 /* ASKCoordinator in Frameworks */ = {isa = PBXBuildFile; productRef = 2DA5FBB0E2EE2B5064749DDD /* ASKCoordinator */; };
+		FA093C622F8889190051FC20 /* Util in Frameworks */ = {isa = PBXBuildFile; productRef = FA093C612F8889190051FC20 /* Util */; };
 		FAB02BEA2F848A7C0089B681 /* BioEnhancements in Frameworks */ = {isa = PBXBuildFile; productRef = FAB02BE92F848A7C0089B681 /* BioEnhancements */; };
 		FAB02BEF2F848CE60089B681 /* BioStats in Frameworks */ = {isa = PBXBuildFile; productRef = FAB02BEE2F848CE60089B681 /* BioStats */; };
 /* End PBXBuildFile section */
@@ -52,6 +53,7 @@
 			files = (
 				FAB02BEA2F848A7C0089B681 /* BioEnhancements in Frameworks */,
 				FAB02BEF2F848CE60089B681 /* BioStats in Frameworks */,
+				FA093C622F8889190051FC20 /* Util in Frameworks */,
 				68DCDD32F76E6A6BBD5CBFA8 /* ASKCoordinator in Frameworks */,
 				2EFA2F93ACEFED91F2DD5F82 /* ASKCore in Frameworks */,
 				03C2F1D47B16CA17B7ABF3EE /* Knit in Frameworks */,
@@ -138,6 +140,7 @@
 				08974BE33FD6E57B96804857 /* KnitMacros */,
 				FAB02BE92F848A7C0089B681 /* BioEnhancements */,
 				FAB02BEE2F848CE60089B681 /* BioStats */,
+				FA093C612F8889190051FC20 /* Util */,
 			);
 			productName = VespriumHackChoice;
 			productReference = D6F1BFC0B86E06968BD081D9 /* VespriumHackChoice.app */;
@@ -168,7 +171,7 @@
 				BCE9A71EFAC2492044D5ECD4 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
 				FAB02BE82F848A7C0089B681 /* XCLocalSwiftPackageReference "../../swift-modules/BioEnhancements" */,
 				FAB02BED2F848CE60089B681 /* XCLocalSwiftPackageReference "../../swift-modules/BioStats" */,
-				FA4D3F6B2F8884AA00EE44C6 /* XCLocalSwiftPackageReference "../../swift-modules/Util" */,
+				FA093C602F8889190051FC20 /* XCLocalSwiftPackageReference "../../swift-modules/Util" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B0B5E1C7CD7D6D75E5D3611A /* Products */;
@@ -460,7 +463,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		FA4D3F6B2F8884AA00EE44C6 /* XCLocalSwiftPackageReference "../../swift-modules/Util" */ = {
+		FA093C602F8889190051FC20 /* XCLocalSwiftPackageReference "../../swift-modules/Util" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = "../../swift-modules/Util";
 		};
@@ -539,6 +542,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BCE9A71EFAC2492044D5ECD4 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */;
 			productName = "plugin:SwiftLintBuildToolPlugin";
+		};
+		FA093C612F8889190051FC20 /* Util */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Util;
 		};
 		FAB02BE92F848A7C0089B681 /* BioEnhancements */ = {
 			isa = XCSwiftPackageProductDependency;
