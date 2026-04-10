@@ -82,4 +82,44 @@ struct GameCalculatorTests {
         let net = GameCalculator(player: player).monthlyBalanceChange()
         #expect(net == 82)
     }
+
+    @Test func calculateStrainReturnsZeroAtSixteenBusyHours() {
+        var player = PlayerCharacter(dateOfBirth: VespriumDate(year: 20, month: .stir, day: 1)!)
+        player.cards = PlayerCards(
+            job: .farming,
+            activities: [
+                .activity(.school),
+                .activity(.languages)
+            ]
+        )
+
+        let strain = GameCalculator(player: player).calculateStrain()
+        #expect(strain == Strain(physical: 0, mental: 0))
+    }
+
+    @Test func calculateStrainIncreasesWhenRestIsUnderEightHours() {
+        var player = PlayerCharacter(dateOfBirth: VespriumDate(year: 20, month: .stir, day: 1)!)
+        player.cards = PlayerCards(
+            job: .farming,
+            activities: [
+                .activity(.school),
+                .activity(.languages),
+                .activity(.meditation)
+            ]
+        )
+
+        let strain = GameCalculator(player: player).calculateStrain()
+        #expect(strain == Strain(physical: 1, mental: 1))
+    }
+    
+    @Test func calculateStrainValues() {
+        let player = PlayerCharacter(dateOfBirth: VespriumDate(year: 20, month: .stir, day: 1)!)
+        let calc = GameCalculator(player: player)
+        #expect(calc.calculateTimeStrain(busyHours: 17).mental == 1)
+        #expect(calc.calculateTimeStrain(busyHours: 20).mental == 4)
+        #expect(calc.calculateTimeStrain(busyHours: 21).mental == 6)
+        #expect(calc.calculateTimeStrain(busyHours: 22).mental == 9)
+        #expect(calc.calculateTimeStrain(busyHours: 23).physical == 13)
+        #expect(calc.calculateTimeStrain(busyHours: 24).mental == 18)
+    }
 }

@@ -7,7 +7,7 @@ public struct Strain: Equatable, Sendable {
     public let physical: Int
     public let mental: Int
     
-    public init(physical: Int, mental: Int) {
+    public init(physical: Int = 0, mental: Int = 0) {
         self.physical = physical
         self.mental = mental
     }

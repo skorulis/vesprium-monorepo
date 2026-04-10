@@ -61,6 +61,17 @@ struct PlayerCharacterView: View {
                     .listRowInsets(EdgeInsets(top: 10, leading: 16, bottom: 14, trailing: 16))
             }
 
+            Section("Strain") {
+                LabeledContent("Physical") {
+                    Text(model.strain.physical, format: .number)
+                        .monospacedDigit()
+                }
+                LabeledContent("Mental") {
+                    Text(model.strain.mental, format: .number)
+                        .monospacedDigit()
+                }
+            }
+
             Section("Birth") {
                 LabeledContent("Date of birth", value: formattedDate(model.player.dateOfBirth))
             }
@@ -125,6 +136,10 @@ extension PlayerCharacterView {
         var monthlyJobIncome: Int? {
             guard let job = player.job else { return nil }
             return GameCalculator(player: player).monthlyJobEarnings(for: job)
+        }
+
+        var strain: Strain {
+            GameCalculator(player: player).calculateStrain()
         }
     }
 }
