@@ -6,6 +6,7 @@ enum MainPath: CoordinatorPath {
     case cards
     case cardDetails(GameCard)
     case monthlyExpensesBreakdown
+    case shop
 
     var id: String {
         switch self {
@@ -19,6 +20,8 @@ enum MainPath: CoordinatorPath {
             "cardDetails"
         case .monthlyExpensesBreakdown:
             "monthlyExpensesBreakdown"
+        case .shop:
+            "shop"
         }
     }
 }

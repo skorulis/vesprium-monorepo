@@ -1,3 +1,4 @@
+import ASKCoordinator
 import ASKCore
 import Combine
 import Knit
@@ -6,7 +7,8 @@ import Observation
 
 @MainActor
 @Observable
-final class GameViewModel {
+final class GameViewModel: CoordinatorViewModel {
+    weak var coordinator: ASKCoordinator.Coordinator?
     let gameService: GameService
     private let mainStore: MainStore
 
@@ -47,5 +49,9 @@ final class GameViewModel {
 
     func exitToMenu() {
         mainStore.exitToMenu()
+    }
+
+    func showShop() {
+        coordinator?.present(MainPath.shop, style: .sheet)
     }
 }

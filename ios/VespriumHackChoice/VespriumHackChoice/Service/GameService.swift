@@ -1,4 +1,5 @@
 import ASKCore
+import BioEnhancements
 import BioStats
 import Combine
 import Foundation
@@ -7,6 +8,12 @@ import KnitMacros
 
 @MainActor
 final class GameService: ObservableObject {
+    enum ShopPurchaseResult: Equatable {
+        case purchased
+        case alreadyOwned
+        case insufficientFunds
+    }
+
     private let store: MainStore
     private let eventGenerator: EventGenerator
 
@@ -25,6 +32,7 @@ final class GameService: ObservableObject {
         self.store.gameState = state
         let delta = self.executeMonthChanges(previousDate: previousDate, newDate: newDate)
         if crossedYear {
+            self.refreshShopIfNeeded(forYear: newDate.year)
             self.applyYearlyWeaknessCheck(on: newDate)
             state = self.store.gameState
             var reviewTotals = state.currentYear
@@ -56,6 +64,43 @@ final class GameService: ObservableObject {
         } else {
             self.appendMonthSummary(date: newDate, moneyDelta: delta, eventHeadline: nil, choiceSummary: nil)
         }
+    }
+
+    func purchaseShopEnhancement(_ enhancement: BioEnhancement) -> ShopPurchaseResult {
+        var player = self.store.player
+        guard player.cards.hasEnhancement(enhancement) == false else {
+            return .alreadyOwned
+        }
+
+        let cost = enhancement.baseCost
+        guard player.money >= cost else {
+            return .insufficientFunds
+        }
+
+        player.money -= cost
+        player.cards.add(card: .bodyEnhancement(enhancement))
+        self.store.player = player
+
+        var state = self.store.gameState
+        state.currentYear.moneyNetChange -= cost
+        self.store.gameState = state
+        return .purchased
+    }
+
+    func refreshShopIfNeeded(forYear year: Int) {
+        let state = self.store.gameState
+        let shouldRefresh = state.shopLastRefreshYear != year || state.shopEnhancements.isEmpty
+        guard shouldRefresh else { return }
+        self.refreshShop(forYear: year)
+    }
+
+    private func refreshShop(forYear year: Int) {
+        var state = self.store.gameState
+        let all = BioEnhancement.allCases
+        let count = min(3, all.count)
+        state.shopEnhancements = Array(all.shuffled().prefix(count))
+        state.shopLastRefreshYear = year
+        self.store.gameState = state
     }
 
     func resolveYearReview() {

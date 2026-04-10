@@ -1,3 +1,4 @@
+import BioEnhancements
 import BioStats
 import Foundation
 import Testing
@@ -247,6 +248,57 @@ struct GameServiceTests {
 
         #expect(mainStore.player.money == moneyBefore + 10)
         #expect(mainStore.player.cards.activities.count == 1)
+    }
+
+    @Test func yearBoundaryRefreshesShopInventoryWithoutDuplicates() {
+        var player = mainStore.player
+        player.cards = PlayerCards(
+            job: .farming,
+            activities: [],
+            bodyEnhancements: [.bodyEnhancement(.chlorophyllSkin)]
+        )
+        mainStore.player = player
+
+        var state = mainStore.gameState
+        state.currentGameDate = SetupConstants.gameStartTime
+        state.currentYear = .zero
+        state.pendingYearReview = nil
+        state.pendingEvent = nil
+        state.shopEnhancements = [.barometricEars]
+        state.shopLastRefreshYear = nil
+        mainStore.gameState = state
+
+        for _ in 0..<10 {
+            gameService.advanceTime()
+        }
+
+        let refreshed = mainStore.gameState.shopEnhancements
+        #expect(refreshed.count == min(3, BioEnhancement.allCases.count))
+        #expect(Set(refreshed.map(\.rawValue)).count == refreshed.count)
+        #expect(mainStore.gameState.shopLastRefreshYear == SetupConstants.gameStartTime.adding(years: 1).year)
+        #expect(refreshed.contains(.chlorophyllSkin))
+    }
+
+    @Test func purchaseShopEnhancementHandlesSuccessAndAlreadyOwned() {
+        var player = mainStore.player
+        player.money = 500
+        player.cards = PlayerCards(job: .farming, activities: [])
+        mainStore.player = player
+
+        var state = mainStore.gameState
+        state.currentYear = .zero
+        mainStore.gameState = state
+
+        let purchaseResult = gameService.purchaseShopEnhancement(.chlorophyllSkin)
+        #expect(purchaseResult == .purchased)
+        #expect(mainStore.player.cards.hasEnhancement(.chlorophyllSkin))
+        #expect(mainStore.player.money == 400)
+        #expect(mainStore.gameState.currentYear.moneyNetChange == -100)
+
+        let secondAttempt = gameService.purchaseShopEnhancement(.chlorophyllSkin)
+        #expect(secondAttempt == .alreadyOwned)
+        #expect(mainStore.player.money == 400)
+        #expect(mainStore.gameState.currentYear.moneyNetChange == -100)
     }
 
     @Test func yearBoundaryWeaknessSuccessDoesNotReduceVitality() {

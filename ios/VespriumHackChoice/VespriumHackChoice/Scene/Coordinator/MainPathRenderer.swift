@@ -11,7 +11,7 @@ struct MainPathRenderer: CoordinatorPathRenderer {
     func render(path: MainPath, in coordinator: Coordinator) -> some View {
         switch path {
         case .game:
-            GameView(viewModel: resolver.gameViewModel())
+            GameView(viewModel: coordinator.apply(resolver.gameViewModel()))
         case .character:
             PlayerCharacterView(viewModel: coordinator.apply(resolver.playerCharacterViewModel()))
         case .cards:
@@ -20,6 +20,8 @@ struct MainPathRenderer: CoordinatorPathRenderer {
             CardDetailsView(viewModel: resolver.cardDetailsViewModel(card: card))
         case .monthlyExpensesBreakdown:
             MonthlyExpensesBreakdownView(viewModel: resolver.monthlyExpensesBreakdownViewModel())
+        case .shop:
+            ShopView(viewModel: coordinator.apply(resolver.shopViewModel()))
         }
     }
 }

@@ -1,3 +1,4 @@
+import BioEnhancements
 import BioStats
 
 /// Simulation state that is not part of the player character: calendar, economy phase,
@@ -13,18 +14,32 @@ struct GameState: Sendable, Equatable, Codable {
     var pendingYearReview: YearEndReview?
     /// Recent months for the on-screen log (newest last; capped in ``GameService``).
     var monthLog: [MonthSummary]
+    /// Current yearly shop inventory of bio enhancements.
+    var shopEnhancements: [BioEnhancement]
+    /// Last year when shop inventory was refreshed.
+    var shopLastRefreshYear: Int?
 
     init(
         currentGameDate: VespriumDate,
         pendingEvent: GameEvent? = nil,
         currentYear: CurrentYear = .zero,
         pendingYearReview: YearEndReview? = nil,
-        monthLog: [MonthSummary] = []
+        monthLog: [MonthSummary] = [],
+        shopEnhancements: [BioEnhancement] = Self.defaultShopEnhancements(),
+        shopLastRefreshYear: Int? = nil
     ) {
         self.currentGameDate = currentGameDate
         self.pendingEvent = pendingEvent
         self.currentYear = currentYear
         self.pendingYearReview = pendingYearReview
         self.monthLog = monthLog
+        self.shopEnhancements = shopEnhancements
+        self.shopLastRefreshYear = shopLastRefreshYear
+    }
+
+    static func defaultShopEnhancements() -> [BioEnhancement] {
+        let all = BioEnhancement.allCases
+        let count = min(3, all.count)
+        return Array(all.shuffled().prefix(count))
     }
 }

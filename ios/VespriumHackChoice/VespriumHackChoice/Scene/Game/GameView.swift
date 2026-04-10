@@ -1,3 +1,4 @@
+import ASKCoordinator
 import BioStats
 import SwiftUI
 
@@ -72,6 +73,14 @@ struct GameView: View {
                         Image(systemName: "xmark.circle")
                     }
                     .accessibilityLabel("Exit to main menu")
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        viewModel.showShop()
+                    } label: {
+                        Image(systemName: "cart")
+                    }
+                    .accessibilityLabel("Open shop")
                 }
             }
         }
