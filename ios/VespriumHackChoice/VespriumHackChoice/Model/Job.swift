@@ -32,4 +32,20 @@ enum Job: String, Codable, CaseIterable, Hashable, Sendable {
         case .shopKeeper: 10
         }
     }
+
+    var flags: JobFlag {
+        switch self {
+        case .farming:
+            return [.outdoors]
+        case .shopKeeper:
+            return []
+        }
+    }
+}
+
+struct JobFlag: OptionSet {
+    let rawValue: UInt
+
+    static let outdoors = Self(rawValue: 1 << 0)
+
 }

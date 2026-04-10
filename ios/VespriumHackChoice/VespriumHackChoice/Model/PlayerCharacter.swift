@@ -5,6 +5,7 @@ struct PlayerCharacter: Codable, Sendable, Equatable {
     var money: Int
     var dateOfBirth: VespriumDate
     var cards: PlayerCards
+    var statusEffects: [StatusEffect]
 
     init(
         attributes: AttributeValues = AttributeValues(),
@@ -15,6 +16,7 @@ struct PlayerCharacter: Codable, Sendable, Equatable {
         self.money = money
         self.dateOfBirth = dateOfBirth
         self.cards = .init()
+        statusEffects = []
     }
 
     /// Full Vesprium calendar years completed since ``dateOfBirth`` relative to `currentGameDate`.
