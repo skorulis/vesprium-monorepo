@@ -17,15 +17,12 @@ struct EventGenerator {
 
     /// All card kinds this generator may surface in offers (jobs, activities, body enhancements).
     static func allOfferableCards() -> [GameCard] {
-        Job.allCases.map { .job($0) }
-            + Activity.allCases.map { .activity($0) }
-            + BioEnhancement.allCases.map { .bodyEnhancement($0) }
+        Activity.allCases.map { .activity($0) }
     }
 
     /// Up to four random cards from ``allOfferableCards()`` that the player does not already have.
     /// - Parameter forCompletedYear: The Vesprium calendar year that just ended (shown in ``YearEndReview``).
-    func yearlyCardChoiceEvent(forCompletedYear year: Int) -> GameEvent? {
-        guard Self.shouldOfferYearlyCardChoice(forCompletedYear: year) else { return nil }
+    func yearlyCardChoiceEvent() -> GameEvent? {
         let owned = mainStore.player.cards.allCards
         let available = Self.allOfferableCards().filter { card in
             !owned.contains(where: { $0 == card })
@@ -40,17 +37,12 @@ struct EventGenerator {
         )
     }
 
-    /// Yearly card pick is offered on **odd** completed years only (e.g. 1251, 1253) to keep the milestone rarer.
-    static func shouldOfferYearlyCardChoice(forCompletedYear year: Int) -> Bool {
-        year % 2 == 1
-    }
-
     func nextEvent() -> GameEvent? {
         if mainStore.player.job == nil {
             return firstJobOfferEvent()
         }
-        if mainStore.player.cards.activities.isEmpty {
-            return activityChoiceEvent()
+        if mainStore.gameState.currentGameDate.month.rawValue == 1 {
+            return yearlyCardChoiceEvent()
         }
         return monthlyChoiceEvent()
     }
@@ -75,15 +67,6 @@ struct EventGenerator {
         GameEvent(
             text: "Word spreads that you are looking for work. Local employers have openings.",
             cards: Job.allCases.map { GameCard.job($0) },
-            skippable: false
-        )
-    }
-
-    /// Shown once the player is employed but has not chosen an outside-work activity yet.
-    private func activityChoiceEvent() -> GameEvent {
-        GameEvent(
-            text: "You have some free time outside work. What will you focus on?",
-            cards: Activity.allCases.map { GameCard.activity($0) },
             skippable: false
         )
     }

@@ -112,11 +112,7 @@ final class GameService: ObservableObject {
         var state = self.store.gameState
         state.pendingYearReview = nil
         self.store.gameState = state
-        if let yearly = self.eventGenerator.yearlyCardChoiceEvent(forCompletedYear: completedYear) {
-            state = self.store.gameState
-            state.pendingEvent = yearly
-            self.store.gameState = state
-        } else if let event = self.eventGenerator.nextEvent() {
+        if let event = self.eventGenerator.nextEvent() {
             state = self.store.gameState
             state.pendingEvent = event
             self.store.gameState = state
