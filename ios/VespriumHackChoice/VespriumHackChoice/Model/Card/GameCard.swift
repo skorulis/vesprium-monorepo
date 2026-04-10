@@ -1,6 +1,7 @@
 //  Created by Alex Skorulis on 8/4/2026.
 
 import BioEnhancements
+import BioStats
 import Foundation
 import SwiftUI
 
@@ -72,6 +73,15 @@ enum GameCard: Codable, Sendable, Equatable {
             return mod.baseCost > 0
         case .job, .activity, .monthlyChoice:
             return false
+        }
+    }
+    
+    var strain: Strain {
+        switch self {
+        case .bodyEnhancement(let mod):
+            return mod.strain
+        case .job, .activity, .monthlyChoice:
+            return .init()
         }
     }
 }

@@ -7,7 +7,7 @@ import Foundation
 struct PlayerCards: Codable, Sendable, Equatable {
     var equippedJob: GameCard?
     var activities: [GameCard] = []
-    var bodyEnhancements: [GameCard] = []
+    var bodyEnhancements: [BioEnhancement] = []
 
     var job: Job? {
         guard let equippedJob else { return nil }
@@ -22,7 +22,7 @@ struct PlayerCards: Codable, Sendable, Equatable {
     }
 
     var bodyEnhancementCards: [GameCard] {
-        bodyEnhancements
+        bodyEnhancements.map { GameCard.bodyEnhancement($0) }
     }
 
     var allCards: [GameCard] {
@@ -33,6 +33,10 @@ struct PlayerCards: Codable, Sendable, Equatable {
     /// Sum of `dailyHours` across active cards (tasks, employment, etc.).
     var totalDailyHours: Int {
         allCards.reduce(0) { $0 + $1.dailyHours }
+    }
+
+    var totalStrain: Strain {
+        allCards.reduce(Strain()) { $0 + $1.strain }
     }
 
     func hasEnhancement(_ enhancement: BioEnhancement) -> Bool {
@@ -47,7 +51,7 @@ struct PlayerCards: Codable, Sendable, Equatable {
     init(
         equippedJob: GameCard? = nil,
         activities: [GameCard] = [],
-        bodyEnhancements: [GameCard] = []
+        bodyEnhancements: [BioEnhancement] = []
     ) {
         self.equippedJob = equippedJob
         self.activities = activities
@@ -55,7 +59,7 @@ struct PlayerCards: Codable, Sendable, Equatable {
     }
 
     /// Convenience for previews and tests.
-    init(job: Job?, activities: [GameCard] = [], bodyEnhancements: [GameCard] = []) {
+    init(job: Job?, activities: [GameCard] = [], bodyEnhancements: [BioEnhancement] = []) {
         if let job {
             self.equippedJob = .job(job)
         } else {
@@ -64,7 +68,7 @@ struct PlayerCards: Codable, Sendable, Equatable {
         self.activities = activities
         self.bodyEnhancements = bodyEnhancements
     }
-    
+
     /// All `AttributeBonus` values contributed by currently equipped body enhancements.
     var equippedAttributeBonuses: [AttributeBonus] {
         bodyEnhancementCards.flatMap { card -> [AttributeBonus] in
@@ -81,8 +85,8 @@ struct PlayerCards: Codable, Sendable, Equatable {
             equippedJob = card
         case .activity:
             activities.append(card)
-        case .bodyEnhancement:
-            bodyEnhancements.append(card)
+        case let .bodyEnhancement(mod):
+            bodyEnhancements.append(mod)
         case .monthlyChoice:
             break
         }
@@ -94,8 +98,8 @@ struct PlayerCards: Codable, Sendable, Equatable {
             equippedJob = nil
         case .activity:
             activities = activities.filter { $0 != card }
-        case .bodyEnhancement:
-            bodyEnhancements = bodyEnhancements.filter { $0 != card }
+        case let .bodyEnhancement(mod):
+            bodyEnhancements = bodyEnhancements.filter { $0 != mod }
         case .monthlyChoice:
             break
         }

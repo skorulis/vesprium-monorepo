@@ -44,4 +44,15 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
             return []
         }
     }
+
+    public var strain: Strain {
+        switch self {
+        case .chlorophyllSkin:
+            return .init(physical: 1)
+        case .barometricEars:
+            return .init()
+        case .muscleEnergyImplants:
+            return .init(physical: 2)
+        }
+    }
 }

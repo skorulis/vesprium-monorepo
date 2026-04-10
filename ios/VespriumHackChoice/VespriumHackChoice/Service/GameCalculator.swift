@@ -130,14 +130,16 @@ struct GameCalculator {
     /// If the player is busy for more than 16 hours/day, they are resting fewer than 8 hours and
     /// gain +1 physical and +1 mental strain.
     func calculateStrain() -> Strain {
-        let base = calculateTimeStrain(busyHours: player.cards.totalDailyHours)
-        return base
+        var strain = calculateTimeStrain(busyHours: player.cards.totalDailyHours)
+        // swiftlint:disable:next shorthand_operator
+        strain = strain + player.cards.totalStrain
+        return strain.normalized()
     }
 
     func calculateTimeStrain(busyHours: Int) -> Strain {
         let safeHours = VespriumCalendar.hoursPerDay - 8 // Get at least 8 hours rest
         let badHours = VespriumCalendar.hoursPerDay - 4 // Less than 4 hours rest is far worse
-        var value = max(busyHours - safeHours, 0)
+        var value = busyHours - safeHours
         if busyHours > badHours {
             value += (1...(busyHours - badHours)).reduce(0, +)
         }
