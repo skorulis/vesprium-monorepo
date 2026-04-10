@@ -89,7 +89,7 @@ struct GameCalculatorTests {
             job: .farming,
             activities: [
                 .activity(.school),
-                .activity(.languages)
+                .activity(.languages),
             ]
         )
 
@@ -104,14 +104,14 @@ struct GameCalculatorTests {
             activities: [
                 .activity(.school),
                 .activity(.languages),
-                .activity(.meditation)
+                .activity(.meditation),
             ]
         )
 
         let strain = GameCalculator(player: player).calculateStrain()
         #expect(strain == Strain(physical: 1, mental: 1))
     }
-    
+
     @Test func calculateStrainValues() {
         let player = PlayerCharacter(dateOfBirth: VespriumDate(year: 20, month: .stir, day: 1)!)
         let calc = GameCalculator(player: player)

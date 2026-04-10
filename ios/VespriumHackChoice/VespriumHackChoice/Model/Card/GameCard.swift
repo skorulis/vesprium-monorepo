@@ -75,7 +75,7 @@ enum GameCard: Codable, Sendable, Equatable {
             return false
         }
     }
-    
+
     var strain: Strain {
         switch self {
         case .bodyEnhancement(let mod):

@@ -68,7 +68,7 @@ final class CardDetailsViewModel {
         case .job(let job):
             return [
                 ValueLine(id: "job-hours", label: "Daily hours", value: "\(job.dailyHours)"),
-                ValueLine(id: "job-income", label: "Monthly income", value: signedCoins(breakdown(for: job).total))
+                ValueLine(id: "job-income", label: "Monthly income", value: signedCoins(breakdown(for: job).total)),
             ]
         case .activity(let activity):
             return [
@@ -77,7 +77,7 @@ final class CardDetailsViewModel {
                     id: "activity-cost",
                     label: "Monthly cost",
                     value: signedCoins(-activity.details.monthlyCost)
-                )
+                ),
             ]
         case .bodyEnhancement(let enhancement):
             return [

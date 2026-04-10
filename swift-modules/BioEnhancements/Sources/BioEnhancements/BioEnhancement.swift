@@ -26,7 +26,7 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
             return "Forces the neurons in the brain to transmit faster increasing overall thought processing"
         }
     }
-    
+
     public var technicalDetails: String? {
         switch self {
         case .muscleEnergyImplants:

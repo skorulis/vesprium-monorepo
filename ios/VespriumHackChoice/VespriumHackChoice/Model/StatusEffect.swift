@@ -12,7 +12,7 @@ struct StatusEffect: Codable, Sendable, Equatable {
 enum StatusEffectKind: String, Codable, Sendable, Equatable {
     case heatWave
     case coldSnap
-    
+
     var strain: Strain {
         switch self {
         case .heatWave, .coldSnap:
@@ -24,7 +24,7 @@ enum StatusEffectKind: String, Codable, Sendable, Equatable {
 
 struct StatusEffectImpact {
     let strain: Strain
-    
+
     static var none: Self {
         return .init(strain: Strain())
     }
