@@ -16,13 +16,15 @@ let package = Package(
         )
     ],
     dependencies: [
-        .package(path: "../BioStats")
+        .package(path: "../BioStats"),
+        .package(path: "../Util")
     ],
     targets: [
         .target(
             name: "BioEnhancements",
             dependencies: [
-                .product(name: "BioStats", package: "BioStats")
+                .product(name: "BioStats", package: "BioStats"),
+                .product(name: "Util", package: "Util")
             ]
         ),
         .testTarget(

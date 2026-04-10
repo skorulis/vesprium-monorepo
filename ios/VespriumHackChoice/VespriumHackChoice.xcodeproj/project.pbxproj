@@ -168,6 +168,7 @@
 				BCE9A71EFAC2492044D5ECD4 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
 				FAB02BE82F848A7C0089B681 /* XCLocalSwiftPackageReference "../../swift-modules/BioEnhancements" */,
 				FAB02BED2F848CE60089B681 /* XCLocalSwiftPackageReference "../../swift-modules/BioStats" */,
+				FA4D3F6B2F8884AA00EE44C6 /* XCLocalSwiftPackageReference "../../swift-modules/Util" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = B0B5E1C7CD7D6D75E5D3611A /* Products */;
@@ -459,6 +460,10 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
+		FA4D3F6B2F8884AA00EE44C6 /* XCLocalSwiftPackageReference "../../swift-modules/Util" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../../swift-modules/Util";
+		};
 		FAB02BE82F848A7C0089B681 /* XCLocalSwiftPackageReference "../../swift-modules/BioEnhancements" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = "../../swift-modules/BioEnhancements";
