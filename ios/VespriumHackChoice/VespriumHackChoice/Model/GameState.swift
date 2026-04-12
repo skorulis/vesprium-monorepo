@@ -12,8 +12,6 @@ struct GameState: Sendable, Equatable, Codable {
     var currentYear: CurrentYear
     /// When set, the player must dismiss the year summary before other pending events run.
     var pendingYearReview: YearEndReview?
-    /// Recent months for the on-screen log (newest last; capped in ``GameService``).
-    var monthLog: [MonthSummary]
     /// Current yearly shop inventory of bio enhancements.
     var shopEnhancements: [BioEnhancement]
     /// Last year when shop inventory was refreshed.
@@ -24,7 +22,6 @@ struct GameState: Sendable, Equatable, Codable {
         pendingEvent: GameEvent? = nil,
         currentYear: CurrentYear = .zero,
         pendingYearReview: YearEndReview? = nil,
-        monthLog: [MonthSummary] = [],
         shopEnhancements: [BioEnhancement] = Self.defaultShopEnhancements(),
         shopLastRefreshYear: Int? = nil
     ) {
@@ -32,7 +29,6 @@ struct GameState: Sendable, Equatable, Codable {
         self.pendingEvent = pendingEvent
         self.currentYear = currentYear
         self.pendingYearReview = pendingYearReview
-        self.monthLog = monthLog
         self.shopEnhancements = shopEnhancements
         self.shopLastRefreshYear = shopLastRefreshYear
     }

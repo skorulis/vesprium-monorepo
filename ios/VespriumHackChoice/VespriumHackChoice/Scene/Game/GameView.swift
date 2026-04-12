@@ -19,26 +19,7 @@ struct GameView: View {
                     }
                     .padding(.horizontal, 20)
                     .padding(.vertical, 12)
-                    if !viewModel.gameState.monthLog.isEmpty {
-                        ScrollView {
-                            VStack(alignment: .leading, spacing: 6) {
-                                Text("Recent months")
-                                    .font(.caption.weight(.semibold))
-                                    .foregroundStyle(.secondary)
-                                ForEach(Array(viewModel.gameState.monthLog.reversed().prefix(12)), id: \.date) { row in
-                                    Text(monthLogLine(row))
-                                        .font(.caption)
-                                        .foregroundStyle(.primary)
-                                        .multilineTextAlignment(.leading)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                }
-                            }
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal, 20)
-                            .padding(.bottom, 8)
-                        }
-                        .frame(maxHeight: 200)
-                    }
+                    
                     Spacer(minLength: 0)
 
                     maybeEventButton
@@ -120,16 +101,4 @@ struct GameView: View {
         "\(date.year) \(date.month.displayName) \(date.day)"
     }
 
-    private func monthLogLine(_ row: MonthSummary) -> String {
-        var parts: [String] = []
-        parts.append("\(row.date.year) \(row.date.month.displayName)")
-        parts.append(row.moneyDelta >= 0 ? "+\(row.moneyDelta)" : "\(row.moneyDelta)")
-        if let headline = row.eventHeadline {
-            parts.append(headline)
-        }
-        if let choice = row.choiceSummary {
-            parts.append("→ \(choice)")
-        }
-        return parts.joined(separator: " · ")
-    }
 }

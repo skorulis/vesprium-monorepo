@@ -196,7 +196,7 @@ struct GameServiceTests {
         #expect(EventGenerator.shouldOfferYearlyCardChoice(forCompletedYear: 1251) == true)
     }
 
-    @Test func advanceTimeWithJobAndActivityQueuesMonthlyEventAndMonthLog() {
+    @Test func advanceTimeWithJobAndActivityQueuesMonthlyEvent() {
         var player = mainStore.player
         player.cards = PlayerCards(
             job: .farming,
@@ -208,12 +208,10 @@ struct GameServiceTests {
         state.currentYear = .zero
         state.pendingYearReview = nil
         state.pendingEvent = nil
-        state.monthLog = []
         mainStore.gameState = state
 
         gameService.advanceTime()
 
-        #expect(mainStore.gameState.monthLog.count == 1)
         #expect(mainStore.gameState.pendingEvent != nil)
         guard let pick = mainStore.gameState.pendingEvent?.cards.first else {
             Issue.record("Expected monthly or other event with cards")
@@ -221,7 +219,6 @@ struct GameServiceTests {
         }
         gameService.resolvePendingEvent(selecting: pick)
         #expect(mainStore.gameState.pendingEvent == nil)
-        #expect(mainStore.gameState.monthLog.last?.choiceSummary != nil)
     }
 
     @Test func monthlyChoiceMoneyDeltaAppliesWithoutAddingCard() {

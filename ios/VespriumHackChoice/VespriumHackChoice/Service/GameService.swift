@@ -43,26 +43,12 @@ final class GameService: ObservableObject {
         }
         state = self.store.gameState
         if state.pendingYearReview != nil {
-            self.appendMonthSummary(
-                date: newDate,
-                moneyDelta: delta,
-                eventHeadline: "Year \(previousDate.year) ended — open your review.",
-                choiceSummary: nil
-            )
             return
         }
         let queuedEvent = self.eventGenerator.nextEvent()
         if let queuedEvent {
             state.pendingEvent = queuedEvent
             self.store.gameState = state
-            self.appendMonthSummary(
-                date: newDate,
-                moneyDelta: delta,
-                eventHeadline: queuedEvent.text,
-                choiceSummary: nil
-            )
-        } else {
-            self.appendMonthSummary(date: newDate, moneyDelta: delta, eventHeadline: nil, choiceSummary: nil)
         }
     }
 
@@ -136,35 +122,6 @@ final class GameService: ObservableObject {
         self.store.player = player
         self.store.gameState = state
         return delta
-    }
-
-    private func appendMonthSummary(
-        date: VespriumDate,
-        moneyDelta: Int,
-        eventHeadline: String?,
-        choiceSummary: String?
-    ) {
-        var state = self.store.gameState
-        state.monthLog.append(
-            MonthSummary(
-                date: date,
-                moneyDelta: moneyDelta,
-                eventHeadline: eventHeadline,
-                choiceSummary: choiceSummary
-            )
-        )
-        if state.monthLog.count > 48 {
-            state.monthLog.removeFirst(state.monthLog.count - 48)
-        }
-        self.store.gameState = state
-    }
-
-    private func recordChoiceOnLastMonthSummary(_ label: String) {
-        var state = self.store.gameState
-        guard !state.monthLog.isEmpty else { return }
-        let index = state.monthLog.count - 1
-        state.monthLog[index].choiceSummary = label
-        self.store.gameState = state
     }
 
     private func applyMonthlyChoiceEffect(_ effect: MonthlyChoiceEffect) {
@@ -250,12 +207,12 @@ final class GameService: ObservableObject {
         store.gameState = state
     }
 
-    private func applyAttributeTrade(from: Attribute, to: Attribute, amount: Int) -> Int {
-        guard amount > 0, from != to else { return 0 }
+    private func applyAttributeTrade(from: Attribute, to: Attribute, amount: Int) {
+        guard amount > 0, from != to else { return }
         var player = self.store.player
         let available = max(0, player.attributes[from])
         let tradedAmount = min(amount, available)
-        guard tradedAmount > 0 else { return 0 }
+        guard tradedAmount > 0 else { return }
         player.attributes[from] -= tradedAmount
         player.attributes[to] += tradedAmount
         self.store.player = player
@@ -264,13 +221,11 @@ final class GameService: ObservableObject {
         state.currentYear.attributeIncreases[from, default: 0] -= tradedAmount
         state.currentYear.attributeIncreases[to, default: 0] += tradedAmount
         self.store.gameState = state
-        return tradedAmount
     }
 
     func skipPendingEvent() {
         guard let event = store.gameState.pendingEvent else { return }
         guard event.skippable else { return }
-        self.recordChoiceOnLastMonthSummary("Skipped")
         self.clearPendingEvent()
     }
 
@@ -280,7 +235,6 @@ final class GameService: ObservableObject {
             switch card {
             case .monthlyChoice(let option):
                 self.applyMonthlyChoiceEffect(option.effect)
-                self.recordChoiceOnLastMonthSummary(option.title)
             default:
                 let price = card.price
                 var player = store.player
@@ -290,18 +244,13 @@ final class GameService: ObservableObject {
                 var state = store.gameState
                 state.currentYear.moneyNetChange -= price
                 store.gameState = state
-                self.recordChoiceOnLastMonthSummary(card.name)
             }
         } else {
             switch event.kind {
             case .cards:
                 guard event.skippable else { return }
-                self.recordChoiceOnLastMonthSummary("Skipped")
             case .attributeTrade(let from, let to, let amount):
-                let tradedAmount = self.applyAttributeTrade(from: from, to: to, amount: amount)
-                self.recordChoiceOnLastMonthSummary(
-                    "Traded \(tradedAmount) \(from.name) -> \(to.name)"
-                )
+                self.applyAttributeTrade(from: from, to: to, amount: amount)
             }
         }
         self.clearPendingEvent()
