@@ -40,9 +40,9 @@ struct GameView: View {
                         .frame(maxHeight: 200)
                     }
                     Spacer(minLength: 0)
-                    
+
                     maybeEventButton
-                    
+
                     Button {
                         viewModel.advanceTime()
                     } label: {
@@ -99,7 +99,7 @@ struct GameView: View {
             }
         }
     }
-    
+
     @ViewBuilder
     private var maybeEventButton: some View {
         if viewModel.gameState.pendingEvent != nil {

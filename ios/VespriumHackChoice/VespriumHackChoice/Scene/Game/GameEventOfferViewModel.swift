@@ -8,7 +8,7 @@ import Observation
 @Observable
 final class GameEventOfferViewModel: CoordinatorViewModel {
     weak var coordinator: ASKCoordinator.Coordinator?
-    
+
     let event: GameEvent
 
     private let gameService: GameService

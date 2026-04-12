@@ -32,8 +32,7 @@ struct EventGenerator {
         let chosen = Array(available.shuffled().prefix(count))
         return GameEvent(
             text: "A new year begins. What new path will you explore?",
-            cards: chosen,
-            kind: .activity,
+            kind: .cards(chosen),
             skippable: true
         )
     }
@@ -52,11 +51,10 @@ struct EventGenerator {
         guard let entry = matching.shuffled().first else { return nil }
         return GameEvent(
             text: entry.headline,
-            cards: [
+            kind: .cards([
                 .monthlyChoice(entry.optionA),
                 .monthlyChoice(entry.optionB),
-            ],
-            kind: .other,
+            ]),
             skippable: true
         )
     }
