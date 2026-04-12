@@ -1,5 +1,6 @@
 excluded:
   - VespriumHackChoice/Resource/XCAssets+Generated.swift
+  - "**/.build/*"
 
 strict: false
 
@@ -15,6 +16,7 @@ line_length:
 identifier_name:
   min_length: 2
   excluded:
+    - to
     - i
     - j
     - k

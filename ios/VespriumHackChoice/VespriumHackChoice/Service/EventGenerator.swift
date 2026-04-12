@@ -1,6 +1,7 @@
 //  Created by Alexander Skorulis on 7/4/2026.
 
 import BioEnhancements
+import BioStats
 import Foundation
 import Knit
 import KnitMacros
@@ -44,9 +45,27 @@ struct EventGenerator {
         return monthlyChoiceEvent()
     }
 
+    private func randomAttributeTradeEvent() -> GameEvent? {
+        let attributes = Attribute.allCases.shuffled()
+        guard attributes.count >= 2 else { return nil }
+        let from = attributes[0]
+        let to = attributes[1]
+        let available = max(0, mainStore.player.attributes[from])
+        guard available > 0 else { return nil }
+        let amount = min(Int.random(in: 1...3), available)
+        return GameEvent(
+            text: "A specialist offers to rebalance your body stats. Shift \(amount) \(from.name) into \(to.name)?",
+            kind: .attributeTrade(from: from, to: to, amount: amount),
+            skippable: true
+        )
+    }
+
     /// Random dilemma from ``MonthlyChoiceCatalog`` whose situation keys match the current player.
     func monthlyChoiceEvent() -> GameEvent? {
         let player = mainStore.player
+        if Int.random(in: 0..<100) < 30, let trade = randomAttributeTradeEvent() {
+            return trade
+        }
         let matching = MonthlyChoiceCatalog.entries.filter { $0.matches(player: player) }
         guard let entry = matching.shuffled().first else { return nil }
         return GameEvent(

@@ -23,11 +23,12 @@ struct GameEventOfferView: View {
         .padding(24)
     }
 
+    @ViewBuilder
     private var mainContent: some View {
         switch viewModel.event.kind {
         case .cards(let array):
             cardContent(array)
-        case .attributeTrade(let from, let to, let amount):
+        case let .attributeTrade(from, to, amount):
             tradeContent(from: from, to: to, amount: amount)
         }
     }

@@ -102,11 +102,11 @@ struct GameView: View {
 
     @ViewBuilder
     private var maybeEventButton: some View {
-        if viewModel.gameState.pendingEvent != nil {
+        if let event = viewModel.gameState.pendingEvent {
             Button {
                 viewModel.showPendingEventOffer()
             } label: {
-                Image(systemName: "exclamationmark.bubble.circle.fill")
+                event.kind.icon
                     .font(.system(size: 44))
                     .symbolRenderingMode(.hierarchical)
             }
