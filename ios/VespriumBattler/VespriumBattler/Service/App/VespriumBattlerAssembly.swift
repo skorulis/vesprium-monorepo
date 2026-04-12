@@ -28,7 +28,11 @@ final class VespriumBattlerAssembly: AutoInitModuleAssembly {
 
     @MainActor
     private func registerServices(container: Container<TargetResolver>) {}
-    private func registerStores(container: Container<TargetResolver>) {}
+    
+    private func registerStores(container: Container<TargetResolver>) {
+        container.register(MainStore.self) { MainStore.make(resolver: $0) }
+    }
+    
     private func registerViewModels(container: Container<TargetResolver>) {
         container.register(ContentViewModel.self) { ContentViewModel.make(resolver: $0) }
     }
