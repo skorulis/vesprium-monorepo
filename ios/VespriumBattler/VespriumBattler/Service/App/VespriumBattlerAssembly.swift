@@ -38,6 +38,8 @@ final class VespriumBattlerAssembly: AutoInitModuleAssembly {
     }
 
     private func registerViewModels(container: Container<TargetResolver>) {
+        container.register(MainPathRenderer.self) { MainPathRenderer(resolver: $0) }
+        
         container.register(ContentViewModel.self) { ContentViewModel.make(resolver: $0) }
         container.register(BattleViewModel.self) { BattleViewModel.make(resolver: $0) }
         container.register(MainMenuViewModel.self) { MainMenuViewModel.make(resolver: $0) }

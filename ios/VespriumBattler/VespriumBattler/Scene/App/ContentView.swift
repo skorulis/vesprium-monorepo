@@ -7,15 +7,11 @@ import SwiftUI
 struct ContentView: View {
 
     @State var viewModel: ContentViewModel
+    @Environment(\.resolver) private var resolver
 
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
-        }
-        .padding()
+        CoordinatorView(coordinator: Coordinator(root: MainPath.mainMenu))
+            .withRenderers(resolver: resolver!)
     }
 }
 

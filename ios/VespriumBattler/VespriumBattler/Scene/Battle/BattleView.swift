@@ -24,3 +24,8 @@ extension BattleView {
         var battle: Battle
     }
 }
+
+#Preview {
+    let assembler = VespriumBattlerAssembly.testing()
+    BattleView(viewModel: assembler.resolver.battleViewModel())
+}

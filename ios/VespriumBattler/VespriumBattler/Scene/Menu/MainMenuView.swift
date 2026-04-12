@@ -12,7 +12,14 @@ extension MainMenuView: View {
 
     var body: some View {
         VStack {
-
+            Button(action: viewModel.startBattle) {
+                Text("Start")
+            }
         }
     }
+}
+
+#Preview {
+    let assembler = VespriumBattlerAssembly.testing()
+    MainMenuView(viewModel: assembler.resolver.mainMenuViewModel())
 }
