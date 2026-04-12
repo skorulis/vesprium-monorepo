@@ -4,10 +4,32 @@ import Foundation
 import BioStats
 
 struct Enemy: Codable, Sendable, Equatable {
-    let level: Int
-    
+    let id: UUID
+    let kind: EnemyKind
+    var health: Int
+
+    init(kind: EnemyKind) {
+        self.id = UUID()
+        self.kind = kind
+        self.health = kind.maxHealth
+    }
 }
 
-enum EnemyKind {
+enum EnemyKind: String, Codable, Sendable, Equatable {
     case rat
+
+    /// Base damage amount
+    var damage: Int {
+        switch self {
+        case .rat:
+            return 2
+        }
+    }
+
+    var maxHealth: Int {
+        switch self {
+        case .rat:
+            return 10
+        }
+    }
 }

@@ -4,21 +4,14 @@ import BioStats
 import BioEnhancements
 import Foundation
 
+/// The player character that has a life cycle of an entire game
 struct PlayerCharacter: Codable, Sendable, Equatable {
-    var health: Int
     var attributes: AttributeValues = .init()
     var enhancements: EnhancementValues = .init()
 
-    init() {
-        self.health = 0
-        resetForBattle()
-    }
+    init() {}
 
-    var maxHealth: Int { attributes[.vitality] * 3 }
-
-    mutating func resetForBattle() {
-        self.health = maxHealth
-    }
+    var maxHealth: Int { effectiveAttributes[.vitality] * 3 }
 
     var effectiveAttributes: AttributeValues {
         attributes.applyingBonuses(enhancements.attributeBonuses)

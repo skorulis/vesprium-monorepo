@@ -1,10 +1,6 @@
-//
-//  ContentView.swift
-//  VespriumBattler
-//
 //  Created by Alex Skorulis on 13/4/2026.
-//
 
+import ASKCoordinator
 import Knit
 import SwiftUI
 
