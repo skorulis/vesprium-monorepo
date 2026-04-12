@@ -33,6 +33,7 @@ struct EventGenerator {
         return GameEvent(
             text: "A new year begins. What new path will you explore?",
             cards: chosen,
+            kind: .activity,
             skippable: true
         )
     }
@@ -55,6 +56,7 @@ struct EventGenerator {
                 .monthlyChoice(entry.optionA),
                 .monthlyChoice(entry.optionB),
             ],
+            kind: .other,
             skippable: true
         )
     }

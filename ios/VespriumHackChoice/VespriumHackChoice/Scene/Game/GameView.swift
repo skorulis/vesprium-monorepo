@@ -40,18 +40,9 @@ struct GameView: View {
                         .frame(maxHeight: 200)
                     }
                     Spacer(minLength: 0)
-                    if viewModel.gameState.pendingEvent != nil {
-                        Button {
-                            viewModel.showPendingEventOffer()
-                        } label: {
-                            Image(systemName: "exclamationmark.bubble.circle.fill")
-                                .font(.system(size: 44))
-                                .symbolRenderingMode(.hierarchical)
-                        }
-                        .buttonStyle(.plain)
-                        .accessibilityLabel("Open event offer")
-                        .padding(.bottom, 16)
-                    }
+                    
+                    maybeEventButton
+                    
                     Button {
                         viewModel.advanceTime()
                     } label: {
@@ -106,6 +97,22 @@ struct GameView: View {
                     .accessibilityLabel("Open shop")
                 }
             }
+        }
+    }
+    
+    @ViewBuilder
+    private var maybeEventButton: some View {
+        if viewModel.gameState.pendingEvent != nil {
+            Button {
+                viewModel.showPendingEventOffer()
+            } label: {
+                Image(systemName: "exclamationmark.bubble.circle.fill")
+                    .font(.system(size: 44))
+                    .symbolRenderingMode(.hierarchical)
+            }
+            .buttonStyle(.plain)
+            .accessibilityLabel("Open event offer")
+            .padding(.bottom, 16)
         }
     }
 
