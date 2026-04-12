@@ -12,9 +12,6 @@ struct Battle: Codable, Sendable, Equatable {
     /// How many seconds this battle has been going on for
     var time: Int = 0
 
-    /// How many enemies to defeat before the battle is finished
-    var enemiesRemaining: Int { enemyCount - defeatedEnemies.count }
-
     /// The player currently in battle
     var battlePlayer: BattlePlayer
 
@@ -23,5 +20,9 @@ struct Battle: Codable, Sendable, Equatable {
 
     /// Enemies that have been killed by the player
     var defeatedEnemies: [Enemy] = []
+    
+    /// How many enemies to defeat before the battle is finished
+    var enemiesRemaining: Int { enemyCount - defeatedEnemies.count }
+    var spawnedEnemies: Int { enemies.count + defeatedEnemies.count }
 
 }

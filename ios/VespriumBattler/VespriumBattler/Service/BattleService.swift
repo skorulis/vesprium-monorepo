@@ -3,6 +3,7 @@
 import Knit
 import KnitMacros
 import Foundation
+import Util
 
 final class BattleService {
 
@@ -26,16 +27,28 @@ final class BattleService {
 
     /// The player attacks
     func playerTick(battle: inout Battle) {
-
+        // TODO: Implement player attack on the first enemy
     }
 
     /// An enemy attacks
     func enemyTick(battle: inout Battle, enemy: Enemy) {
-
+        // TODO: Implement enemy attack on the player
     }
 
     /// Spawn enemies if needed
     func battleTick(battle: inout Battle) {
-
+        guard battle.enemiesRemaining > 0 else { return }
+        
+        let spawnChancePercent = if battle.spawnedEnemies == 0 {
+            100
+        } else {
+            20 - (battle.enemies.count * 5)
+        }
+        
+        let chance = Chance(percent: spawnChancePercent)
+        guard chance.check() else { return }
+        let enemy = enemyService.make(battleLevel: battle.level)
+        battle.enemies.append(enemy)
+        print("Spawned \(enemy.kind.rawValue)")
     }
 }
