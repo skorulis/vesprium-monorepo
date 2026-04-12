@@ -87,6 +87,12 @@ final class GameService: ObservableObject {
         return .purchased
     }
 
+    func switchJob(to job: Job) {
+        var player = self.store.player
+        player.cards.add(card: .job(job))
+        self.store.player = player
+    }
+
     func refreshShopIfNeeded(forYear year: Int) {
         let state = self.store.gameState
         let shouldRefresh = state.shopLastRefreshYear != year || state.shopEnhancements.isEmpty
@@ -105,7 +111,6 @@ final class GameService: ObservableObject {
 
     func resolveYearReview() {
         guard let review = self.store.gameState.pendingYearReview else { return }
-        let completedYear = review.year
         var player = self.store.player
         self.applyActivityYearlyAttributeBonuses(to: &player)
         self.store.player = player

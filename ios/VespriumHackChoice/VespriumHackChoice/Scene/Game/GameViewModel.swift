@@ -54,4 +54,8 @@ final class GameViewModel: CoordinatorViewModel {
     func showShop() {
         coordinator?.present(MainPath.shop, style: .sheet)
     }
+
+    func showJobs() {
+        coordinator?.present(MainPath.job, style: .sheet)
+    }
 }

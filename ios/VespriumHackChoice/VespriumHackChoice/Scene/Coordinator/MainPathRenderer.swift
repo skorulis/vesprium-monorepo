@@ -22,6 +22,8 @@ struct MainPathRenderer: CoordinatorPathRenderer {
             MonthlyExpensesBreakdownView(viewModel: resolver.monthlyExpensesBreakdownViewModel())
         case .shop:
             ShopView(viewModel: coordinator.apply(resolver.shopViewModel()))
+        case .job:
+            JobView(viewModel: coordinator.apply(resolver.jobViewModel()))
         }
     }
 }

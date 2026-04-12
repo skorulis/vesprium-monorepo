@@ -76,6 +76,14 @@ struct GameView: View {
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     Button {
+                        viewModel.showJobs()
+                    } label: {
+                        Image(systemName: "briefcase")
+                    }
+                    .accessibilityLabel("Open jobs")
+                }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
                         viewModel.showShop()
                     } label: {
                         Image(systemName: "cart")
