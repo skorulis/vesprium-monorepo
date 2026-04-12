@@ -26,6 +26,11 @@ Example today: `swift-modules/CharacterImageGenerator/` (character rendering and
 
 Hosts Xcode projects for applications.The app targets import Swift packages from `swift-modules/` via Swift Package Manager as needed.
 
+Current iOS app projects:
+
+- [`ios/VespriumHackChoice/`](../../ios/VespriumHackChoice/README.md) — card-based life simulator.
+- [`ios/VespriumBattler/`](../../ios/VespriumBattler/README.md) — monitor a bio-enhanced human in combat while keeping body settings under control.
+
 `ios/.cursor/` holds Cursor rules that apply to work under `ios/`; they complement any repo-wide guidance without mixing platform-specific conventions into packages or docs.
 
 ## What does not live at the root
