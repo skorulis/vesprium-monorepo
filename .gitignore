@@ -1,5 +1,5 @@
 swift-modules/*/.build
 swift-modules/CharacterImageGenerator/.swiftpm
 ios/**/project.xcworkspace/xcuserdata
-ios/**/VespriumHackChoice.xcodeproj/xcuserdata
+ios/**/xcuserdata
 swift-modules/**/.swiftpm

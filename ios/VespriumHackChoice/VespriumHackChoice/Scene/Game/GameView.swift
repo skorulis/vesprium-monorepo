@@ -19,7 +19,7 @@ struct GameView: View {
                     }
                     .padding(.horizontal, 20)
                     .padding(.vertical, 12)
-                    
+
                     Spacer(minLength: 0)
 
                     maybeEventButton

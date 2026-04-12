@@ -1,0 +1,60 @@
+{
+  "originHash" : "a8a50da1a3f58a3fd2b801b7ec59f36b9af5fe8ebeec0ffb08fd511fd21aeafa",
+  "pins" : [
+    {
+      "identity" : "askcoordinator",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/skorulis/ASKCoordinator",
+      "state" : {
+        "branch" : "main",
+        "revision" : "36fe684d761270b8c5a88f6cef1410d807fd5e66"
+      }
+    },
+    {
+      "identity" : "askcore",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/skorulis/ASKCore",
+      "state" : {
+        "branch" : "main",
+        "revision" : "400f97f0c18bc744112b458096b6471cc063a8b0"
+      }
+    },
+    {
+      "identity" : "knit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/cashapp/knit.git",
+      "state" : {
+        "branch" : "main",
+        "revision" : "3d4afea562b95a95725f689be819b10ff93351fc"
+      }
+    },
+    {
+      "identity" : "swift-argument-parser",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-argument-parser",
+      "state" : {
+        "revision" : "626b5b7b2f45e1b0b1c6f4a309296d1d21d7311b",
+        "version" : "1.7.1"
+      }
+    },
+    {
+      "identity" : "swift-syntax",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/apple/swift-syntax.git",
+      "state" : {
+        "revision" : "4799286537280063c85a32f09884cfbca301b1a1",
+        "version" : "602.0.0"
+      }
+    },
+    {
+      "identity" : "swiftlintplugins",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/SimplyDanny/SwiftLintPlugins",
+      "state" : {
+        "revision" : "8a4640d14777685ba8f14e832373160498fbab92",
+        "version" : "0.63.2"
+      }
+    }
+  ],
+  "version" : 3
+}

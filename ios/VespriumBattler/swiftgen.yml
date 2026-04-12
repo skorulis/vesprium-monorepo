@@ -1,0 +1,8 @@
+xcassets:
+  inputs:
+    - VespriumBattler/Resource/Assets.xcassets
+  outputs:
+    - templatePath: Templates/xcassets/swift5.stencil
+      params:
+        forceProvidesNamespaces: true
+      output: VespriumBattler/Resource/XCAssets+Generated.swift

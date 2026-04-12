@@ -141,6 +141,6 @@ enum MonthlyChoiceCatalog {
                 effect: .vitalityDelta(1)
             ),
             situation: .activityCountAtLeast(2)
-        ),
+        )
     ]
 }

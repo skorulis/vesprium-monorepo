@@ -72,7 +72,7 @@ struct EventGenerator {
             text: entry.headline,
             kind: .cards([
                 .monthlyChoice(entry.optionA),
-                .monthlyChoice(entry.optionB),
+                .monthlyChoice(entry.optionB)
             ]),
             skippable: true
         )

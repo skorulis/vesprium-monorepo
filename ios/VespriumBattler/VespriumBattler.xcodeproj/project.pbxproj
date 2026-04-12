@@ -1,0 +1,482 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FA47AAED2F8C3E6900801775 /* BioStats in Frameworks */ = {isa = PBXBuildFile; productRef = FA47AAEC2F8C3E6900801775 /* BioStats */; };
+		FA47AAF02F8C3E7200801775 /* BioEnhancements in Frameworks */ = {isa = PBXBuildFile; productRef = FA47AAEF2F8C3E7200801775 /* BioEnhancements */; };
+		FA47AAF32F8C3E7C00801775 /* ASKCoordinator in Frameworks */ = {isa = PBXBuildFile; productRef = FA47AAF22F8C3E7C00801775 /* ASKCoordinator */; };
+		FA47AAF62F8C3E8A00801775 /* ASKCore in Frameworks */ = {isa = PBXBuildFile; productRef = FA47AAF52F8C3E8A00801775 /* ASKCore */; };
+		FA47AAF92F8C3EA100801775 /* Knit in Frameworks */ = {isa = PBXBuildFile; productRef = FA47AAF82F8C3EA100801775 /* Knit */; };
+		FA47AAFB2F8C3EA100801775 /* KnitMacros in Frameworks */ = {isa = PBXBuildFile; productRef = FA47AAFA2F8C3EA100801775 /* KnitMacros */; };
+		FA47AAFE2F8C3EB100801775 /* Util in Frameworks */ = {isa = PBXBuildFile; productRef = FA47AAFD2F8C3EB100801775 /* Util */; };
+		FA47AB142F8C3F4400801775 /* knitconfig.json in Resources */ = {isa = PBXBuildFile; fileRef = FA47AB132F8C3F4400801775 /* knitconfig.json */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		FA47AADC2F8C3E4C00801775 /* VespriumBattler.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VespriumBattler.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FA47AB132F8C3F4400801775 /* knitconfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = knitconfig.json; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		FA47AADE2F8C3E4C00801775 /* VespriumBattler */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = VespriumBattler;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FA47AAD92F8C3E4C00801775 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA47AAF32F8C3E7C00801775 /* ASKCoordinator in Frameworks */,
+				FA47AAFB2F8C3EA100801775 /* KnitMacros in Frameworks */,
+				FA47AAFE2F8C3EB100801775 /* Util in Frameworks */,
+				FA47AAF02F8C3E7200801775 /* BioEnhancements in Frameworks */,
+				FA47AAF92F8C3EA100801775 /* Knit in Frameworks */,
+				FA47AAED2F8C3E6900801775 /* BioStats in Frameworks */,
+				FA47AAF62F8C3E8A00801775 /* ASKCore in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FA47AAD32F8C3E4C00801775 = {
+			isa = PBXGroup;
+			children = (
+				FA47AB132F8C3F4400801775 /* knitconfig.json */,
+				FA47AADE2F8C3E4C00801775 /* VespriumBattler */,
+				FA47AADD2F8C3E4C00801775 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FA47AADD2F8C3E4C00801775 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FA47AADC2F8C3E4C00801775 /* VespriumBattler.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FA47AADB2F8C3E4C00801775 /* VespriumBattler */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FA47AAE72F8C3E4D00801775 /* Build configuration list for PBXNativeTarget "VespriumBattler" */;
+			buildPhases = (
+				FA47AAD82F8C3E4C00801775 /* Sources */,
+				FA47AAD92F8C3E4C00801775 /* Frameworks */,
+				FA47AADA2F8C3E4C00801775 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				FA47AB302F8C40F500801775 /* PBXTargetDependency */,
+				FA47AB2D2F8C40F200801775 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				FA47AADE2F8C3E4C00801775 /* VespriumBattler */,
+			);
+			name = VespriumBattler;
+			packageProductDependencies = (
+				FA47AAEC2F8C3E6900801775 /* BioStats */,
+				FA47AAEF2F8C3E7200801775 /* BioEnhancements */,
+				FA47AAF22F8C3E7C00801775 /* ASKCoordinator */,
+				FA47AAF52F8C3E8A00801775 /* ASKCore */,
+				FA47AAF82F8C3EA100801775 /* Knit */,
+				FA47AAFA2F8C3EA100801775 /* KnitMacros */,
+				FA47AAFD2F8C3EB100801775 /* Util */,
+			);
+			productName = VespriumBattler;
+			productReference = FA47AADC2F8C3E4C00801775 /* VespriumBattler.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FA47AAD42F8C3E4C00801775 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2630;
+				LastUpgradeCheck = 2630;
+				TargetAttributes = {
+					FA47AADB2F8C3E4C00801775 = {
+						CreatedOnToolsVersion = 26.3;
+					};
+				};
+			};
+			buildConfigurationList = FA47AAD72F8C3E4C00801775 /* Build configuration list for PBXProject "VespriumBattler" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FA47AAD32F8C3E4C00801775;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				FA47AAEB2F8C3E6900801775 /* XCLocalSwiftPackageReference "../../swift-modules/BioStats" */,
+				FA47AAEE2F8C3E7200801775 /* XCLocalSwiftPackageReference "../../swift-modules/BioEnhancements" */,
+				FA47AAF12F8C3E7C00801775 /* XCRemoteSwiftPackageReference "ASKCoordinator" */,
+				FA47AAF42F8C3E8A00801775 /* XCRemoteSwiftPackageReference "ASKCore" */,
+				FA47AAF72F8C3EA100801775 /* XCRemoteSwiftPackageReference "knit" */,
+				FA47AAFC2F8C3EB100801775 /* XCLocalSwiftPackageReference "../../swift-modules/Util" */,
+				FA47AAFF2F8C3EC900801775 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = FA47AADD2F8C3E4C00801775 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FA47AADB2F8C3E4C00801775 /* VespriumBattler */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FA47AADA2F8C3E4C00801775 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FA47AB142F8C3F4400801775 /* knitconfig.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FA47AAD82F8C3E4C00801775 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		FA47AB2D2F8C40F200801775 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = FA47AB2C2F8C40F200801775 /* KnitBuildPlugin */;
+		};
+		FA47AB302F8C40F500801775 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			productRef = FA47AB2F2F8C40F500801775 /* SwiftLintBuildToolPlugin */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		FA47AAE52F8C3E4D00801775 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = X4S6MUZL2D;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		FA47AAE62F8C3E4D00801775 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = X4S6MUZL2D;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 26.2;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FA47AAE82F8C3E4D00801775 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = X4S6MUZL2D;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.skorulis.VespriumBattler;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		FA47AAE92F8C3E4D00801775 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = X4S6MUZL2D;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.skorulis.VespriumBattler;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FA47AAD72F8C3E4C00801775 /* Build configuration list for PBXProject "VespriumBattler" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA47AAE52F8C3E4D00801775 /* Debug */,
+				FA47AAE62F8C3E4D00801775 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FA47AAE72F8C3E4D00801775 /* Build configuration list for PBXNativeTarget "VespriumBattler" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FA47AAE82F8C3E4D00801775 /* Debug */,
+				FA47AAE92F8C3E4D00801775 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		FA47AAEB2F8C3E6900801775 /* XCLocalSwiftPackageReference "../../swift-modules/BioStats" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../../swift-modules/BioStats";
+		};
+		FA47AAEE2F8C3E7200801775 /* XCLocalSwiftPackageReference "../../swift-modules/BioEnhancements" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../../swift-modules/BioEnhancements";
+		};
+		FA47AAFC2F8C3EB100801775 /* XCLocalSwiftPackageReference "../../swift-modules/Util" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = "../../swift-modules/Util";
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		FA47AAF12F8C3E7C00801775 /* XCRemoteSwiftPackageReference "ASKCoordinator" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/skorulis/ASKCoordinator";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		FA47AAF42F8C3E8A00801775 /* XCRemoteSwiftPackageReference "ASKCore" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/skorulis/ASKCore";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		FA47AAF72F8C3EA100801775 /* XCRemoteSwiftPackageReference "knit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/cashapp/knit";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		FA47AAFF2F8C3EC900801775 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SimplyDanny/SwiftLintPlugins";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.63.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		FA47AAEC2F8C3E6900801775 /* BioStats */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BioStats;
+		};
+		FA47AAEF2F8C3E7200801775 /* BioEnhancements */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BioEnhancements;
+		};
+		FA47AAF22F8C3E7C00801775 /* ASKCoordinator */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FA47AAF12F8C3E7C00801775 /* XCRemoteSwiftPackageReference "ASKCoordinator" */;
+			productName = ASKCoordinator;
+		};
+		FA47AAF52F8C3E8A00801775 /* ASKCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FA47AAF42F8C3E8A00801775 /* XCRemoteSwiftPackageReference "ASKCore" */;
+			productName = ASKCore;
+		};
+		FA47AAF82F8C3EA100801775 /* Knit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FA47AAF72F8C3EA100801775 /* XCRemoteSwiftPackageReference "knit" */;
+			productName = Knit;
+		};
+		FA47AAFA2F8C3EA100801775 /* KnitMacros */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FA47AAF72F8C3EA100801775 /* XCRemoteSwiftPackageReference "knit" */;
+			productName = KnitMacros;
+		};
+		FA47AAFD2F8C3EB100801775 /* Util */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Util;
+		};
+		FA47AB2C2F8C40F200801775 /* KnitBuildPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FA47AAF72F8C3EA100801775 /* XCRemoteSwiftPackageReference "knit" */;
+			productName = "plugin:KnitBuildPlugin";
+		};
+		FA47AB2F2F8C40F500801775 /* SwiftLintBuildToolPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = FA47AAFF2F8C3EC900801775 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */;
+			productName = "plugin:SwiftLintBuildToolPlugin";
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = FA47AAD42F8C3E4C00801775 /* Project object */;
+}
