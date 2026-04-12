@@ -1,4 +1,5 @@
 import SwiftUI
+import BioStats
 
 struct GameEventOfferView: View {
     @State var viewModel: GameEventOfferViewModel
@@ -26,6 +27,8 @@ struct GameEventOfferView: View {
         switch viewModel.event.kind {
         case .cards(let array):
             cardContent(array)
+        case .attributeTrade(let from, let to, let amount):
+            tradeContent(from: from, to: to, amount: amount)
         }
     }
 
@@ -47,5 +50,39 @@ struct GameEventOfferView: View {
             }
             .padding(.horizontal, 4)
         }
+    }
+
+    private func tradeContent(from: Attribute, to: Attribute, amount: Int) -> some View {
+        VStack(spacing: 14) {
+            HStack(spacing: 10) {
+                attributeTradeRow(attribute: from, amountText: "-\(amount)", tint: .red)
+                Image(systemName: "arrow.right")
+                    .font(.headline)
+                    .foregroundStyle(.secondary)
+                attributeTradeRow(attribute: to, amountText: "+\(amount)", tint: .green)
+            }
+            .padding(12)
+            .frame(maxWidth: .infinity)
+            .background {
+                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                    .fill(Color.secondary.opacity(0.12))
+            }
+
+            Button("Apply Trade") {
+                viewModel.acceptTrade()
+            }
+            .buttonStyle(.borderedProminent)
+        }
+    }
+
+    private func attributeTradeRow(attribute: Attribute, amountText: String, tint: Color) -> some View {
+        VStack(spacing: 4) {
+            Text(attribute.name)
+                .font(.subheadline.weight(.medium))
+            Text(amountText)
+                .font(.headline.monospacedDigit())
+                .foregroundStyle(tint)
+        }
+        .frame(maxWidth: .infinity)
     }
 }

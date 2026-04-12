@@ -244,6 +244,36 @@ final class GameService: ObservableObject {
         self.store.gameState = state
     }
 
+    private func clearPendingEvent() {
+        var state = store.gameState
+        state.pendingEvent = nil
+        store.gameState = state
+    }
+
+    private func applyAttributeTrade(from: Attribute, to: Attribute, amount: Int) -> Int {
+        guard amount > 0, from != to else { return 0 }
+        var player = self.store.player
+        let available = max(0, player.attributes[from])
+        let tradedAmount = min(amount, available)
+        guard tradedAmount > 0 else { return 0 }
+        player.attributes[from] -= tradedAmount
+        player.attributes[to] += tradedAmount
+        self.store.player = player
+
+        var state = self.store.gameState
+        state.currentYear.attributeIncreases[from, default: 0] -= tradedAmount
+        state.currentYear.attributeIncreases[to, default: 0] += tradedAmount
+        self.store.gameState = state
+        return tradedAmount
+    }
+
+    func skipPendingEvent() {
+        guard let event = store.gameState.pendingEvent else { return }
+        guard event.skippable else { return }
+        self.recordChoiceOnLastMonthSummary("Skipped")
+        self.clearPendingEvent()
+    }
+
     func resolvePendingEvent(selecting card: GameCard?) {
         guard let event = store.gameState.pendingEvent else { return }
         if let card {
@@ -263,11 +293,17 @@ final class GameService: ObservableObject {
                 self.recordChoiceOnLastMonthSummary(card.name)
             }
         } else {
-            guard event.skippable else { return }
-            self.recordChoiceOnLastMonthSummary("Skipped")
+            switch event.kind {
+            case .cards:
+                guard event.skippable else { return }
+                self.recordChoiceOnLastMonthSummary("Skipped")
+            case .attributeTrade(let from, let to, let amount):
+                let tradedAmount = self.applyAttributeTrade(from: from, to: to, amount: amount)
+                self.recordChoiceOnLastMonthSummary(
+                    "Traded \(tradedAmount) \(from.name) -> \(to.name)"
+                )
+            }
         }
-        var state = store.gameState
-        state.pendingEvent = nil
-        store.gameState = state
+        self.clearPendingEvent()
     }
 }

@@ -24,8 +24,13 @@ final class GameEventOfferViewModel: CoordinatorViewModel {
         coordinator?.retreat()
     }
 
-    func skip() {
+    func acceptTrade() {
         gameService.resolvePendingEvent(selecting: nil)
+        coordinator?.retreat()
+    }
+
+    func skip() {
+        gameService.skipPendingEvent()
         coordinator?.retreat()
     }
 }
