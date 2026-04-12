@@ -79,6 +79,15 @@ struct GameView: View {
                         viewModel.showJobs()
                     } label: {
                         Image(systemName: "briefcase")
+                            .overlay(alignment: .topTrailing) {
+                                if viewModel.player.job == nil {
+                                    Circle()
+                                        .fill(.red)
+                                        .frame(width: 8, height: 8)
+                                        .offset(x: 4, y: -4)
+                                        .accessibilityHidden(true)
+                                }
+                            }
                     }
                     .accessibilityLabel("Open jobs")
                 }

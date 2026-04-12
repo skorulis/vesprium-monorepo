@@ -38,9 +38,6 @@ struct EventGenerator {
     }
 
     func nextEvent() -> GameEvent? {
-        if mainStore.player.job == nil {
-            return firstJobOfferEvent()
-        }
         if mainStore.gameState.currentGameDate.month.rawValue == 1 {
             return yearlyCardChoiceEvent()
         }
@@ -62,12 +59,4 @@ struct EventGenerator {
         )
     }
 
-    /// Offer shown when the player has no job after a month advances.
-    private func firstJobOfferEvent() -> GameEvent {
-        GameEvent(
-            text: "Word spreads that you are looking for work. Local employers have openings.",
-            cards: Job.allCases.map { GameCard.job($0) },
-            skippable: false
-        )
-    }
 }
