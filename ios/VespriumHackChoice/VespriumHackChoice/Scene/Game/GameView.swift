@@ -40,6 +40,18 @@ struct GameView: View {
                         .frame(maxHeight: 200)
                     }
                     Spacer(minLength: 0)
+                    if viewModel.gameState.pendingEvent != nil {
+                        Button {
+                            viewModel.showPendingEventOffer()
+                        } label: {
+                            Image(systemName: "exclamationmark.bubble.circle.fill")
+                                .font(.system(size: 44))
+                                .symbolRenderingMode(.hierarchical)
+                        }
+                        .buttonStyle(.plain)
+                        .accessibilityLabel("Open event offer")
+                        .padding(.bottom, 16)
+                    }
                     Button {
                         viewModel.advanceTime()
                     } label: {
@@ -57,12 +69,6 @@ struct GameView: View {
                     YearEndReviewView(review: review) {
                         viewModel.resolveYearReview()
                     }
-                } else if let event = viewModel.gameState.pendingEvent {
-                    GameEventOfferView(
-                        event: event,
-                        onSelectCard: { viewModel.resolvePendingEvent(selecting: $0) },
-                        onSkip: { viewModel.resolvePendingEvent(selecting: nil) }
-                    )
                 }
             }
             .toolbar {

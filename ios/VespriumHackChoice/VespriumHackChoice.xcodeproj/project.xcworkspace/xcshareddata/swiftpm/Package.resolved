@@ -1,5 +1,5 @@
 {
-  "originHash" : "5fdec2defefc96f471adc711399dcc8b80ee801cafefa6333af006d2fb7cf1d3",
+  "originHash" : "f7c512fff530beb9312e83998d3dc11d832149119a4457a7265e771fbc4a58ec",
   "pins" : [
     {
       "identity" : "askcoordinator",
@@ -7,7 +7,7 @@
       "location" : "https://github.com/skorulis/ASKCoordinator",
       "state" : {
         "branch" : "main",
-        "revision" : "ec2706b419a6c1c9b8aede46f5b0d87b8c4bf35b"
+        "revision" : "1ce22d6f54e6918dbd0ae80f4a3e4845361e206c"
       }
     },
     {

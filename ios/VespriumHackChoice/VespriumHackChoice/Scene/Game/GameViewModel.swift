@@ -39,8 +39,9 @@ final class GameViewModel: CoordinatorViewModel {
         gameService.advanceTime()
     }
 
-    func resolvePendingEvent(selecting card: GameCard?) {
-        gameService.resolvePendingEvent(selecting: card)
+    func showPendingEventOffer() {
+        guard let event = gameState.pendingEvent else { return }
+        coordinator?.custom(overlay: .basicDialog, MainPath.gameEventOffer(event))
     }
 
     func resolveYearReview() {
@@ -58,4 +59,5 @@ final class GameViewModel: CoordinatorViewModel {
     func showJobs() {
         coordinator?.present(MainPath.job, style: .sheet)
     }
+
 }
