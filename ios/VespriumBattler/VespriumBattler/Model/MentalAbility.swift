@@ -21,7 +21,7 @@ enum MentalAbility: String, Codable, Sendable, Equatable, CaseIterable {
         }
     }
 
-    var activeTime: TimeInterval {
+    var duration: TimeInterval {
         switch self {
         case .focusSpike:
             return 5

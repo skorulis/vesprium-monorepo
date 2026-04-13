@@ -13,44 +13,35 @@ struct Enemy: Codable, Sendable, Equatable {
     init(kind: EnemyKind) {
         self.id = UUID()
         self.kind = kind
-        self.health = kind.maxHealth
+        self.health = kind.details.maxHealth
     }
+    
+    var details: EnemyDetails { kind.details }
+}
+
+struct EnemyDetails: Codable, Sendable, Equatable {
+    /// Base damage amount
+    let damage: Int
+    let agility: Int
+    let attackRate: TimeInterval
+    let maxHealth: Int
+    /// Money gained when defeated
+    let money: Int
 }
 
 enum EnemyKind: String, Codable, Sendable, Equatable {
     case rat
 
-    /// Base damage amount
-    var damage: Int {
+    var details: EnemyDetails {
         switch self {
         case .rat:
-            return 1
+            return EnemyDetails(
+                damage: 1,
+                agility: 12,
+                attackRate: 2.5,
+                maxHealth: 10,
+                money: 10
+            )
         }
-    }
-
-    var agility: Int {
-        switch self {
-        case .rat:
-            return 12
-        }
-    }
-
-    var attackRate: TimeInterval {
-        switch self {
-        case .rat:
-            return 1.5
-        }
-    }
-
-    var maxHealth: Int {
-        switch self {
-        case .rat:
-            return 10
-        }
-    }
-
-    /// Money gained when defeated
-    var money: Int {
-        return 10
     }
 }

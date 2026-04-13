@@ -135,27 +135,6 @@ private extension BattleView {
     }
 }
 
-private struct EnemyChip: View {
-
-    let enemy: Enemy
-
-    var body: some View {
-        VStack(alignment: .leading, spacing: 6) {
-            Text(enemy.kind.rawValue.capitalized)
-                .font(.subheadline.weight(.semibold))
-            Text("HP \(enemy.health)")
-                .font(.caption)
-                .foregroundStyle(.secondary)
-        }
-        .padding(.horizontal, 12)
-        .padding(.vertical, 10)
-        .background(
-            RoundedRectangle(cornerRadius: 10)
-                .fill(.ultraThinMaterial)
-        )
-    }
-}
-
 private struct LabeledSliderRow: View {
 
     let title: String

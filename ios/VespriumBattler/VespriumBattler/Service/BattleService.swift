@@ -60,10 +60,11 @@ final class BattleService {
         guard var enemy = battle.enemies.first else { return }
         guard battle.battlePlayer.storedTime >= 1 else { return }
         battle.battlePlayer.storedTime -= 1
+        let details = enemy.details
 
         let hitChance = calculator.hitChance(
             attackerAgility: battle.battlePlayer.player.agility,
-            defenderAgility: enemy.kind.agility
+            defenderAgility: details.agility
         )
         guard hitChance.check() else {
             print("Miss")
@@ -75,7 +76,7 @@ final class BattleService {
         enemy.health -= Int(round(damage))
         battle.replace(enemy: enemy)
         if enemy.health <= 0 {
-            mainStore.player.money += enemy.kind.money
+            mainStore.player.money += details.money
             print("Killed \(enemy.kind.rawValue)")
         }
     }
@@ -83,16 +84,17 @@ final class BattleService {
     /// An enemy attacks
     func enemyTick(battle: inout Battle, enemy: inout Enemy, time: TimeInterval) {
         enemy.storedTime += time
-        guard enemy.storedTime >= enemy.kind.attackRate else { return }
-        enemy.storedTime -= enemy.kind.attackRate
+        let details = enemy.details
+        guard enemy.storedTime >= details.attackRate else { return }
+        enemy.storedTime -= details.attackRate
 
         let hitChance = calculator.hitChance(
-            attackerAgility: enemy.kind.agility,
+            attackerAgility: details.agility,
             defenderAgility: battle.battlePlayer.player.agility
         )
 
         guard hitChance.check() else { return }
-        battle.battlePlayer.health -= enemy.kind.damage
+        battle.battlePlayer.health -= details.damage
     }
 
     /// Spawn enemies if needed

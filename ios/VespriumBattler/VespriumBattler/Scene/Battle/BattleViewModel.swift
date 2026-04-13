@@ -68,9 +68,7 @@ extension BattleViewModel {
         guard canActivate(ability) else { return }
         updateBattle { battle in
             battle.battlePlayer.abilityCooldowns[ability] = ability.cooldown
-            if battle.battlePlayer.activeAbilities.contains(ability) == false {
-                battle.battlePlayer.activeAbilities.append(ability)
-            }
+            battle.battlePlayer.activeAbilities[ability] = ability.duration
         }
     }
 }
@@ -96,10 +94,14 @@ private extension BattleViewModel {
     }
 
     func enemyTick() {
+        var tickLength = BattleActionTimers.playerTickTime
+        if model.battle.battlePlayer.activeAbilities[.focusSpike] != nil {
+            tickLength *= 0.5
+        }
         updateBattle { battle in
             let enemies = battle.enemies
             for var enemy in enemies {
-                battleService.enemyTick(battle: &battle, enemy: &enemy, time: BattleActionTimers.playerTickTime)
+                battleService.enemyTick(battle: &battle, enemy: &enemy, time: tickLength)
                 battle.replace(enemy: enemy)
             }
         }
