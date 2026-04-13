@@ -22,7 +22,7 @@ struct Battle: Codable, Sendable, Equatable {
     var defeatedEnemies: [Enemy] = []
 
     /// How many enemies to defeat before the battle is finished
-    var enemiesRemaining: Int { enemyCount - defeatedEnemies.count }
+    var enemiesRemaining: Int { enemyCount - defeatedEnemies.count - enemies.count }
     var spawnedEnemies: Int { enemies.count + defeatedEnemies.count }
 
     mutating func replace(enemy: Enemy) {
@@ -34,4 +34,18 @@ struct Battle: Codable, Sendable, Equatable {
             enemies[index] = enemy
         }
     }
+    
+    var state: BattleState {
+        if battlePlayer.health <= 0 {
+            return .lost
+        }
+        if enemies.count == 0 && enemiesRemaining == 0 {
+            return .won
+        }
+        return .ongoing
+    }
+}
+
+enum BattleState {
+    case ongoing, won, lost
 }

@@ -48,7 +48,14 @@ private extension BattleViewModel {
 
     func updateBattle(_ mutation: (inout Battle) -> Void) {
         mutation(&model.battle)
-        resetActionTimers()
+        
+        switch model.battle.state {
+        case .lost, .won:
+            print("Battle over")
+            actionTimers.invalidateTimers()
+        default:
+            resetActionTimers()
+        }
     }
 
     func resetActionTimers() {
@@ -106,13 +113,17 @@ private final class BattleActionTimers {
             }
         }
     }
-
-    deinit {
+    
+    func invalidateTimers() {
         playerTimer?.invalidate()
         battleTimer?.invalidate()
         enemyTimers.values.forEach { $0.invalidate() }
         playerTimer = nil
         battleTimer = nil
         enemyTimers = [:]
+    }
+
+    deinit {
+        invalidateTimers()
     }
 }
