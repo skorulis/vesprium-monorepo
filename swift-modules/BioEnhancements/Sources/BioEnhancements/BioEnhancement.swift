@@ -84,7 +84,7 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
             return [AttributeBonus(attribute: .strength, value: 50, kind: .multiplicative)]
         case .brainOverclock:
             return [
-                AttributeBonus(attribute: .intelligence, value: 50, kind: .multiplicative),
+                AttributeBonus(attribute: .cognition, value: 50, kind: .multiplicative),
                 AttributeBonus(attribute: .agility, value: 25, kind: .multiplicative),
             ]
         case .thickendedSkin:

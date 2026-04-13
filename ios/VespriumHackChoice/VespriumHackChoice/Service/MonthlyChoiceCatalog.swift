@@ -98,7 +98,7 @@ enum MonthlyChoiceCatalog {
                 id: "course_intelligence_a",
                 title: "Enroll",
                 hint: "−200 coins · +1 intelligence",
-                effect: .payTuition(cost: 200, attribute: .intelligence, amount: 1)
+                effect: .payTuition(cost: 200, attribute: .cognition, amount: 1)
             ),
             optionB: MonthlyChoiceOption(
                 id: "course_intelligence_b",

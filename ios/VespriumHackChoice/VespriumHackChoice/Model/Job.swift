@@ -22,7 +22,7 @@ enum Job: String, Codable, CaseIterable, Hashable, Sendable {
         case .farming:
             return [.strength: 2, .vitality: 2]
         case .shopKeeper:
-            return [.charisma: 2, .intelligence: 2]
+            return [.charisma: 2, .cognition: 2]
         }
     }
 

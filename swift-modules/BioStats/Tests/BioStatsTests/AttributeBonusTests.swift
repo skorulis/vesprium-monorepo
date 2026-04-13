@@ -31,10 +31,10 @@ struct AttributeBonusTests {
     @Test func adjustedValueAdditiveThenMultiplicative() {
         // (10 + 5) * 120 / 100 = 18
         let bonuses = [
-            AttributeBonus(attribute: .intelligence, value: 5, kind: .additive),
-            AttributeBonus(attribute: .intelligence, value: 20, kind: .multiplicative),
+            AttributeBonus(attribute: .cognition, value: 5, kind: .additive),
+            AttributeBonus(attribute: .cognition, value: 20, kind: .multiplicative),
         ]
-        #expect(AttributeBonus.adjustedValue(base: 10, bonuses: bonuses, attribute: .intelligence) == 18)
+        #expect(AttributeBonus.adjustedValue(base: 10, bonuses: bonuses, attribute: .cognition) == 18)
     }
 
     @Test func adjustedValueIgnoresOtherAttributes() {

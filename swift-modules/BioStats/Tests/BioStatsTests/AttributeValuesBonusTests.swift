@@ -15,14 +15,14 @@ struct AttributeValuesBonusTests {
     @Test func applyingBonusesAdditiveAcrossAttributes() {
         var values = AttributeValues()
         values[.strength] = 10
-        values[.intelligence] = 20
+        values[.cognition] = 20
         let bonuses = [
             AttributeBonus(attribute: .strength, value: 2, kind: .additive),
-            AttributeBonus(attribute: .intelligence, value: 5, kind: .additive),
+            AttributeBonus(attribute: .cognition, value: 5, kind: .additive),
         ]
         let adjusted = values.applyingBonuses(bonuses)
         #expect(adjusted[.strength] == 12)
-        #expect(adjusted[.intelligence] == 25)
+        #expect(adjusted[.cognition] == 25)
         // Unaffected attributes stay at default
         #expect(adjusted[.agility] == Attribute.defaultValue)
     }

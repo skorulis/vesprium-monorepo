@@ -9,7 +9,7 @@ public enum Attribute: String, Codable, CaseIterable, Hashable, Sendable {
     case agility
 
     /// Reasoning, memory, and learning—capacity to analyze, plan, and absorb new information.
-    case intelligence
+    case cognition
 
     /// Robust health and staying power: endurance, recovery, and resistance to illness or fatigue.
     case vitality

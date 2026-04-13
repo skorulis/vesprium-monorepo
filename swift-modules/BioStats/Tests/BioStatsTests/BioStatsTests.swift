@@ -12,12 +12,12 @@ import Testing
 
 @Test func codableRoundTrip() throws {
     var original = AttributeValues()
-    original[.intelligence] = 7
+    original[.cognition] = 7
     original[.strength] = 0
 
     let data = try JSONEncoder().encode(original)
     let decoded = try JSONDecoder().decode(AttributeValues.self, from: data)
 
-    #expect(decoded[.intelligence] == 7)
+    #expect(decoded[.cognition] == 7)
     #expect(decoded[.strength] == 0)
 }

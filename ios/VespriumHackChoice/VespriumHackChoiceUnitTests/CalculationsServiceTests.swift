@@ -34,7 +34,7 @@ struct CalculationServiceTests {
     @Test @MainActor func shopKeeperMonthlyEarningsUsesCharismaAndIntelligence() {
         var player = PlayerCharacter(dateOfBirth: SetupConstants.defaultPlayerDOB)
         player.attributes[.charisma] = 15
-        player.attributes[.intelligence] = 8
+        player.attributes[.cognition] = 8
         let earnings = GameCalculator(player: player).monthlyJobEarnings(for: .shopKeeper)
         // 100 + 2*15 + 2*8
         #expect(earnings == 146)
@@ -43,7 +43,7 @@ struct CalculationServiceTests {
     @Test @MainActor func shopKeeperIgnoresBarometricEars() {
         var player = PlayerCharacter(dateOfBirth: SetupConstants.defaultPlayerDOB)
         player.attributes[.charisma] = 15
-        player.attributes[.intelligence] = 8
+        player.attributes[.cognition] = 8
         player.cards = PlayerCards(bodyEnhancements: [
             .bodyEnhancement(.barometricEars)
         ])

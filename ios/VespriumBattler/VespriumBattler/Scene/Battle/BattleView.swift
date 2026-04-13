@@ -62,11 +62,6 @@ private extension BattleView {
                 value: $viewModel.model.physicalExertion,
                 range: 0...1.5
             )
-            LabeledSliderRow(
-                title: "Mental",
-                value: $viewModel.model.mentalExertion,
-                range: 0...1.5
-            )
         }
     }
 
@@ -82,7 +77,7 @@ private extension BattleView {
             )
             LabeledGaugeRow(
                 title: "Mental Burnout",
-                value: model.mentalBurnout,
+                value: model.battle.battlePlayer.mentalBurnoutFraction,
                 range: 0...1
             )
         }
@@ -186,8 +181,6 @@ extension BattleView {
     struct Model {
         var battle: Battle
         var physicalExertion = 0.8
-        var mentalExertion = 0.0
-        var mentalBurnout = 0.0
     }
 }
 

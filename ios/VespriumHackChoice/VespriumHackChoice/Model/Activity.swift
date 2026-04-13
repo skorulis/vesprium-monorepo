@@ -38,7 +38,7 @@ enum Activity: String, Codable, Sendable, Equatable, CaseIterable {
                 activity: self,
                 monthlyCost: 50,
                 dailyHours: 3,
-                yearlyAttributeBonuses: [.intelligence: 2]
+                yearlyAttributeBonuses: [.cognition: 2]
             )
         case .meditation:
             ActivityDetails(
@@ -59,7 +59,7 @@ enum Activity: String, Codable, Sendable, Equatable, CaseIterable {
                 activity: self,
                 monthlyCost: 10,
                 dailyHours: 2,
-                yearlyAttributeBonuses: [.intelligence: 1]
+                yearlyAttributeBonuses: [.cognition: 1]
             )
         case .yoga:
             ActivityDetails(
@@ -87,7 +87,7 @@ enum Activity: String, Codable, Sendable, Equatable, CaseIterable {
                 activity: self,
                 monthlyCost: 50,
                 dailyHours: 3,
-                yearlyAttributeBonuses: [.intelligence: 1, .charisma: 1]
+                yearlyAttributeBonuses: [.cognition: 1, .charisma: 1]
             )
         }
     }

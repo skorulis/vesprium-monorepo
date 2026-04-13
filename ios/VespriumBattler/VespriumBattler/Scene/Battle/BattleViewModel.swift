@@ -67,8 +67,7 @@ extension BattleViewModel {
     func activate(_ ability: MentalAbility) {
         guard canActivate(ability) else { return }
         updateBattle { battle in
-            battle.battlePlayer.abilityCooldowns[ability] = ability.cooldown
-            battle.battlePlayer.activeAbilities[ability] = ability.duration
+            battle.battlePlayer.activate(ability: ability)
         }
     }
 }
