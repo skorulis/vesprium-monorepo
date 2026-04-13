@@ -8,7 +8,14 @@ enum MainPath: CoordinatorPath {
     case battle
     case mainMenu
 
-    var id: String { String(describing: self) }
+    var id: String {
+        switch self {
+        case .battle:
+            return "battle"
+        case .mainMenu:
+            return "mainMenu"
+        }
+    }
 }
 
 struct MainPathRenderer: CoordinatorPathRenderer {

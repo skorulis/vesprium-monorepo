@@ -28,11 +28,13 @@ final class BattleService {
     /// The player attacks
     func playerTick(battle: inout Battle) {
         // TODO: Implement player attack on the first enemy
+        print("Player tick")
     }
 
     /// An enemy attacks
     func enemyTick(battle: inout Battle, enemy: Enemy) {
         // TODO: Implement enemy attack on the player
+        print("Enemy tick")
     }
 
     /// Spawn enemies if needed

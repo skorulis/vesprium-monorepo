@@ -13,7 +13,8 @@ struct BattleView {
 extension BattleView: View {
 
     var body: some View {
-        VStack {
+        Self._printChanges()
+        return VStack {
 
         }
     }
