@@ -15,9 +15,9 @@ struct BattleWonDialogView: View {
                 .multilineTextAlignment(.center)
                 .foregroundStyle(.secondary)
 
-            Button("Continue") {
-                coordinator?.retreat()
-                coordinator?.retreat()
+            Button("Visit Shop") {
+                coordinator?.dismissOverlay()
+                coordinator?.push(MainPath.shop)
             }
             .buttonStyle(.borderedProminent)
         }

@@ -44,6 +44,7 @@ final class VespriumBattlerAssembly: AutoInitModuleAssembly {
         container.register(BattleViewModel.self) { BattleViewModel.make(resolver: $0) }
             .inObjectScope(.weak) // HACK TO FIX OBSERVATION ISSUES
         container.register(MainMenuViewModel.self) { MainMenuViewModel.make(resolver: $0) }
+        container.register(ShopViewModel.self) { ShopViewModel.make(resolver: $0) }
     }
 }
 

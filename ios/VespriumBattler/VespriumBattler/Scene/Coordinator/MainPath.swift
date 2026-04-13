@@ -7,6 +7,7 @@ import SwiftUI
 enum MainPath: CoordinatorPath {
     case battle
     case mainMenu
+    case shop
     case battleWon
     case battleLost
 
@@ -16,6 +17,8 @@ enum MainPath: CoordinatorPath {
             return "battle"
         case .mainMenu:
             return "mainMenu"
+        case .shop:
+            return "shop"
         case .battleWon:
             return "battleWon"
         case .battleLost:
@@ -36,6 +39,8 @@ struct MainPathRenderer: CoordinatorPathRenderer {
             BattleView(viewModel: coordinator.apply(resolver.battleViewModel()))
         case .mainMenu:
             MainMenuView(viewModel: coordinator.apply(resolver.mainMenuViewModel()))
+        case .shop:
+            ShopView(viewModel: coordinator.apply(resolver.shopViewModel()))
         case .battleWon:
             BattleWonDialogView()
         case .battleLost:
