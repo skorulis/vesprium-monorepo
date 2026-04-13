@@ -9,6 +9,7 @@ final class BattleService {
 
     private let mainStore: MainStore
     private let enemyService: EnemyService
+    private let calculator = BattleCalculator()
 
     @Resolvable<Resolver>
     init(mainStore: MainStore, enemyService: EnemyService) {
@@ -28,6 +29,14 @@ final class BattleService {
     /// The player attacks
     func playerTick(battle: inout Battle) {
         guard var enemy = battle.enemies.first else { return }
+        let hitChance = calculator.hitChance(
+            attackerAgility: battle.battlePlayer.player.agility,
+            defenderAgility: enemy.kind.agility
+        )
+        guard hitChance.check() else {
+            print("Miss")
+            return
+        }
         enemy.health -= battle.battlePlayer.player.damage
         battle.replace(enemy: enemy)
         if enemy.health <= 0 {
@@ -43,6 +52,12 @@ final class BattleService {
 
     /// Spawn enemies if needed
     func battleTick(battle: inout Battle) {
+        battle.time += 1
+        maybeSpawn(battle: &battle)
+        
+    }
+    
+    private func maybeSpawn(battle: inout Battle) {
         guard battle.enemiesRemaining > 0 else { return }
 
         let spawnChancePercent = if battle.spawnedEnemies == 0 {
