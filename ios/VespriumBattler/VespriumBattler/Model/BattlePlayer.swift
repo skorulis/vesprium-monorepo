@@ -13,10 +13,14 @@ struct BattlePlayer: Codable, Sendable, Equatable {
     var storedTime: Double = 0
 
     /// Exertion averaged over time to prevent quick changes
-    var averagedPhysicalExertion: Double = 1
+    var averagedPhysicalExertion: Double = 0
 
     /// Current burnout level
     var physicalBurnout: Double = 0
+
+    var physicalBurnoutFraction: Double {
+        return physicalBurnout / Double(player.effectiveAttributes[.vitality])
+    }
 
     /// Time until the ability is available
     var abilityCooldowns: [MentalAbility: Double] = [:]
@@ -31,7 +35,18 @@ struct BattlePlayer: Codable, Sendable, Equatable {
 
     mutating func updateExertion(physical: Double, time: TimeInterval) {
         averagedPhysicalExertion = averagedPhysicalExertion * (1 - time) + physical * time
-        physicalBurnout = physicalBurnout * (1 - time) + averagedPhysicalExertion * time
-        physicalBurnout = min(physicalBurnout, 1)
+
+        physicalBurnout += burnoutChange * time
+        physicalBurnout = max(physicalBurnout, 0)
+        physicalBurnout = min(physicalBurnout, Double(player.effectiveAttributes[.vitality]))
+    }
+
+    var burnoutChange: Double {
+        let burnoutCutoff = 0.8
+        if averagedPhysicalExertion > burnoutCutoff {
+            return (averagedPhysicalExertion - burnoutCutoff) / (1 - burnoutCutoff)
+        } else {
+            return -(burnoutCutoff - averagedPhysicalExertion) / burnoutCutoff
+        }
     }
 }

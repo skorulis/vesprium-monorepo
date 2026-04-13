@@ -15,7 +15,7 @@ struct Enemy: Codable, Sendable, Equatable {
         self.kind = kind
         self.health = kind.details.maxHealth
     }
-    
+
     var details: EnemyDetails { kind.details }
 }
 

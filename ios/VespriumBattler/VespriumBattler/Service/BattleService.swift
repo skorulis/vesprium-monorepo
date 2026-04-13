@@ -33,7 +33,7 @@ final class BattleService {
         updateAbilityCooldowns(battlePlayer: &battle.battlePlayer, time: time)
         maybePlayerAttack(battle: &battle)
     }
-    
+
     func updateAbilityCooldowns(battlePlayer: inout BattlePlayer, time: TimeInterval) {
         let cooldowns = battlePlayer.abilityCooldowns
         for (ability, remaining) in cooldowns {
@@ -44,7 +44,7 @@ final class BattleService {
                 battlePlayer.abilityCooldowns[ability] = next
             }
         }
-        
+
         let active = battlePlayer.activeAbilities
         for (ability, remaining) in active {
             let next = max(0, remaining - time)

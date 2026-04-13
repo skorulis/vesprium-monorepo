@@ -77,7 +77,7 @@ private extension BattleView {
 
             LabeledGaugeRow(
                 title: "Physical Burnout",
-                value: model.battle.battlePlayer.physicalBurnout,
+                value: model.battle.battlePlayer.physicalBurnoutFraction,
                 range: 0...1
             )
             LabeledGaugeRow(
