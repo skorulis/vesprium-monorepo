@@ -30,7 +30,30 @@ final class BattleService {
     func playerTick(time: TimeInterval, battle: inout Battle) {
         battle.battlePlayer.storedTime += time
         battle.battlePlayer.storedTime = min(1, battle.battlePlayer.storedTime)
+        updateAbilityCooldowns(battlePlayer: &battle.battlePlayer, time: time)
         maybePlayerAttack(battle: &battle)
+    }
+    
+    func updateAbilityCooldowns(battlePlayer: inout BattlePlayer, time: TimeInterval) {
+        let cooldowns = battlePlayer.abilityCooldowns
+        for (ability, remaining) in cooldowns {
+            let next = max(0, remaining - time)
+            if next == 0 {
+                battlePlayer.abilityCooldowns.removeValue(forKey: ability)
+            } else {
+                battlePlayer.abilityCooldowns[ability] = next
+            }
+        }
+        
+        let active = battlePlayer.activeAbilities
+        for (ability, remaining) in active {
+            let next = max(0, remaining - time)
+            if next == 0 {
+                battlePlayer.activeAbilities.removeValue(forKey: ability)
+            } else {
+                battlePlayer.activeAbilities[ability] = next
+            }
+        }
     }
 
     private func maybePlayerAttack(battle: inout Battle) {
@@ -62,7 +85,7 @@ final class BattleService {
         enemy.storedTime += time
         guard enemy.storedTime >= enemy.kind.attackRate else { return }
         enemy.storedTime -= enemy.kind.attackRate
-        
+
         let hitChance = calculator.hitChance(
             attackerAgility: enemy.kind.agility,
             defenderAgility: battle.battlePlayer.player.agility

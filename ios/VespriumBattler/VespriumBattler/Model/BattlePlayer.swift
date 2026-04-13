@@ -18,6 +18,12 @@ struct BattlePlayer: Codable, Sendable, Equatable {
     /// Current burnout level
     var physicalBurnout: Double = 0
 
+    /// Time until the ability is available
+    var abilityCooldowns: [MentalAbility: Double] = [:]
+
+    /// Abilities that are active
+    var activeAbilities: [MentalAbility: Double] = [:]
+
     init(player: PlayerCharacter) {
         self.player = player
         self.health = player.maxHealth

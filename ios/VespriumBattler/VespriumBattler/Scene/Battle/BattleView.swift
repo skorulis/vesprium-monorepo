@@ -17,6 +17,7 @@ extension BattleView: View {
             VStack(alignment: .leading, spacing: 20) {
                 exertionSection
                 enemySection
+                mentalAbilitiesSection
                 burnoutSection
                 playerHealthSection
             }
@@ -84,6 +85,33 @@ private extension BattleView {
                 value: model.mentalBurnout,
                 range: 0...1
             )
+        }
+    }
+
+    var mentalAbilitiesSection: some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Mental Abilities")
+                .font(.headline)
+
+            if viewModel.mentalAbilities.isEmpty {
+                Text("No abilities unlocked")
+                    .foregroundStyle(.secondary)
+            } else {
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 12) {
+                        ForEach(viewModel.mentalAbilities, id: \.self) { ability in
+                            MentalAbilityButton(
+                                ability: ability,
+                                cooldownRemaining: viewModel.remainingCooldown(for: ability),
+                                action: {
+                                    viewModel.activate(ability)
+                                }
+                            )
+                        }
+                    }
+                    .padding(.vertical, 4)
+                }
+            }
         }
     }
 

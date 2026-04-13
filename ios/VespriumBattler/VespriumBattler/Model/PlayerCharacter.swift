@@ -26,7 +26,7 @@ struct PlayerCharacter: Codable, Sendable, Equatable {
     var agility: Int {
         effectiveAttributes[.agility]
     }
-    
+
     var mentalAbilities: [MentalAbility] {
         return [.focusSpike]
     }

@@ -9,7 +9,7 @@ import KnitMacros
     weak var coordinator: ASKCoordinator.Coordinator?
 
     private let mainStore: MainStore
-    
+
     @Resolvable<Resolver>
     init(mainStore: MainStore) {
         self.mainStore = mainStore

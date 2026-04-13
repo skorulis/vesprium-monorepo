@@ -6,7 +6,7 @@ import BioStats
 struct Enemy: Codable, Sendable, Equatable {
     let id: UUID
     let kind: EnemyKind
-    
+
     var storedTime: TimeInterval = 0
     var health: Int
 
@@ -34,7 +34,7 @@ enum EnemyKind: String, Codable, Sendable, Equatable {
             return 12
         }
     }
-    
+
     var attackRate: TimeInterval {
         switch self {
         case .rat:

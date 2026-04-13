@@ -20,7 +20,7 @@ extension GameView: View {
             ShopView(viewModel: applyCoordinator(resolver!.shopViewModel()))
         }
     }
-    
+
     private func applyCoordinator<T>(_ viewModel: T) -> T {
         guard let coordinator = self.viewModel.coordinator else {
             return viewModel

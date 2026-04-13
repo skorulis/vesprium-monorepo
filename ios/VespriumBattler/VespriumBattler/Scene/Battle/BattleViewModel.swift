@@ -35,6 +35,18 @@ import KnitMacros
     var playerMaxHealth: Int {
         model.battle.battlePlayer.player.maxHealth
     }
+
+    var mentalAbilities: [MentalAbility] {
+        model.battle.battlePlayer.player.mentalAbilities
+    }
+
+    func remainingCooldown(for ability: MentalAbility) -> TimeInterval {
+        model.battle.battlePlayer.abilityCooldowns[ability] ?? 0
+    }
+
+    func canActivate(_ ability: MentalAbility) -> Bool {
+        remainingCooldown(for: ability) <= 0
+    }
 }
 
 // MARK: - Actions
@@ -50,6 +62,16 @@ extension BattleViewModel {
                 self?.battleTick()
             }
         )
+    }
+
+    func activate(_ ability: MentalAbility) {
+        guard canActivate(ability) else { return }
+        updateBattle { battle in
+            battle.battlePlayer.abilityCooldowns[ability] = ability.cooldown
+            if battle.battlePlayer.activeAbilities.contains(ability) == false {
+                battle.battlePlayer.activeAbilities.append(ability)
+            }
+        }
     }
 }
 
