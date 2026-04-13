@@ -13,6 +13,7 @@ import KnitMacros
 
     var model: BattleView.Model
     private var actionTimers = BattleActionTimers()
+    private var hasPresentedBattleOutcomeDialog = false
 
     @Resolvable<Resolver>
     init(battleService: BattleService, mainStore: MainStore) {
@@ -86,12 +87,21 @@ private extension BattleViewModel {
         mutation(&model.battle)
 
         switch model.battle.state {
-        case .lost, .won:
-            print("Battle over")
+        case .lost:
             actionTimers.invalidateTimers()
+            presentBattleOutcomeDialog(path: .battleLost)
+        case .won:
+            actionTimers.invalidateTimers()
+            presentBattleOutcomeDialog(path: .battleWon)
         default:
             resetActionTimers()
         }
+    }
+
+    func presentBattleOutcomeDialog(path: MainPath) {
+        guard hasPresentedBattleOutcomeDialog == false else { return }
+        hasPresentedBattleOutcomeDialog = true
+        coordinator?.custom(overlay: .basicDialog, path)
     }
 }
 
@@ -121,19 +131,15 @@ private final class BattleActionTimers {
             }
         }
 
-        for enemy in battle.enemies {
-            if enemyTimers[enemy.id] == nil {
-                enemyTimers[enemy.id] = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-                    enemyAction(enemy)
-                }
+        for enemy in battle.enemies where enemyTimers[enemy.id] == nil {
+            enemyTimers[enemy.id] = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+                enemyAction(enemy)
             }
         }
 
-        for deadEnemy in battle.defeatedEnemies {
-            if enemyTimers[deadEnemy.id] != nil {
-                enemyTimers[deadEnemy.id]?.invalidate()
-                enemyTimers.removeValue(forKey: deadEnemy.id)
-            }
+        for deadEnemy in battle.defeatedEnemies where enemyTimers[deadEnemy.id] != nil {
+            enemyTimers[deadEnemy.id]?.invalidate()
+            enemyTimers.removeValue(forKey: deadEnemy.id)
         }
     }
 
