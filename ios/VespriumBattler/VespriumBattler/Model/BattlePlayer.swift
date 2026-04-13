@@ -5,7 +5,7 @@ import Foundation
 
 struct BattlePlayer: Codable, Sendable, Equatable {
 
-    let player: PlayerCharacter
+    var player: PlayerCharacter
 
     /// Current health
     var health: Int

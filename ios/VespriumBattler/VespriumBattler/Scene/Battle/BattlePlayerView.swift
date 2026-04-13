@@ -1,5 +1,6 @@
 // Created by Alex Skorulis on 14/4/2026.
 
+import BioStats
 import SwiftUI
 import Util
 
@@ -26,15 +27,21 @@ struct BattlePlayerView: View {
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
 
-            VStack(alignment: .trailing, spacing: 0) {
-                Text("Hit: \(hitChanceText)")
-                Text("DMG: \(damageText)")
-            }
-            .font(.caption.weight(.semibold))
-            .foregroundStyle(.secondary)
-            .padding(12)
+            physicalInformation
         }
         .frame(height: 140)
+    }
+    
+    private var physicalInformation: some View {
+        VStack(alignment: .trailing, spacing: 0) {
+            Text("STR: \(player.effectiveAttributes[.strength])")
+            Text("AGI: \(player.effectiveAttributes[.agility])")
+            Text("HIT: \(hitChanceText)")
+            Text("DMG: \(damageText)")
+        }
+        .font(.caption.weight(.semibold))
+        .foregroundStyle(.secondary)
+        .padding(12)
     }
 
     private var physicalBurnoutGauge: some View {
@@ -65,6 +72,8 @@ struct BattlePlayerView: View {
 }
 
 private extension BattlePlayerView {
+    
+    var player: PlayerCharacter { battle.battlePlayer.player }
 
     var hitChanceText: String {
         guard let target = battle.enemies.first else {
