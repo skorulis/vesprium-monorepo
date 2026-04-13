@@ -8,6 +8,7 @@ import Foundation
 struct PlayerCharacter: Codable, Sendable, Equatable {
     var attributes: AttributeValues = .init()
     var enhancements: EnhancementValues = .init()
+    var money: Int = 100
 
     init() {}
 
