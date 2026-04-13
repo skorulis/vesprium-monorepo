@@ -29,6 +29,7 @@ final class BattleService {
     /// The player attacks
     func playerTick(time: TimeInterval, battle: inout Battle) {
         battle.battlePlayer.storedTime += time
+        battle.battlePlayer.storedTime = min(1, battle.battlePlayer.storedTime)
         maybePlayerAttack(battle: &battle)
     }
 
@@ -62,7 +63,7 @@ final class BattleService {
             attackerAgility: enemy.kind.agility,
             defenderAgility: battle.battlePlayer.player.agility
         )
-        
+
         guard hitChance.check() else { return }
         battle.battlePlayer.health -= enemy.kind.damage
     }

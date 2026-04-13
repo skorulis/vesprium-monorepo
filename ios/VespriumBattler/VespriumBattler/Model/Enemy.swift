@@ -39,7 +39,7 @@ enum EnemyKind: String, Codable, Sendable, Equatable {
             return 10
         }
     }
-    
+
     /// Money gained when defeated
     var money: Int {
         return 10

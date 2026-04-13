@@ -14,11 +14,14 @@ final class MainStore: ObservableObject {
 
     @Published var player: PlayerCharacter
 
+    @Published var gameState: GameState
+
     @Resolvable<Resolver>
     init(keyValueStore: PKeyValueStore) {
         self.keyValueStore = keyValueStore
 
         player = (try? keyValueStore.codable(forKey: Self.playerKey)) ?? .init()
+        gameState = (try? keyValueStore.codable(forKey: Self.gameStateKey)) ?? .init()
     }
 
 }

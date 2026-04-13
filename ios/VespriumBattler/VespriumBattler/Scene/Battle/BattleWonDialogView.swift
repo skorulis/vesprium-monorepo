@@ -5,6 +5,7 @@ import SwiftUI
 
 struct BattleWonDialogView: View {
     @Environment(\.coordinator) private var coordinator
+    let mainStore: MainStore
 
     var body: some View {
         VStack(spacing: 16) {
@@ -17,7 +18,7 @@ struct BattleWonDialogView: View {
 
             Button("Visit Shop") {
                 coordinator?.dismissOverlay()
-                coordinator?.push(MainPath.shop)
+                mainStore.gameState.phase = .shop
             }
             .buttonStyle(.borderedProminent)
         }

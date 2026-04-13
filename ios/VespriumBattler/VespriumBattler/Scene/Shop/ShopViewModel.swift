@@ -53,7 +53,6 @@ extension ShopViewModel {
     }
 
     func goToNextBattle() {
-        coordinator?.retreat()
-        coordinator?.push(MainPath.battle)
+        mainStore.gameState.phase = .battle
     }
 }

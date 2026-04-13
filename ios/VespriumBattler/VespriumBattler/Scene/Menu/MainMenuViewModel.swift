@@ -8,12 +8,15 @@ import KnitMacros
 @Observable @MainActor final class MainMenuViewModel: CoordinatorViewModel {
     weak var coordinator: ASKCoordinator.Coordinator?
 
+    private let mainStore: MainStore
+    
     @Resolvable<Resolver>
-    init() {
-
+    init(mainStore: MainStore) {
+        self.mainStore = mainStore
     }
 
     func startBattle() {
-        coordinator?.push(MainPath.battle)
+        mainStore.gameState.phase = .battle
+        coordinator?.push(MainPath.game)
     }
 }

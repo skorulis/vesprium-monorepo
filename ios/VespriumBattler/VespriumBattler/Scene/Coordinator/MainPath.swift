@@ -5,6 +5,7 @@ import Knit
 import SwiftUI
 
 enum MainPath: CoordinatorPath {
+    case game
     case battle
     case mainMenu
     case shop
@@ -13,6 +14,8 @@ enum MainPath: CoordinatorPath {
 
     var id: String {
         switch self {
+        case .game:
+            return "game"
         case .battle:
             return "battle"
         case .mainMenu:
@@ -35,6 +38,8 @@ struct MainPathRenderer: CoordinatorPathRenderer {
     @MainActor @ViewBuilder
     func render(path: MainPath, in coordinator: Coordinator) -> some View {
         switch path {
+        case .game:
+            GameView(viewModel: coordinator.apply(resolver.gameViewModel()))
         case .battle:
             BattleView(viewModel: coordinator.apply(resolver.battleViewModel()))
         case .mainMenu:
@@ -42,7 +47,7 @@ struct MainPathRenderer: CoordinatorPathRenderer {
         case .shop:
             ShopView(viewModel: coordinator.apply(resolver.shopViewModel()))
         case .battleWon:
-            BattleWonDialogView()
+            BattleWonDialogView(mainStore: resolver.mainStore())
         case .battleLost:
             BattleLostDialogView()
         }
