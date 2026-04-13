@@ -1,5 +1,6 @@
 // Created by Alex Skorulis on 13/4/2026.
 
+import BioStats
 import Foundation
 
 struct BattlePlayer: Codable, Sendable, Equatable {

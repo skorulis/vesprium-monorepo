@@ -16,4 +16,9 @@ struct PlayerCharacter: Codable, Sendable, Equatable {
     var effectiveAttributes: AttributeValues {
         attributes.applyingBonuses(enhancements.attributeBonuses)
     }
+
+    var damage: Int {
+        let str = effectiveAttributes[.strength]
+        return str / 2
+    }
 }

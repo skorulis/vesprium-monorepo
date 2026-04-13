@@ -12,7 +12,7 @@ import KnitMacros
     init() {
 
     }
-    
+
     func startBattle() {
         coordinator?.push(MainPath.battle)
     }

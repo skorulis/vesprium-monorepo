@@ -20,9 +20,18 @@ struct Battle: Codable, Sendable, Equatable {
 
     /// Enemies that have been killed by the player
     var defeatedEnemies: [Enemy] = []
-    
+
     /// How many enemies to defeat before the battle is finished
     var enemiesRemaining: Int { enemyCount - defeatedEnemies.count }
     var spawnedEnemies: Int { enemies.count + defeatedEnemies.count }
 
+    mutating func replace(enemy: Enemy) {
+        guard let index = enemies.firstIndex(where: { $0.id == enemy.id}) else { return }
+        if enemy.health <= 0 {
+            enemies.remove(at: index)
+            defeatedEnemies.append(enemy)
+        } else {
+            enemies[index] = enemy
+        }
+    }
 }

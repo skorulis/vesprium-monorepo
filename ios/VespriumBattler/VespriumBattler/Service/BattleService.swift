@@ -27,8 +27,12 @@ final class BattleService {
 
     /// The player attacks
     func playerTick(battle: inout Battle) {
-        // TODO: Implement player attack on the first enemy
-        print("Player tick")
+        guard var enemy = battle.enemies.first else { return }
+        enemy.health -= battle.battlePlayer.player.damage
+        battle.replace(enemy: enemy)
+        if enemy.health <= 0 {
+            print("Killed \(enemy.kind.rawValue)")
+        }
     }
 
     /// An enemy attacks
@@ -40,13 +44,13 @@ final class BattleService {
     /// Spawn enemies if needed
     func battleTick(battle: inout Battle) {
         guard battle.enemiesRemaining > 0 else { return }
-        
+
         let spawnChancePercent = if battle.spawnedEnemies == 0 {
             100
         } else {
             20 - (battle.enemies.count * 5)
         }
-        
+
         let chance = Chance(percent: spawnChancePercent)
         guard chance.check() else { return }
         let enemy = enemyService.make(battleLevel: battle.level)

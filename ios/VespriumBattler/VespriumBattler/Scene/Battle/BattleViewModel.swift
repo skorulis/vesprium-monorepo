@@ -1,10 +1,12 @@
 // Created by Alex Skorulis on 13/4/2026.
 
+import ASKCoordinator
 import Foundation
 import Knit
 import KnitMacros
 
-@MainActor @Observable final class BattleViewModel {
+@MainActor @Observable final class BattleViewModel: CoordinatorViewModel {
+    weak var coordinator: ASKCoordinator.Coordinator?
 
     private let battleService: BattleService
     private let mainStore: MainStore
@@ -82,7 +84,7 @@ private final class BattleActionTimers {
                 playerAction()
             }
         }
-        
+
         if battleTimer == nil {
             battleTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
                 battleAction()
@@ -96,7 +98,7 @@ private final class BattleActionTimers {
                 }
             }
         }
-        
+
         for deadEnemy in battle.defeatedEnemies {
             if enemyTimers[deadEnemy.id] != nil {
                 enemyTimers[deadEnemy.id]?.invalidate()
