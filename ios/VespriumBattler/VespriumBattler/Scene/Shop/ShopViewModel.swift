@@ -2,6 +2,7 @@
 
 import ASKCoordinator
 import BioEnhancements
+import Combine
 import Foundation
 import Knit
 import KnitMacros
@@ -9,42 +10,31 @@ import KnitMacros
 @MainActor @Observable final class ShopViewModel: CoordinatorViewModel {
     weak var coordinator: ASKCoordinator.Coordinator?
 
+    var model: ShopView.Model
+    
     private let mainStore: MainStore
+    
+    private var cancellables: Set<AnyCancellable> = []
 
     @Resolvable<Resolver>
     init(mainStore: MainStore) {
         self.mainStore = mainStore
+        self.model = ShopView.Model(player: mainStore.player)
+        
+        mainStore.$player.sink { [unowned self] in
+            self.model.player = $0
+        }
+        .store(in: &cancellables)
     }
 }
 
+// MARK: - Actions
+
 extension ShopViewModel {
-    struct ItemRow: Identifiable {
-        let enhancement: BioEnhancement
-        let canAfford: Bool
-
-        var id: String { enhancement.rawValue }
-        var canPurchase: Bool { canAfford }
-    }
-
-    var player: PlayerCharacter {
-        mainStore.player
-    }
-
-    var shopItems: [ItemRow] {
-        Array(BioEnhancement.allCases
-            .filter { player.enhancements.installed.contains($0) == false }
-            .prefix(5))
-            .map { enhancement in
-                ItemRow(
-                    enhancement: enhancement,
-                    canAfford: player.money >= enhancement.baseCost
-                )
-            }
-    }
 
     func purchase(_ enhancement: BioEnhancement) {
-        guard player.enhancements.installed.contains(enhancement) == false else { return }
-        guard player.money >= enhancement.baseCost else { return }
+        guard model.player.enhancements.installed.contains(enhancement) == false else { return }
+        guard model.player.money >= enhancement.baseCost else { return }
 
         var player = mainStore.player
         player.money -= enhancement.baseCost
@@ -54,5 +44,9 @@ extension ShopViewModel {
 
     func goToNextBattle() {
         mainStore.gameState.phase = .battle
+    }
+
+    func showPlayer() {
+        coordinator?.push(MainPath.player)
     }
 }

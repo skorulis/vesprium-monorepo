@@ -9,6 +9,7 @@ enum MainPath: CoordinatorPath {
     case battle
     case mainMenu
     case shop
+    case player
     case battleWon
     case battleLost
 
@@ -22,6 +23,8 @@ enum MainPath: CoordinatorPath {
             return "mainMenu"
         case .shop:
             return "shop"
+        case .player:
+            return "player"
         case .battleWon:
             return "battleWon"
         case .battleLost:
@@ -46,6 +49,8 @@ struct MainPathRenderer: CoordinatorPathRenderer {
             MainMenuView(viewModel: coordinator.apply(resolver.mainMenuViewModel()))
         case .shop:
             ShopView(viewModel: coordinator.apply(resolver.shopViewModel()))
+        case .player:
+            PlayerView(viewModel: coordinator.apply(resolver.playerViewModel()))
         case .battleWon:
             BattleWonDialogView(mainStore: resolver.mainStore())
         case .battleLost:
