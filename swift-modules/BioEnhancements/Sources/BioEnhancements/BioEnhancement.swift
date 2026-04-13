@@ -9,6 +9,8 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
     case barometricEars
     case muscleEnergyImplants
     case brainOverclock
+    case subdermalArmor
+    case thickendedSkin
 
     public var name: String {
         rawValue.fromCaseName
@@ -24,6 +26,10 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
             return "Implants that hold energy that give a boost to strength when needed"
         case .brainOverclock:
             return "Forces the neurons in the brain to transmit faster increasing overall thought processing"
+        case .subdermalArmor:
+            return "Metal plates embedded in the body's skin that reduces damage"
+        case .thickendedSkin:
+            return "Thicker skin that reduces damage"
         }
     }
 
@@ -48,6 +54,10 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
             return 200
         case .brainOverclock:
             return 500
+        case .subdermalArmor:
+            return 200
+        case .thickendedSkin:
+            return 200
         }
     }
 
@@ -61,6 +71,10 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
             return [
                 AttributeBonus(attribute: .intelligence, value: 50, kind: .multiplicative),
                 AttributeBonus(attribute: .agility, value: 25, kind: .multiplicative),
+            ]
+        case .thickendedSkin:
+            return [
+                AttributeBonus(attribute: .charisma, value: -10, kind: .multiplicative),
             ]
         default:
             return []
@@ -77,6 +91,10 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
             return .init(physical: 2)
         case .brainOverclock:
             return .init(physical: 0, mental: 1)
+        case .subdermalArmor:
+            return .init(physical: 1)
+        case .thickendedSkin:
+            return .init(physical: 1)
         }
     }
 }

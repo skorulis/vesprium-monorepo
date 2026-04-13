@@ -27,8 +27,16 @@ final class BattleService {
     }
 
     /// The player attacks
-    func playerTick(battle: inout Battle) {
+    func playerTick(time: TimeInterval, battle: inout Battle) {
+        battle.battlePlayer.storedTime += time
+        maybePlayerAttack(battle: &battle)
+    }
+
+    private func maybePlayerAttack(battle: inout Battle) {
         guard var enemy = battle.enemies.first else { return }
+        guard battle.battlePlayer.storedTime >= 1 else { return }
+        battle.battlePlayer.storedTime -= 1
+
         let hitChance = calculator.hitChance(
             attackerAgility: battle.battlePlayer.player.agility,
             defenderAgility: enemy.kind.agility

@@ -11,7 +11,7 @@ import KnitMacros
     private let battleService: BattleService
     private let mainStore: MainStore
 
-    private var model: BattleView.Model
+    var model: BattleView.Model
     private var actionTimers = BattleActionTimers()
 
     @Resolvable<Resolver>
@@ -24,13 +24,24 @@ import KnitMacros
         resetActionTimers()
     }
 
+    var enemies: [Enemy] {
+        model.battle.enemies
+    }
+
+    var playerHealth: Int {
+        model.battle.battlePlayer.health
+    }
+
+    var playerMaxHealth: Int {
+        model.battle.battlePlayer.player.maxHealth
+    }
 }
 
 private extension BattleViewModel {
 
     func playerTick() {
         updateBattle { battle in
-            battleService.playerTick(battle: &battle)
+            battleService.playerTick(time: 0.1, battle: &battle)
         }
     }
 
@@ -87,7 +98,7 @@ private final class BattleActionTimers {
         battleAction: @escaping () -> Void
     ) {
         if playerTimer == nil {
-            playerTimer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
+            playerTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
                 playerAction()
             }
         }
