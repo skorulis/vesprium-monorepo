@@ -12,6 +12,8 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
     case subdermalArmor
     case thickendedSkin
     case faceSculpting
+    case socialPheromoneGlands
+    case oxygenatedBlood
 
     public var name: String {
         rawValue.fromCaseName
@@ -33,6 +35,10 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
             return "Thicker skin that reduces damage"
         case .faceSculpting:
             return "Brings out the natural beauty of the face"
+        case .socialPheromoneGlands:
+            return "Controlled pheromone release improves social influence"
+        case .oxygenatedBlood:
+            return "Engineered blood proteins carry oxygen more efficiently"
         }
     }
 
@@ -63,6 +69,10 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
             return 200
         case .faceSculpting:
             return 100
+        case .socialPheromoneGlands:
+            return 180
+        case .oxygenatedBlood:
+            return 260
         }
     }
 
@@ -85,6 +95,16 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
             return [
                 AttributeBonus(attribute: .charisma, value: 25, kind: .multiplicative),
             ]
+        case .socialPheromoneGlands:
+            return [
+                AttributeBonus(attribute: .charisma, value: 30, kind: .multiplicative),
+                AttributeBonus(attribute: .stability, value: -10, kind: .multiplicative),
+            ]
+        case .oxygenatedBlood:
+            return [
+                AttributeBonus(attribute: .strength, value: 20, kind: .multiplicative),
+                AttributeBonus(attribute: .agility, value: 20, kind: .multiplicative),
+            ]
         default:
             return []
         }
@@ -104,7 +124,9 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
             return .init(physical: 1)
         case .thickendedSkin:
             return .init(physical: 1)
-        case .faceSculpting:
+        case .oxygenatedBlood:
+            return .init(physical: 2)
+        case .faceSculpting, .socialPheromoneGlands:
             return .none
         }
     }

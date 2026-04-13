@@ -43,11 +43,8 @@ extension BattleViewModel {
     func resetActionTimers() {
         actionTimers.reset(
             battle: model.battle,
-            playerAction: { [weak self] in
-                self?.playerTick()
-            },
-            enemyAction: { [weak self] enemy in
-                self?.enemyTick(enemy: enemy)
+            attackAction: { [weak self] in
+                self?.attackTick()
             },
             battleAction: { [weak self] in
                 self?.battleTick()
@@ -60,6 +57,11 @@ extension BattleViewModel {
 
 private extension BattleViewModel {
 
+    func attackTick() {
+        playerTick()
+        enemyTick()
+    }
+
     func playerTick() {
         let physicalExertion = model.physicalExertion
         updateBattle { battle in
@@ -71,9 +73,13 @@ private extension BattleViewModel {
         }
     }
 
-    func enemyTick(enemy: Enemy) {
+    func enemyTick() {
         updateBattle { battle in
-            battleService.enemyTick(battle: &battle, enemy: enemy)
+            let enemies = battle.enemies
+            for var enemy in enemies {
+                battleService.enemyTick(battle: &battle, enemy: &enemy, time: BattleActionTimers.playerTickTime)
+                battle.replace(enemy: enemy)
+            }
         }
     }
 
@@ -107,21 +113,19 @@ private extension BattleViewModel {
 
 private final class BattleActionTimers {
 
-    private(set) var playerTimer: Timer?
-    private(set) var enemyTimers: [UUID: Timer] = [:]
+    private(set) var attackTimer: Timer?
     private(set) var battleTimer: Timer?
 
     fileprivate static let playerTickTime: TimeInterval = 0.1
 
     func reset(
         battle: Battle,
-        playerAction: @escaping () -> Void,
-        enemyAction: @escaping (Enemy) -> Void,
+        attackAction: @escaping () -> Void,
         battleAction: @escaping () -> Void
     ) {
-        if playerTimer == nil {
-            playerTimer = Timer.scheduledTimer(withTimeInterval: Self.playerTickTime, repeats: true) { _ in
-                playerAction()
+        if attackTimer == nil {
+            attackTimer = Timer.scheduledTimer(withTimeInterval: Self.playerTickTime, repeats: true) { _ in
+                attackAction()
             }
         }
 
@@ -130,26 +134,13 @@ private final class BattleActionTimers {
                 battleAction()
             }
         }
-
-        for enemy in battle.enemies where enemyTimers[enemy.id] == nil {
-            enemyTimers[enemy.id] = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { _ in
-                enemyAction(enemy)
-            }
-        }
-
-        for deadEnemy in battle.defeatedEnemies where enemyTimers[deadEnemy.id] != nil {
-            enemyTimers[deadEnemy.id]?.invalidate()
-            enemyTimers.removeValue(forKey: deadEnemy.id)
-        }
     }
 
     func invalidateTimers() {
-        playerTimer?.invalidate()
+        attackTimer?.invalidate()
         battleTimer?.invalidate()
-        enemyTimers.values.forEach { $0.invalidate() }
-        playerTimer = nil
+        attackTimer = nil
         battleTimer = nil
-        enemyTimers = [:]
     }
 
     deinit {

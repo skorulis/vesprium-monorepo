@@ -58,7 +58,11 @@ final class BattleService {
     }
 
     /// An enemy attacks
-    func enemyTick(battle: inout Battle, enemy: Enemy) {
+    func enemyTick(battle: inout Battle, enemy: inout Enemy, time: TimeInterval) {
+        enemy.storedTime += time
+        guard enemy.storedTime >= enemy.kind.attackRate else { return }
+        enemy.storedTime -= enemy.kind.attackRate
+        
         let hitChance = calculator.hitChance(
             attackerAgility: enemy.kind.agility,
             defenderAgility: battle.battlePlayer.player.agility
