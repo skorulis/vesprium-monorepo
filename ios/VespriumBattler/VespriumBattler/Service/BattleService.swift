@@ -21,7 +21,7 @@ final class BattleService {
         let battlePlayer = BattlePlayer(player: mainStore.player)
         return Battle(
             level: 1,
-            enemyCount: 10,
+            enemyCount: 5,
             battlePlayer: battlePlayer,
         )
     }

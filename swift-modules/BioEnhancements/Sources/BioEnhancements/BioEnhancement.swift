@@ -11,6 +11,7 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
     case brainOverclock
     case subdermalArmor
     case thickendedSkin
+    case faceSculpting
 
     public var name: String {
         rawValue.fromCaseName
@@ -30,6 +31,8 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
             return "Metal plates embedded in the body's skin that reduces damage"
         case .thickendedSkin:
             return "Thicker skin that reduces damage"
+        case .faceSculpting:
+            return "Brings out the natural beauty of the face"
         }
     }
 
@@ -58,6 +61,8 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
             return 200
         case .thickendedSkin:
             return 200
+        case .faceSculpting:
+            return 100
         }
     }
 
@@ -75,6 +80,10 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
         case .thickendedSkin:
             return [
                 AttributeBonus(attribute: .charisma, value: -10, kind: .multiplicative),
+            ]
+        case .faceSculpting:
+            return [
+                AttributeBonus(attribute: .charisma, value: 25, kind: .multiplicative),
             ]
         default:
             return []
@@ -95,6 +104,8 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
             return .init(physical: 1)
         case .thickendedSkin:
             return .init(physical: 1)
+        case .faceSculpting:
+            return .none
         }
     }
 }

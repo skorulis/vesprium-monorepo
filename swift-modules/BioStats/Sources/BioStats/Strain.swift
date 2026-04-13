@@ -11,6 +11,8 @@ public struct Strain: Equatable, Sendable {
         self.physical = physical
         self.mental = mental
     }
+    
+    public static var none: Strain { Strain() }
 
     public func normalized() -> Strain {
         Strain(physical: max(physical, 0), mental: max(mental, 0))
