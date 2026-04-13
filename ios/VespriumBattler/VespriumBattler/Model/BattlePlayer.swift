@@ -7,6 +7,7 @@ struct BattlePlayer: Codable, Sendable, Equatable {
 
     let player: PlayerCharacter
 
+    /// Current health
     var health: Int
 
     /// Time that has accumulated in order to perform the next attack
@@ -14,10 +15,10 @@ struct BattlePlayer: Codable, Sendable, Equatable {
 
     /// Exertion averaged over time to prevent quick changes
     var averagedPhysicalExertion: Double = 0
-    
+
     /// Total mental burnout
     var mentalBurnout: Double = 0
-    
+
     var mentalBurnoutFraction: Double {
         return mentalBurnout / Double(player.effectiveAttributes[.stability])
     }
@@ -40,6 +41,11 @@ struct BattlePlayer: Codable, Sendable, Equatable {
         self.health = player.maxHealth
     }
     
+    var agility: Int {
+        let value = Double(player.effectiveAttributes[.agility]) * averagedPhysicalExertion
+        return Int(round(value))
+    }
+
     mutating func activate(ability: MentalAbility) {
         abilityCooldowns[ability] = ability.cooldown
         activeAbilities[ability] = ability.duration
@@ -52,7 +58,7 @@ struct BattlePlayer: Codable, Sendable, Equatable {
         physicalBurnout += burnoutChange * time
         physicalBurnout = max(physicalBurnout, 0)
         physicalBurnout = min(physicalBurnout, Double(player.effectiveAttributes[.vitality]))
-        
+
         mentalBurnout -= time
         mentalBurnout = max(mentalBurnout, 0)
     }

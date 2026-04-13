@@ -11,16 +11,16 @@ import KnitMacros
     weak var coordinator: ASKCoordinator.Coordinator?
 
     var model: ShopView.Model
-    
+
     private let mainStore: MainStore
-    
+
     private var cancellables: Set<AnyCancellable> = []
 
     @Resolvable<Resolver>
     init(mainStore: MainStore) {
         self.mainStore = mainStore
         self.model = ShopView.Model(player: mainStore.player)
-        
+
         mainStore.$player.sink { [unowned self] in
             self.model.player = $0
         }

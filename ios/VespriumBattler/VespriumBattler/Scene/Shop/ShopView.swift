@@ -78,10 +78,10 @@ extension ShopView {
         var id: String { enhancement.rawValue }
         var canPurchase: Bool { canAfford }
     }
-    
+
     struct Model {
         var player: PlayerCharacter
-        
+
         var shopItems: [ItemRow] {
             Array(BioEnhancement.allCases
                 .filter { player.enhancements.installed.contains($0) == false }

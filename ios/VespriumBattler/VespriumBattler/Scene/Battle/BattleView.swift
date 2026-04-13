@@ -15,6 +15,7 @@ extension BattleView: View {
     var body: some View {
         return ScrollView {
             VStack(alignment: .leading, spacing: 20) {
+                BattlePlayerView(battle: model.battle)
                 exertionSection
                 enemySection
                 mentalAbilitiesSection
@@ -60,7 +61,7 @@ private extension BattleView {
             LabeledSliderRow(
                 title: "Physical",
                 value: $viewModel.model.physicalExertion,
-                range: 0...1.5
+                range: 0...1.0
             )
         }
     }

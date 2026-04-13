@@ -63,7 +63,7 @@ final class BattleService {
         let details = enemy.details
 
         let hitChance = calculator.hitChance(
-            attackerAgility: battle.battlePlayer.player.agility,
+            attackerAgility: battle.battlePlayer.agility,
             defenderAgility: details.agility
         )
         guard hitChance.check() else {
@@ -90,7 +90,7 @@ final class BattleService {
 
         let hitChance = calculator.hitChance(
             attackerAgility: details.agility,
-            defenderAgility: battle.battlePlayer.player.agility
+            defenderAgility: battle.battlePlayer.agility
         )
 
         guard hitChance.check() else { return }
