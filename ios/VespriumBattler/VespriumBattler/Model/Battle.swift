@@ -34,7 +34,7 @@ struct Battle: Codable, Sendable, Equatable {
             enemies[index] = enemy
         }
     }
-    
+
     var state: BattleState {
         if battlePlayer.health <= 0 {
             return .lost

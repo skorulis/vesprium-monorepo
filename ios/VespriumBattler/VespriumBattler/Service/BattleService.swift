@@ -21,7 +21,7 @@ final class BattleService {
         let battlePlayer = BattlePlayer(player: mainStore.player)
         return Battle(
             level: 1,
-            enemyCount: 5,
+            enemyCount: 10,
             battlePlayer: battlePlayer,
         )
     }
@@ -45,7 +45,10 @@ final class BattleService {
             print("Miss")
             return
         }
-        enemy.health -= battle.battlePlayer.player.damage
+
+        let damage = Double(battle.battlePlayer.player.damage) * battle.battlePlayer.averagedPhysicalExertion
+
+        enemy.health -= Int(round(damage))
         battle.replace(enemy: enemy)
         if enemy.health <= 0 {
             print("Killed \(enemy.kind.rawValue)")
@@ -54,24 +57,29 @@ final class BattleService {
 
     /// An enemy attacks
     func enemyTick(battle: inout Battle, enemy: Enemy) {
-        // TODO: Implement enemy attack on the player
-        print("Enemy tick")
+        let hitChance = calculator.hitChance(
+            attackerAgility: enemy.kind.agility,
+            defenderAgility: battle.battlePlayer.player.agility
+        )
+        
+        guard hitChance.check() else { return }
+        battle.battlePlayer.health -= enemy.kind.damage
     }
 
     /// Spawn enemies if needed
     func battleTick(battle: inout Battle) {
         battle.time += 1
         maybeSpawn(battle: &battle)
-        
+
     }
-    
+
     private func maybeSpawn(battle: inout Battle) {
         guard battle.enemiesRemaining > 0 else { return }
 
         let spawnChancePercent = if battle.spawnedEnemies == 0 {
             100
         } else {
-            20 - (battle.enemies.count * 5)
+            40 - (battle.enemies.count * 10)
         }
 
         let chance = Chance(percent: spawnChancePercent)

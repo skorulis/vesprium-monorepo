@@ -21,7 +21,7 @@ struct PlayerCharacter: Codable, Sendable, Equatable {
         let str = effectiveAttributes[.strength]
         return str / 2
     }
-    
+
     var agility: Int {
         effectiveAttributes[.agility]
     }

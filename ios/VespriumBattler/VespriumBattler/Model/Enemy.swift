@@ -25,11 +25,11 @@ enum EnemyKind: String, Codable, Sendable, Equatable {
             return 2
         }
     }
-    
+
     var agility: Int {
         switch self {
         case .rat:
-            return 10
+            return 12
         }
     }
 

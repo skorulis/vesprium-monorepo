@@ -15,12 +15,15 @@ extension BattleView: View {
     var body: some View {
         return ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                enemySection
                 exertionSection
+                enemySection
                 burnoutSection
                 playerHealthSection
             }
             .padding(16)
+        }
+        .onAppear {
+            viewModel.resetActionTimers()
         }
     }
 }
@@ -56,12 +59,12 @@ private extension BattleView {
             LabeledSliderRow(
                 title: "Physical",
                 value: $viewModel.model.physicalExertion,
-                range: 0...1
+                range: 0...1.5
             )
             LabeledSliderRow(
                 title: "Mental",
                 value: $viewModel.model.mentalExertion,
-                range: 0...1
+                range: 0...1.5
             )
         }
     }
@@ -73,7 +76,7 @@ private extension BattleView {
 
             LabeledGaugeRow(
                 title: "Physical Burnout",
-                value: model.physicalBurnout,
+                value: model.battle.battlePlayer.physicalBurnout,
                 range: 0...1
             )
             LabeledGaugeRow(
@@ -158,7 +161,17 @@ private struct LabeledGaugeRow: View {
                 Text("\(Int(value * 100))%")
             }
             .gaugeStyle(.linearCapacity)
+            .tint(tintColor)
         }
+    }
+
+    var tintColor: Color? {
+        if value >= 0.95 {
+            return .red
+        } else if value >= 0.9 {
+            return .yellow
+        }
+        return nil
     }
 }
 
@@ -167,7 +180,6 @@ extension BattleView {
         var battle: Battle
         var physicalExertion = 0.8
         var mentalExertion = 0.0
-        var physicalBurnout = 0.0
         var mentalBurnout = 0.0
     }
 }

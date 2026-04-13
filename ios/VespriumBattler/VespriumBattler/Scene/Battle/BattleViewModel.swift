@@ -21,7 +21,6 @@ import KnitMacros
 
         let battle = battleService.makeBattle()
         self.model = .init(battle: battle)
-        resetActionTimers()
     }
 
     var enemies: [Enemy] {
@@ -37,11 +36,37 @@ import KnitMacros
     }
 }
 
+// MARK: - Actions
+
+extension BattleViewModel {
+    func resetActionTimers() {
+        actionTimers.reset(
+            battle: model.battle,
+            playerAction: { [weak self] in
+                self?.playerTick()
+            },
+            enemyAction: { [weak self] enemy in
+                self?.enemyTick(enemy: enemy)
+            },
+            battleAction: { [weak self] in
+                self?.battleTick()
+            }
+        )
+    }
+}
+
+// MARK: - Logic
+
 private extension BattleViewModel {
 
     func playerTick() {
+        let physicalExertion = model.physicalExertion
         updateBattle { battle in
-            battleService.playerTick(time: 0.1, battle: &battle)
+            battle.battlePlayer.updateExertion(
+                physical: physicalExertion,
+                time: BattleActionTimers.playerTickTime
+            )
+            battleService.playerTick(time: BattleActionTimers.playerTickTime, battle: &battle)
         }
     }
 
@@ -59,7 +84,7 @@ private extension BattleViewModel {
 
     func updateBattle(_ mutation: (inout Battle) -> Void) {
         mutation(&model.battle)
-        
+
         switch model.battle.state {
         case .lost, .won:
             print("Battle over")
@@ -67,21 +92,6 @@ private extension BattleViewModel {
         default:
             resetActionTimers()
         }
-    }
-
-    func resetActionTimers() {
-        actionTimers.reset(
-            battle: model.battle,
-            playerAction: { [weak self] in
-                self?.playerTick()
-            },
-            enemyAction: { [weak self] enemy in
-                self?.enemyTick(enemy: enemy)
-            },
-            battleAction: { [weak self] in
-                self?.battleTick()
-            }
-        )
     }
 }
 
@@ -91,6 +101,8 @@ private final class BattleActionTimers {
     private(set) var enemyTimers: [UUID: Timer] = [:]
     private(set) var battleTimer: Timer?
 
+    fileprivate static let playerTickTime: TimeInterval = 0.1
+
     func reset(
         battle: Battle,
         playerAction: @escaping () -> Void,
@@ -98,7 +110,7 @@ private final class BattleActionTimers {
         battleAction: @escaping () -> Void
     ) {
         if playerTimer == nil {
-            playerTimer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true) { _ in
+            playerTimer = Timer.scheduledTimer(withTimeInterval: Self.playerTickTime, repeats: true) { _ in
                 playerAction()
             }
         }
@@ -124,7 +136,7 @@ private final class BattleActionTimers {
             }
         }
     }
-    
+
     func invalidateTimers() {
         playerTimer?.invalidate()
         battleTimer?.invalidate()
