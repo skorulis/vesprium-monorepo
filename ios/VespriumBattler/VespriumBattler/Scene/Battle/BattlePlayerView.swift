@@ -18,10 +18,12 @@ struct BattlePlayerView: View {
                 Image(systemName: "person.circle.fill")
                     .font(.system(size: 64))
                     .foregroundStyle(.blue)
+                
+                physicalBurnoutGauge
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
 
-            VStack(alignment: .trailing, spacing: 4) {
+            VStack(alignment: .trailing, spacing: 0) {
                 Text("Hit: \(hitChanceText)")
                 Text("DMG: \(damageText)")
             }
@@ -30,6 +32,17 @@ struct BattlePlayerView: View {
             .padding(12)
         }
         .frame(height: 140)
+    }
+
+    private var physicalBurnoutGauge: some View {
+        Gauge(value: battle.battlePlayer.physicalBurnoutFraction, in: 0...1) {
+            EmptyView()
+        } currentValueLabel: {
+            Text("\(Int(battle.battlePlayer.physicalBurnoutFraction * 100))%")
+        }
+        .gaugeStyle(.accessoryCircularCapacity)
+        .tint(physicalBurnoutTint)
+        .frame(width: 32, height: 32)
     }
 }
 
@@ -51,5 +64,15 @@ private extension BattlePlayerView {
     var damageText: String {
         let damage = Double(battle.battlePlayer.player.damage) * battle.battlePlayer.averagedPhysicalExertion
         return "\(Int(round(damage)))"
+    }
+
+    var physicalBurnoutTint: Color? {
+        let value = battle.battlePlayer.physicalBurnoutFraction
+        if value >= 0.95 {
+            return .red
+        } else if value >= 0.9 {
+            return .yellow
+        }
+        return nil
     }
 }

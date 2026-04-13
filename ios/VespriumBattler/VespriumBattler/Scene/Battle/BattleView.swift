@@ -72,11 +72,6 @@ private extension BattleView {
                 .font(.headline)
 
             LabeledGaugeRow(
-                title: "Physical Burnout",
-                value: model.battle.battlePlayer.physicalBurnoutFraction,
-                range: 0...1
-            )
-            LabeledGaugeRow(
                 title: "Mental Burnout",
                 value: model.battle.battlePlayer.mentalBurnoutFraction,
                 range: 0...1

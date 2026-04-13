@@ -40,7 +40,7 @@ struct BattlePlayer: Codable, Sendable, Equatable {
         self.player = player
         self.health = player.maxHealth
     }
-    
+
     var agility: Int {
         let value = Double(player.effectiveAttributes[.agility]) * averagedPhysicalExertion
         return Int(round(value))
