@@ -18,8 +18,11 @@ struct BattlePlayerView: View {
                 Image(systemName: "person.circle.fill")
                     .font(.system(size: 64))
                     .foregroundStyle(.blue)
-                
-                physicalBurnoutGauge
+
+                HStack(spacing: 30) {
+                    physicalBurnoutGauge
+                    mentalBurnoutGauge
+                }
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
 
@@ -38,10 +41,25 @@ struct BattlePlayerView: View {
         Gauge(value: battle.battlePlayer.physicalBurnoutFraction, in: 0...1) {
             EmptyView()
         } currentValueLabel: {
-            Text("\(Int(battle.battlePlayer.physicalBurnoutFraction * 100))%")
+            Image(systemName: "figure.arms.open")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
         }
         .gaugeStyle(.accessoryCircularCapacity)
         .tint(physicalBurnoutTint)
+        .frame(width: 32, height: 32)
+    }
+
+    private var mentalBurnoutGauge: some View {
+        Gauge(value: battle.battlePlayer.mentalBurnoutFraction, in: 0...1) {
+            EmptyView()
+        } currentValueLabel: {
+            Image(systemName: "brain.head.profile.fill")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+        }
+        .gaugeStyle(.accessoryCircularCapacity)
+        .tint(mentalBurnoutTint)
         .frame(width: 32, height: 32)
     }
 }
@@ -68,6 +86,16 @@ private extension BattlePlayerView {
 
     var physicalBurnoutTint: Color? {
         let value = battle.battlePlayer.physicalBurnoutFraction
+        if value >= 0.95 {
+            return .red
+        } else if value >= 0.9 {
+            return .yellow
+        }
+        return nil
+    }
+
+    var mentalBurnoutTint: Color? {
+        let value = battle.battlePlayer.mentalBurnoutFraction
         if value >= 0.95 {
             return .red
         } else if value >= 0.9 {

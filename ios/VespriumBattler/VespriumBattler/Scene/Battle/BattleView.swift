@@ -19,7 +19,6 @@ extension BattleView: View {
                 exertionSection
                 enemySection
                 mentalAbilitiesSection
-                burnoutSection
                 playerHealthSection
             }
             .padding(16)
@@ -62,19 +61,6 @@ private extension BattleView {
                 title: "Physical",
                 value: $viewModel.model.physicalExertion,
                 range: 0...1.0
-            )
-        }
-    }
-
-    var burnoutSection: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            Text("Burnout")
-                .font(.headline)
-
-            LabeledGaugeRow(
-                title: "Mental Burnout",
-                value: model.battle.battlePlayer.mentalBurnoutFraction,
-                range: 0...1
             )
         }
     }
@@ -142,34 +128,6 @@ private struct LabeledSliderRow: View {
             }
             Slider(value: $value, in: range)
         }
-    }
-}
-
-private struct LabeledGaugeRow: View {
-
-    let title: String
-    let value: Double
-    let range: ClosedRange<Double>
-
-    var body: some View {
-        HStack {
-            Gauge(value: value, in: range) {
-                Text(title)
-            } currentValueLabel: {
-                Text("\(Int(value * 100))%")
-            }
-            .gaugeStyle(.linearCapacity)
-            .tint(tintColor)
-        }
-    }
-
-    var tintColor: Color? {
-        if value >= 0.95 {
-            return .red
-        } else if value >= 0.9 {
-            return .yellow
-        }
-        return nil
     }
 }
 
