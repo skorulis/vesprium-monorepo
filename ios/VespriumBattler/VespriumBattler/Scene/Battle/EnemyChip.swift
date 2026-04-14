@@ -7,6 +7,7 @@ struct EnemyChip: View {
 
     let enemy: Enemy
     let isTargeted: Bool
+    let damageEvents: [BattleViewModel.DamageEvent]
     let action: () -> Void
 
     private var cooldownRemainingFraction: Double {
@@ -48,6 +49,16 @@ struct EnemyChip: View {
                 RoundedRectangle(cornerRadius: 10)
                     .strokeBorder(isTargeted ? .red : .orange.opacity(0.6), lineWidth: isTargeted ? 2 : 1.5)
             )
+            .overlay(alignment: .top) {
+                ZStack {
+                    ForEach(Array(damageEvents.enumerated()), id: \.element.id) { index, event in
+                        FloatingDamageNumberView(amount: event.amount)
+                            .offset(y: CGFloat(-8 - (index * 8)))
+                    }
+                }
+                .allowsHitTesting(false)
+                .zIndex(10)
+            }
         }
         .buttonStyle(.plain)
     }

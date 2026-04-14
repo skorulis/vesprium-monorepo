@@ -46,6 +46,7 @@ private extension BattleView {
                             EnemyChip(
                                 enemy: enemy,
                                 isTargeted: enemy.id == viewModel.currentTargetedEnemyID,
+                                damageEvents: viewModel.damageEvents(for: enemy.id),
                                 action: { viewModel.selectTarget(enemyID: enemy.id) }
                             )
                         }
