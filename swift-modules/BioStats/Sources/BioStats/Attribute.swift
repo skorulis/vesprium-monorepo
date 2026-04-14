@@ -24,7 +24,7 @@ public enum Attribute: String, Codable, CaseIterable, Hashable, Sendable, Custom
     public static let defaultValue: Int = 10
 
     public var name: String {
-        String(describing: self).capitalized
+        rawValue.capitalized
     }
 
     public var description: String { name }

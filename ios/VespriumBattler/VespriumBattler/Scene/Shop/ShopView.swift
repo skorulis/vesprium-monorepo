@@ -21,24 +21,30 @@ extension ShopView: View {
                 }
                 .buttonStyle(.bordered)
             }
+            .padding(16)
 
             if viewModel.model.shopItems.isEmpty {
                 Text("No new options available.")
                     .foregroundStyle(.secondary)
             } else {
-                ScrollView {
-                    LazyVStack(alignment: .leading, spacing: 12) {
-                        ForEach(viewModel.model.shopItems) { item in
-                            optionCell(item: item)
-                        }
-                    }
-                }
+                itemList
             }
 
             continueButton
         }
-        .padding(16)
+        
         .navigationTitle("Shop")
+    }
+    
+    private var itemList: some View {
+        ScrollView {
+            LazyVStack(alignment: .leading, spacing: 12) {
+                ForEach(viewModel.model.shopItems) { item in
+                    optionCell(item: item)
+                }
+            }
+            .padding(.horizontal, 16)
+        }
     }
 
     private var continueButton: some View {
