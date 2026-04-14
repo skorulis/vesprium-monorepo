@@ -8,6 +8,9 @@ public enum DerivedAttribute: String, Codable, CaseIterable, Hashable, Sendable,
     
     // Absolute damage reduction
     case damageAbsorbtion
+    
+    // How much further physical exertion can be pushed over 100%
+    case physicalExertion
 
     public var description: String { rawValue.capitalized }
 }

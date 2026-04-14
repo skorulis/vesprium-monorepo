@@ -70,7 +70,7 @@ private extension BattleView {
             LabeledSliderRow(
                 title: "Physical",
                 value: $viewModel.model.physicalExertion,
-                range: 0...1.0
+                range: 0...model.battle.battlePlayer.maxExertionFraction,
             )
         }
     }

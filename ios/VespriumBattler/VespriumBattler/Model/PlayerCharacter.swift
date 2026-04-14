@@ -46,6 +46,14 @@ struct PlayerCharacter: Codable, Sendable, Equatable {
     var maxMentalBurnout: Int {
         max(effectiveAttributes[.stability] - enhancements.strain.mental, 1)
     }
+    
+    var maxExertion: Int {
+        return DerivedAttributeBonus.adjustedValue(
+            base: 100,
+            bonuses: enhancements.derivedAttributeBonuses,
+            attribute: .physicalExertion
+        )
+    }
 
     mutating func addMoney(_ amount: Int) {
         let total = Double(amount) * rewardMoneyMultiplier

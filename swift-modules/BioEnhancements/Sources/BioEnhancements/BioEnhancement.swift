@@ -16,6 +16,7 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
     case oxygenatedBlood
     case raptorClaws
     case retractableClaws
+    case extraAdrenalGlands
 
     public var name: String {
         rawValue.fromCaseName
@@ -163,6 +164,16 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
                 strain: .init(physical: 2),
                 method: .mechanicalImplant,
                 excludes: [.raptorClaws],
+            )
+        case .extraAdrenalGlands:
+            return .init(
+                text: "Allows producing a higher level of adrenaline when needed",
+                baseCost: 150,
+                derivedAttributeBonuses: [
+                    DerivedAttributeBonus(attribute: .physicalExertion, value: 20, kind: .additive),
+                ],
+                strain: .init(physical: 1),
+                method: .surgery,
             )
         }
     }
