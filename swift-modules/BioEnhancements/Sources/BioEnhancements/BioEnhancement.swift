@@ -15,6 +15,8 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
     case socialPheromoneGlands
     case oxygenatedBlood
     case raptorClaws
+    case retractableClaws
+    
 
     public var name: String {
         rawValue.fromCaseName
@@ -42,6 +44,8 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
             return "Engineered blood proteins carry oxygen more efficiently"
         case .raptorClaws:
             return "Bone claws embedded into the fingers"
+        case .retractableClaws:
+            return "Metal claws that can be hidden back inside the hands when not in use"
         }
     }
 
@@ -77,7 +81,9 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
         case .oxygenatedBlood:
             return 260
         case .raptorClaws:
-            return 100
+            return 150
+        case .retractableClaws:
+            return 200
         }
     }
 
@@ -133,6 +139,10 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
             return [
                 DerivedAttributeBonus(attribute: .damage, value: 50, kind: .multiplicative)
             ]
+        case .retractableClaws:
+            return [
+                DerivedAttributeBonus(attribute: .damage, value: 50, kind: .multiplicative)
+            ]
         default:
             return []
         }
@@ -156,6 +166,8 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
             return .init(physical: 2)
         case .raptorClaws:
             return .init(physical: 1)
+        case .retractableClaws:
+            return .init(physical: 2)
         case .faceSculpting, .socialPheromoneGlands:
             return .none
         }
@@ -183,6 +195,8 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
             return .geneGraft
         case .raptorClaws:
             return .geneGraft
+        case .retractableClaws:
+            return .mechanicalImplant
         }
     }
 }
