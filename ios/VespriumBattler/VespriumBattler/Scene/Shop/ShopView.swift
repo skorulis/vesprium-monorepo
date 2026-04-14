@@ -32,10 +32,10 @@ extension ShopView: View {
 
             continueButton
         }
-        
+
         .navigationTitle("Shop")
     }
-    
+
     private var itemList: some View {
         ScrollView {
             LazyVStack(alignment: .leading, spacing: 12) {
@@ -181,6 +181,9 @@ extension ShopView {
             guard player.money >= cost else { return false }
             switch self {
             case let .enhancement(enhancement):
+                if player.enhancements.isUnavailable(enhancement) {
+                    return false
+                }
                 return player.enhancements.installed.contains(enhancement) == false
             case .training:
                 return true

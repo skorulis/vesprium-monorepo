@@ -5,10 +5,10 @@ import Foundation
 public enum DerivedAttribute: String, Codable, CaseIterable, Hashable, Sendable, CustomStringConvertible {
 
     case damage
-    
+
     // Absolute damage reduction
     case damageAbsorbtion
-    
+
     // How much further physical exertion can be pushed over 100%
     case physicalExertion
 

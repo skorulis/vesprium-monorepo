@@ -24,4 +24,12 @@ public struct EnhancementValues: Codable, Sendable, Equatable {
     public var strain: Strain {
         return installed.reduce(Strain()) { $0 + $1.strain }
     }
+
+    public var excludedEnhancements: Set<BioEnhancement> {
+        return installed.map { $0.excludes }.reduce([]) { $0.union($1) }
+    }
+
+    public func isUnavailable(_ enhancement: BioEnhancement) -> Bool {
+        return excludedEnhancements.contains(enhancement)
+    }
 }

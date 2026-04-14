@@ -6,9 +6,9 @@ public enum EnhancementMethod: String, Codable, Sendable, Equatable, CaseIterabl
     case geneGraft
     case mechanicalImplant
     case surgery
-    
+
     case unknown
-    
+
     var text: String {
         switch self {
         case .geneGraft:

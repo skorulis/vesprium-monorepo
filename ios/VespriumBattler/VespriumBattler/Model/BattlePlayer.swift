@@ -29,7 +29,7 @@ struct BattlePlayer: Codable, Sendable, Equatable {
     var physicalBurnoutFraction: Double {
         return physicalBurnout.total / Double(player.maxPhysicalBurnout)
     }
-    
+
     var maxExertionFraction: Double {
         return Double(player.maxExertion) / 100
     }

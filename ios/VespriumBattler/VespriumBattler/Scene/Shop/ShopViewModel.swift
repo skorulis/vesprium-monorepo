@@ -23,6 +23,7 @@ import Util
         self.mainStore = mainStore
 
         var enhancementArray = RandomArray(items: BioEnhancement.allCases) {
+            if $0.isUseless { return 0 }
             if mainStore.player.enhancements.installed.contains($0) {
                 return 0
             }
@@ -102,5 +103,16 @@ extension ShopViewModel {
 
     func showPlayer() {
         coordinator?.push(MainPath.player)
+    }
+}
+
+extension BioEnhancement {
+    var isUseless: Bool {
+        switch self {
+        case .chlorophyllSkin, .barometricEars:
+            return true
+        default:
+            return false
+        }
     }
 }

@@ -26,7 +26,7 @@ struct PlayerCharacter: Codable, Sendable, Equatable {
             attribute: .damage
         )
     }
-    
+
     var damageAbsorbtion: Int {
         return DerivedAttributeBonus.adjustedValue(
             base: 0,
@@ -46,7 +46,7 @@ struct PlayerCharacter: Codable, Sendable, Equatable {
     var maxMentalBurnout: Int {
         max(effectiveAttributes[.stability] - enhancements.strain.mental, 1)
     }
-    
+
     var maxExertion: Int {
         return DerivedAttributeBonus.adjustedValue(
             base: 100,
@@ -63,6 +63,7 @@ struct PlayerCharacter: Codable, Sendable, Equatable {
     // How much extra money is gained from rewards
     var rewardMoneyMultiplier: Double {
         let base = effectiveAttributes[.charisma] - Attribute.defaultValue
-        return 1 + (0.1 * Double(base))
+        return 1 + (0.05 * Double(base))
     }
+
 }

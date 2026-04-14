@@ -38,17 +38,13 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
         details.attributeBonuses
     }
 
-    public var derivedAttributeBonuses: [DerivedAttributeBonus] {
-        details.derivedAttributeBonuses
-    }
+    public var derivedAttributeBonuses: [DerivedAttributeBonus] { details.derivedAttributeBonuses }
 
-    public var strain: Strain {
-        details.strain
-    }
-    
-    public var method: EnhancementMethod {
-        details.method
-    }
+    public var strain: Strain { details.strain }
+
+    public var method: EnhancementMethod { details.method }
+
+    public var excludes: Set<BioEnhancement> { details.excludes }
 
     private var details: EnhancementDetails {
         switch self {
@@ -177,7 +173,7 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
             )
         }
     }
-    
+
 }
 
 private struct EnhancementDetails {
