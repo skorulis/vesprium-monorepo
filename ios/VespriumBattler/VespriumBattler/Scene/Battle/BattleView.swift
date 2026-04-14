@@ -33,7 +33,7 @@ private extension BattleView {
 
     var enemySection: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("Enemies")
+            Text("Enemies (\(model.battle.enemiesRemaining) remaining)")
                 .font(.headline)
 
             if viewModel.enemies.isEmpty {

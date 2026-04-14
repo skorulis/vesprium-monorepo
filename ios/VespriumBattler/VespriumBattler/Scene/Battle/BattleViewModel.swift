@@ -111,9 +111,9 @@ private extension BattleViewModel {
     }
 
     func checkPhysicalBurnout(battle: inout Battle) {
-        let chance = Chance(battle.battlePlayer.physicalBurnoutChance)
+        let chance = Chance(battle.battlePlayer.physicalBurnout.decayChance * BattleActionTimers.playerTickTime)
         if chance.check() {
-            battle.battlePlayer.physicalBurnoutChance = 0
+            battle.battlePlayer.physicalBurnout.decayChance = 0
             let attribute: Attribute  = Chance(0.5).check() ? .strength : .agility
             battle.battlePlayer.player.attributes[attribute] -= 1
         }

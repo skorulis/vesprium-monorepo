@@ -96,6 +96,7 @@ final class BattleService {
 
         guard hitChance.check() else { return }
         battle.battlePlayer.health -= details.damage
+        battle.battlePlayer.health = max(battle.battlePlayer.health, 0)
     }
 
     /// Spawn enemies if needed
