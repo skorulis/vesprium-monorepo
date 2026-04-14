@@ -15,6 +15,8 @@ extension BattleView: View {
     var body: some View {
         return ScrollView {
             VStack(alignment: .leading, spacing: 20) {
+                Text("Level \(model.battle.level)")
+                    .font(.headline)
                 BattlePlayerView(
                     battle: model.battle,
                     damageEvents: model.playerDamageEvents

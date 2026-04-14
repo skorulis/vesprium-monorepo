@@ -35,13 +35,20 @@ extension ShopView: View {
                 }
             }
 
-            Button("Next Battle") {
+            continueButton
+        }
+        .padding(16)
+        .navigationTitle("Shop")
+    }
+    
+    private var continueButton: some View {
+        HStack {
+            Spacer()
+            Button("Continue to battle \(viewModel.model.nextLevel)") {
                 viewModel.goToNextBattle()
             }
             .buttonStyle(.borderedProminent)
         }
-        .padding(16)
-        .navigationTitle("Shop")
     }
 
     private func optionCell(item: ItemRow) -> some View {
@@ -151,6 +158,7 @@ extension ShopView {
     }
 
     struct Model {
+        let nextLevel: Int
         var player: PlayerCharacter
         var shopItems: [ItemRow]
 

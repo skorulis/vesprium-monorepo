@@ -50,6 +50,7 @@ import Util
         }
 
         self.model = ShopView.Model(
+            nextLevel: mainStore.gameState.currentLevel + 1,
             player: mainStore.player,
             shopItems: items.shuffled(),
         )
@@ -72,7 +73,7 @@ extension ShopViewModel {
         case let .training(training):
             purchaseTraining(training)
         }
-        model.shopItems = model.shopItems.filter { $0.id == item.id }
+        model.shopItems = model.shopItems.filter { $0.id != item.id }
     }
 
     private func purchaseEnhancement(_ enhancement: BioEnhancement) {
