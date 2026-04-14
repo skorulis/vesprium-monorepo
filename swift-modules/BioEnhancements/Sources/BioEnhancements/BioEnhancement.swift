@@ -14,6 +14,7 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
     case faceSculpting
     case socialPheromoneGlands
     case oxygenatedBlood
+    case raptorClaws
 
     public var name: String {
         rawValue.fromCaseName
@@ -39,6 +40,8 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
             return "Controlled pheromone release improves social influence"
         case .oxygenatedBlood:
             return "Engineered blood proteins carry oxygen more efficiently"
+        case .raptorClaws:
+            return "Bone claws embedded into the fingers"
         }
     }
 
@@ -73,6 +76,8 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
             return 180
         case .oxygenatedBlood:
             return 260
+        case .raptorClaws:
+            return 100
         }
     }
 
@@ -105,6 +110,21 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
                 AttributeBonus(attribute: .strength, value: 20, kind: .multiplicative),
                 AttributeBonus(attribute: .agility, value: 20, kind: .multiplicative),
             ]
+        case .raptorClaws:
+            return [
+                AttributeBonus(attribute: .agility, value: -10, kind: .multiplicative),
+            ]
+        default:
+            return []
+        }
+    }
+    
+    public var derivedAttributeBonuses: [DerivedAttributeBonus] {
+        switch self {
+        case .raptorClaws:
+            return [
+                DerivedAttributeBonus(attribute: .damage, value: 50, kind: .multiplicative)
+            ]
         default:
             return []
         }
@@ -126,6 +146,8 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
             return .init(physical: 1)
         case .oxygenatedBlood:
             return .init(physical: 2)
+        case .raptorClaws:
+            return .init(physical: 1)
         case .faceSculpting, .socialPheromoneGlands:
             return .none
         }

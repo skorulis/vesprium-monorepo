@@ -3,7 +3,7 @@
 import Foundation
 
 /// How an ``AttributeBonus`` combines with a base value.
-public enum AttributeBonusKind: String, Codable, Sendable, Equatable {
+public enum BonusKind: String, Codable, Sendable, Equatable {
     /// Adds ``AttributeBonus/value`` directly to the base (can be negative).
     case additive
     /// Treats ``AttributeBonus/value`` as a signed percentage change: each step applies
@@ -11,12 +11,12 @@ public enum AttributeBonusKind: String, Codable, Sendable, Equatable {
     case multiplicative
 }
 
-public struct AttributeBonus {
-    public let attribute: Attribute
+public struct Bonus<AttributeType: Equatable> {
+    public let attribute: AttributeType
     public let value: Int
-    public let kind: AttributeBonusKind
-
-    public init(attribute: Attribute, value: Int, kind: AttributeBonusKind = .additive) {
+    public let kind: BonusKind
+    
+    public init(attribute: AttributeType, value: Int, kind: BonusKind = .additive) {
         self.attribute = attribute
         self.value = value
         self.kind = kind
@@ -27,7 +27,7 @@ public struct AttributeBonus {
     /// Processing order:
     /// 1. All additive bonuses for this attribute are summed and added to `base`.
     /// 2. Each multiplicative bonus applies in array order: `result = (result * (100 + value)) / 100`.
-    public static func adjustedValue(base: Int, bonuses: [AttributeBonus], attribute: Attribute) -> Int {
+    public static func adjustedValue(base: Int, bonuses: [Bonus<AttributeType>], attribute: AttributeType) -> Int {
         let relevant = bonuses.filter { $0.attribute == attribute }
         let additiveSum = relevant
             .filter { $0.kind == .additive }
@@ -39,3 +39,6 @@ public struct AttributeBonus {
         return result
     }
 }
+
+public typealias AttributeBonus = Bonus<Attribute>
+public typealias DerivedAttributeBonus = Bonus<DerivedAttribute>
