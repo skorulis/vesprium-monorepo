@@ -6,6 +6,7 @@ import Combine
 import Foundation
 import Knit
 import KnitMacros
+import Util
 
 @MainActor @Observable final class ShopViewModel: CoordinatorViewModel {
     weak var coordinator: ASKCoordinator.Coordinator?
@@ -19,7 +20,29 @@ import KnitMacros
     @Resolvable<Resolver>
     init(mainStore: MainStore) {
         self.mainStore = mainStore
-        self.model = ShopView.Model(player: mainStore.player)
+
+        var enhancementArray = RandomArray(items: BioEnhancement.allCases) {
+            if mainStore.player.enhancements.installed.contains($0) {
+                return 0
+            }
+            return 1
+        }
+
+        var items: [ShopView.ItemRow] = []
+        var checkCount = 0
+        while checkCount < 10 && items.count < 5 {
+            checkCount += 1
+            guard let (item, index) = enhancementArray.randomWithIndex else {
+                continue
+            }
+            enhancementArray.remove(index: index)
+            items.append(ShopView.ItemRow(enhancement: item))
+        }
+
+        self.model = ShopView.Model(
+            player: mainStore.player,
+            shopItems: items,
+        )
 
         mainStore.$player.sink { [unowned self] in
             self.model.player = $0

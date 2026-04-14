@@ -6,6 +6,7 @@ public struct RandomArray<ItemType> {
 
     private var store: [Wrapper]
     private let total: Double
+    private var removedIndexes: Set<Int> = []
 
     public init(items: [ItemType], score: (ItemType) -> Double) {
         var total: Double = 0
@@ -53,6 +54,9 @@ public struct RandomArray<ItemType> {
         } else if item.range.upperBound < value {
             return find(value: value, range: index+1..<range.upperBound)
         } else {
+            if removedIndexes.contains(index) {
+                return nil
+            }
             return (item.item, index)
         }
     }
@@ -60,9 +64,13 @@ public struct RandomArray<ItemType> {
     func firstIndex(where predicate: (ItemType) throws -> Bool) rethrows -> Int? {
         return try allItems.firstIndex(where: predicate)
     }
+    
+    public mutating func remove(index: Int) {
+        removedIndexes.insert(index)
+    }
 
     public var count: Int {
-        return store.count
+        return store.count - removedIndexes.count
     }
 
     var allItems: [ItemType] {

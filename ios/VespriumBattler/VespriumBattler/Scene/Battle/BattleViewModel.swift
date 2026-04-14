@@ -17,7 +17,7 @@ import Util
     var model: BattleView.Model
     private var actionTimers = BattleActionTimers()
     private var hasPresentedBattleOutcomeDialog = false
-    
+
     @Resolvable<Resolver>
     init(battleService: BattleService, mainStore: MainStore) {
         self.battleService = battleService
@@ -133,12 +133,22 @@ private extension BattleViewModel {
         if model.battle.battlePlayer.activeAbilities[.focusSpike] != nil {
             tickLength *= 0.5
         }
+        var playerDamageEvents: [Int] = []
         updateBattle { battle in
             let enemies = battle.enemies
             for var enemy in enemies {
+                let previousPlayerHealth = battle.battlePlayer.health
                 battleService.enemyTick(battle: &battle, enemy: &enemy, time: tickLength)
                 battle.replace(enemy: enemy)
+                let damage = previousPlayerHealth - battle.battlePlayer.health
+                if damage > 0 {
+                    playerDamageEvents.append(damage)
+                }
             }
+        }
+
+        for damage in playerDamageEvents {
+            enqueuePlayerDamageEvent(amount: damage)
         }
     }
 
@@ -193,6 +203,20 @@ private extension BattleViewModel {
     func pruneDamageEventsForExistingEnemies() {
         let validEnemyIDs = Set(model.battle.enemies.map(\.id))
         model.enemyDamageEvents = model.enemyDamageEvents.filter { validEnemyIDs.contains($0.key) }
+    }
+
+    func enqueuePlayerDamageEvent(amount: Int) {
+        let event = DamageEvent(amount: amount)
+        model.playerDamageEvents.append(event)
+
+        Task { [weak self] in
+            try? await Task.sleep(nanoseconds: 900_000_000)
+            self?.removePlayerDamageEvent(eventID: event.id)
+        }
+    }
+
+    func removePlayerDamageEvent(eventID: UUID) {
+        model.playerDamageEvents.removeAll { $0.id == eventID }
     }
 }
 

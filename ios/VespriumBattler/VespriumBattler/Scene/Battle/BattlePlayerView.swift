@@ -7,6 +7,7 @@ import Util
 struct BattlePlayerView: View {
 
     let battle: Battle
+    let damageEvents: [DamageEvent]
 
     private let calculator = BattleCalculator()
 
@@ -30,6 +31,15 @@ struct BattlePlayerView: View {
             physicalInformation
         }
         .frame(height: 140)
+        .overlay(alignment: .top) {
+            ZStack {
+                ForEach(Array(damageEvents.enumerated()), id: \.element.id) { index, event in
+                    FloatingDamageNumberView(amount: event.amount)
+                        .offset(y: CGFloat(20 + (index * 8)))
+                }
+            }
+            .allowsHitTesting(false)
+        }
     }
 
     private var physicalInformation: some View {

@@ -76,11 +76,11 @@ struct BattlePlayer: Codable, Sendable, Equatable {
             return -(burnoutCutoff - averagedPhysicalExertion) / burnoutCutoff
         }
     }
-    
+
 }
 
 struct Burnout: Codable, Equatable, Sendable {
     var total: Double = 0
     var decayChance: Double = 0
-    
+
 }

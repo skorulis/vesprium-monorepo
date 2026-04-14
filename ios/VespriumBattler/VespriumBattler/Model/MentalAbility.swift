@@ -6,17 +6,22 @@ import SwiftUI
 enum MentalAbility: String, Codable, Sendable, Equatable, CaseIterable {
 
     case focusSpike
+    case precisionStrike
 
     var text: String {
         switch self {
         case .focusSpike:
-            return "Slows time for 5s"
+            return "Slows player perception of time for 5s"
+        case .precisionStrike:
+            return "Doubles chance to hit for 5s"
         }
     }
 
     var cooldown: TimeInterval {
         switch self {
         case .focusSpike:
+            return 10
+        case .precisionStrike:
             return 10
         }
     }
@@ -25,6 +30,8 @@ enum MentalAbility: String, Codable, Sendable, Equatable, CaseIterable {
         switch self {
         case .focusSpike:
             return 5
+        case .precisionStrike:
+            return 5
         }
     }
 
@@ -32,6 +39,8 @@ enum MentalAbility: String, Codable, Sendable, Equatable, CaseIterable {
         switch self {
         case .focusSpike:
             return 7
+        case .precisionStrike:
+            return 5
         }
     }
 
@@ -39,6 +48,8 @@ enum MentalAbility: String, Codable, Sendable, Equatable, CaseIterable {
         switch self {
         case .focusSpike:
             return Image(systemName: "sparkle")
+        case .precisionStrike:
+            return Image(systemName: "dot.scope")
         }
     }
 }

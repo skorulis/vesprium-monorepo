@@ -15,7 +15,10 @@ extension BattleView: View {
     var body: some View {
         return ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                BattlePlayerView(battle: model.battle)
+                BattlePlayerView(
+                    battle: model.battle,
+                    damageEvents: model.playerDamageEvents
+                )
                 exertionSection
                 enemySection
                 mentalAbilitiesSection
@@ -141,7 +144,8 @@ extension BattleView {
         var battle: Battle
         var physicalExertion = 0.8
         var enemyDamageEvents: [UUID: [DamageEvent]] = [:]
-        
+        var playerDamageEvents: [DamageEvent] = []
+
         var currentTargetedEnemyID: UUID? {
             if let targetedEnemyID = battle.targetedEnemyID,
                battle.enemies.contains(where: { $0.id == targetedEnemyID }) {
@@ -149,7 +153,7 @@ extension BattleView {
             }
             return battle.enemies.first?.id
         }
-        
+
         func damageEvents(for enemyID: UUID) -> [DamageEvent] {
             enemyDamageEvents[enemyID] ?? []
         }
