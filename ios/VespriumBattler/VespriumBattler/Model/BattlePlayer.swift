@@ -63,6 +63,8 @@ struct BattlePlayer: Codable, Sendable, Equatable {
 
         if physicalBurnoutFraction >= 0.9 {
             physicalBurnoutChance += physicalBurnoutFraction * time * 0.25
+        } else {
+            physicalBurnoutChance = 0
         }
 
         mentalBurnout -= time

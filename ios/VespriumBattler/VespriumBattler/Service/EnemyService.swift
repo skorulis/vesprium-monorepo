@@ -3,6 +3,7 @@
 import Knit
 import KnitMacros
 import Foundation
+import Util
 
 final class EnemyService {
 
@@ -10,6 +11,9 @@ final class EnemyService {
     init() {}
 
     func make(battleLevel: Int) -> Enemy {
-        return .init(kind: .rat)
+        let options = EnemyKind.allCases.filter { $0.details.startLevel <= battleLevel }
+        let array = RandomArray(items: options, score: { $0.details.rarity })
+        let type = array.random ?? .rat
+        return .init(kind: type)
     }
 }

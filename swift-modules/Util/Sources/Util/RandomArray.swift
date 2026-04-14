@@ -2,12 +2,12 @@
 
 import Foundation
 
-struct RandomArray<ItemType> {
+public struct RandomArray<ItemType> {
 
     private var store: [Wrapper]
     private let total: Double
 
-    init(items: [ItemType], score: (ItemType) -> Double) {
+    public init(items: [ItemType], score: (ItemType) -> Double) {
         var total: Double = 0
         var temp: [Wrapper] = []
         for item in items {
@@ -28,11 +28,11 @@ struct RandomArray<ItemType> {
         return store.last?.range.upperBound ?? 0
     }
 
-    var random: ItemType? {
+    public var random: ItemType? {
         return randomWithIndex?.0
     }
 
-    var randomWithIndex: (ItemType, Int)? {
+    public var randomWithIndex: (ItemType, Int)? {
         if store.isEmpty {
             return nil
         }
@@ -61,7 +61,7 @@ struct RandomArray<ItemType> {
         return try allItems.firstIndex(where: predicate)
     }
 
-    var count: Int {
+    public var count: Int {
         return store.count
     }
 
