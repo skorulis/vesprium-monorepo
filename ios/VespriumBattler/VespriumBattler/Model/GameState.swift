@@ -5,7 +5,7 @@ import Foundation
 struct GameState: Codable, Sendable, Equatable {
 
     var phase: GameStatePhase = .menu
-
+    var currentLevel: Int = 1
 }
 
 enum GameStatePhase: String, Codable, Sendable, Equatable {

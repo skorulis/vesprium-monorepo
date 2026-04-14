@@ -12,7 +12,7 @@ extension MainMenuView: View {
 
     var body: some View {
         VStack {
-            Button(action: viewModel.startBattle) {
+            Button(action: viewModel.startGame) {
                 Text("Start")
             }
         }

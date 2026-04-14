@@ -2,6 +2,7 @@
 
 import ASKCoordinator
 import BioEnhancements
+import BioStats
 import Combine
 import Foundation
 import Knit
@@ -36,12 +37,21 @@ import Util
                 continue
             }
             enhancementArray.remove(index: index)
-            items.append(ShopView.ItemRow(enhancement: item))
+            items.append(ShopView.ItemRow(id: UUID(), option: .enhancement(item)))
+        }
+
+        for attribute in Attribute.allCases.shuffled().prefix(2) {
+            let training = ShopView.TrainingOption(
+                attribute: attribute,
+                amount: 1,
+                cost: 40
+            )
+            items.append(ShopView.ItemRow(id: UUID(), option: .training(training)))
         }
 
         self.model = ShopView.Model(
             player: mainStore.player,
-            shopItems: items,
+            shopItems: items.shuffled(),
         )
 
         mainStore.$player.sink { [unowned self] in
@@ -55,13 +65,32 @@ import Util
 
 extension ShopViewModel {
 
-    func purchase(_ enhancement: BioEnhancement) {
+    func purchase(_ item: ShopView.ItemRow) {
+        switch item.option {
+        case let .enhancement(enhancement):
+            purchaseEnhancement(enhancement)
+        case let .training(training):
+            purchaseTraining(training)
+        }
+        model.shopItems = model.shopItems.filter { $0.id == item.id }
+    }
+
+    private func purchaseEnhancement(_ enhancement: BioEnhancement) {
         guard model.player.enhancements.installed.contains(enhancement) == false else { return }
         guard model.player.money >= enhancement.baseCost else { return }
 
         var player = mainStore.player
         player.money -= enhancement.baseCost
         player.enhancements.installed.append(enhancement)
+        mainStore.player = player
+    }
+
+    private func purchaseTraining(_ training: ShopView.TrainingOption) {
+        guard model.player.money >= training.cost else { return }
+
+        var player = mainStore.player
+        player.money -= training.cost
+        player.attributes[training.attribute] += training.amount
         mainStore.player = player
     }
 

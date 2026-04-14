@@ -15,8 +15,9 @@ import KnitMacros
         self.mainStore = mainStore
     }
 
-    func startBattle() {
+    func startGame() {
         mainStore.gameState.phase = .battle
+        mainStore.gameState.currentLevel = 1
         coordinator?.push(MainPath.game)
     }
 }
