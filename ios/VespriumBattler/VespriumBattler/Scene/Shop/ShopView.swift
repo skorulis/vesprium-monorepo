@@ -40,7 +40,7 @@ extension ShopView: View {
         .padding(16)
         .navigationTitle("Shop")
     }
-    
+
     private var continueButton: some View {
         HStack {
             Spacer()
@@ -64,6 +64,30 @@ extension ShopView: View {
             Text(item.description)
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
+
+            if item.attributeBonuses.isEmpty == false {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Attribute Bonuses")
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(.secondary)
+                    ForEach(item.attributeBonusText, id: \.self) { text in
+                        Text(text)
+                            .font(.caption)
+                    }
+                }
+            }
+            
+            if item.strainIncreaseText.isEmpty == false {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Strain Increases")
+                        .font(.caption.weight(.semibold))
+                        .foregroundStyle(.secondary)
+                    ForEach(item.strainIncreaseText, id: \.self) { text in
+                        Text(text)
+                            .font(.caption)
+                    }
+                }
+            }
 
             HStack {
                 Spacer()
@@ -123,6 +147,24 @@ extension ShopView {
             }
         }
 
+        var attributeBonuses: [AttributeBonus] {
+            switch self {
+            case let .enhancement(enhancement):
+                return enhancement.attributeBonuses
+            case let .training(training):
+                return training.attributeBonuses
+            }
+        }
+        
+        var strain: Strain {
+            switch self {
+            case let .enhancement(enhancement):
+                return enhancement.strain
+            case .training:
+                return .none
+            }
+        }
+
         func canPurchase(player: PlayerCharacter) -> Bool {
             guard player.money >= cost else { return false }
             switch self {
@@ -146,6 +188,10 @@ extension ShopView {
         var text: String {
             "Permanently increases \(attribute.name.lowercased()) by \(amount)."
         }
+
+        var attributeBonuses: [AttributeBonus] {
+            [AttributeBonus(attribute: attribute, value: amount)]
+        }
     }
 
     struct ItemRow: Identifiable {
@@ -155,6 +201,31 @@ extension ShopView {
         var title: String { option.title }
         var description: String { option.description }
         var cost: Int { option.cost }
+        var attributeBonuses: [AttributeBonus] { option.attributeBonuses }
+        var strain: Strain { option.strain }
+        var attributeBonusText: [String] {
+            attributeBonuses.map { bonus in
+                switch bonus.kind {
+                case .additive:
+                    let sign = bonus.value >= 0 ? "+" : ""
+                    return "\(bonus.attribute.name): \(sign)\(bonus.value)"
+                case .multiplicative:
+                    let sign = bonus.value >= 0 ? "+" : ""
+                    return "\(bonus.attribute.name): \(sign)\(bonus.value)%"
+                }
+            }
+        }
+        
+        var strainIncreaseText: [String] {
+            var values: [String] = []
+            if strain.physical > 0 {
+                values.append("Physical: +\(strain.physical)")
+            }
+            if strain.mental > 0 {
+                values.append("Mental: +\(strain.mental)")
+            }
+            return values
+        }
     }
 
     struct Model {
