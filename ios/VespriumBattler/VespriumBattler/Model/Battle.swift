@@ -18,6 +18,9 @@ struct Battle: Codable, Sendable, Equatable {
     /// The current enemies in the battle
     var enemies: [Enemy] = []
 
+    /// The enemy currently targeted by the player
+    var targetedEnemyID: UUID?
+
     /// Enemies that have been killed by the player
     var defeatedEnemies: [Enemy] = []
 
@@ -29,10 +32,22 @@ struct Battle: Codable, Sendable, Equatable {
         guard let index = enemies.firstIndex(where: { $0.id == enemy.id}) else { return }
         if enemy.health <= 0 {
             enemies.remove(at: index)
+            if targetedEnemyID == enemy.id {
+                targetedEnemyID = nil
+            }
             defeatedEnemies.append(enemy)
         } else {
             enemies[index] = enemy
         }
+    }
+
+    /// Returns the currently targeted enemy ID, falling back to first alive enemy.
+    mutating func resolvedTargetEnemyID() -> UUID? {
+        if let targetedEnemyID, enemies.contains(where: { $0.id == targetedEnemyID }) {
+            return targetedEnemyID
+        }
+        targetedEnemyID = enemies.first?.id
+        return targetedEnemyID
     }
 
     var state: BattleState {

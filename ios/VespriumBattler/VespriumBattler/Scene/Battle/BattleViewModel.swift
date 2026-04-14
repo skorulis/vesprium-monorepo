@@ -30,6 +30,14 @@ import Util
         model.battle.enemies
     }
 
+    var currentTargetedEnemyID: UUID? {
+        if let targetedEnemyID = model.battle.targetedEnemyID,
+           model.battle.enemies.contains(where: { $0.id == targetedEnemyID }) {
+            return targetedEnemyID
+        }
+        return model.battle.enemies.first?.id
+    }
+
     var playerHealth: Int {
         model.battle.battlePlayer.health
     }
@@ -70,6 +78,13 @@ extension BattleViewModel {
         guard canActivate(ability) else { return }
         updateBattle { battle in
             battle.battlePlayer.activate(ability: ability)
+        }
+    }
+
+    func selectTarget(enemyID: UUID) {
+        updateBattle { battle in
+            guard battle.enemies.contains(where: { $0.id == enemyID }) else { return }
+            battle.targetedEnemyID = enemyID
         }
     }
 }

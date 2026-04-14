@@ -27,10 +27,10 @@ struct EnemyDetails: Codable, Sendable, Equatable {
     let maxHealth: Int
     /// Money gained when defeated
     let money: Int
-    
+
     /// The first level this enemy will appear at
     let startLevel: Int
-    
+
     var rarity: Double = 1
 }
 

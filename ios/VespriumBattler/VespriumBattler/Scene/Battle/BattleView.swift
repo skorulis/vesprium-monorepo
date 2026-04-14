@@ -43,7 +43,11 @@ private extension BattleView {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 12) {
                         ForEach(viewModel.enemies, id: \.id) { enemy in
-                            EnemyChip(enemy: enemy)
+                            EnemyChip(
+                                enemy: enemy,
+                                isTargeted: enemy.id == viewModel.currentTargetedEnemyID,
+                                action: { viewModel.selectTarget(enemyID: enemy.id) }
+                            )
                         }
                     }
                     .padding(.vertical, 4)

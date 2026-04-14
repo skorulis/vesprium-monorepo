@@ -57,7 +57,8 @@ final class BattleService {
     }
 
     private func maybePlayerAttack(battle: inout Battle) {
-        guard var enemy = battle.enemies.first else { return }
+        guard let targetEnemyID = battle.resolvedTargetEnemyID(),
+              var enemy = battle.enemies.first(where: { $0.id == targetEnemyID }) else { return }
         guard battle.battlePlayer.storedTime >= 1 else { return }
         battle.battlePlayer.storedTime -= 1
         let details = enemy.details
