@@ -38,4 +38,15 @@ struct PlayerCharacter: Codable, Sendable, Equatable {
     var maxMentalBurnout: Int {
         max(effectiveAttributes[.stability] - enhancements.strain.mental, 1)
     }
+    
+    mutating func addMoney(_ amount: Int) {
+        let total = Double(amount) * rewardMoneyMultiplier
+        money += Int(round(total))
+    }
+    
+    // How much extra money is gained from rewards
+    var rewardMoneyMultiplier: Double {
+        let base = effectiveAttributes[.charisma] - Attribute.defaultValue
+        return 1 + (0.1 * Double(base))
+    }
 }

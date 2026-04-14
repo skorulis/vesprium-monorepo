@@ -167,6 +167,7 @@ private extension BattleViewModel {
             actionTimers.invalidateTimers()
             presentBattleOutcomeDialog(path: .battleLost)
         case .won:
+            mainStore.player.addMoney(model.battle.level * 100)
             actionTimers.invalidateTimers()
             presentBattleOutcomeDialog(path: .battleWon)
         default:

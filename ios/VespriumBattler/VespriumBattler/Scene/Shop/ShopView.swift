@@ -211,41 +211,15 @@ extension ShopView {
         var derivedAttributeBonuses: [DerivedAttributeBonus] { option.derivedAttributeBonuses }
         var strain: Strain { option.strain }
         var attributeBonusText: [String] {
-            attributeBonuses.map { bonus in
-                switch bonus.kind {
-                case .additive:
-                    let sign = bonus.value >= 0 ? "+" : ""
-                    return "\(bonus.attribute.name): \(sign)\(bonus.value)"
-                case .multiplicative:
-                    let sign = bonus.value >= 0 ? "+" : ""
-                    return "\(bonus.attribute.name): \(sign)\(bonus.value)%"
-                }
-            }
+            attributeBonuses.map { $0.description }
         }
 
         var derivedAttributeBoostsText: [String] {
-            derivedAttributeBonuses.map { bonus in
-                switch bonus.kind {
-                case .additive:
-                    let sign = bonus.value >= 0 ? "+" : ""
-                    return "\(bonus.attribute.rawValue.capitalized): \(sign)\(bonus.value)"
-                case .multiplicative:
-                    let sign = bonus.value >= 0 ? "+" : ""
-                    return "\(bonus.attribute.rawValue.capitalized): \(sign)\(bonus.value)%"
-                }
-            }
+            derivedAttributeBonuses.map { $0.description }
         }
 
-        var strainIncreaseText: [String] {
-            var values: [String] = []
-            if strain.physical > 0 {
-                values.append("Physical Strain: +\(strain.physical)")
-            }
-            if strain.mental > 0 {
-                values.append("Mental Strain: +\(strain.mental)")
-            }
-            return values
-        }
+        var strainIncreaseText: [String] { strain.descriptionLines }
+            
     }
 
     struct Model {

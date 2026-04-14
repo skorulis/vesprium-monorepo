@@ -1,7 +1,8 @@
 /// Registry of character statistics for the world model.
 ///
 /// Add new cases here as concrete statistics are defined; raw values stay stable for persistence.
-public enum Attribute: String, Codable, CaseIterable, Hashable, Sendable {
+public enum Attribute: String, Codable, CaseIterable, Hashable, Sendable, CustomStringConvertible {
+    
     /// Raw physical power: lifting, striking, and sustained exertion.
     case strength
 
@@ -25,4 +26,6 @@ public enum Attribute: String, Codable, CaseIterable, Hashable, Sendable {
     public var name: String {
         String(describing: self).capitalized
     }
+    
+    public var description: String { name }
 }

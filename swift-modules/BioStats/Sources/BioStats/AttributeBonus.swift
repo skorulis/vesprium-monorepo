@@ -11,7 +11,7 @@ public enum BonusKind: String, Codable, Sendable, Equatable {
     case multiplicative
 }
 
-public struct Bonus<AttributeType: Equatable> {
+public struct Bonus<AttributeType: Equatable> where AttributeType: CustomStringConvertible {
     public let attribute: AttributeType
     public let value: Int
     public let kind: BonusKind
@@ -37,6 +37,17 @@ public struct Bonus<AttributeType: Equatable> {
             result = (result * (100 + bonus.value)) / 100
         }
         return result
+    }
+    
+    public var description: String {
+        switch kind {
+        case .additive:
+            let sign = value >= 0 ? "+" : ""
+            return "\(attribute.description): \(sign)\(value)"
+        case .multiplicative:
+            let sign = value >= 0 ? "+" : ""
+            return "\(attribute.description): \(sign)\(value)%"
+        }
     }
 }
 

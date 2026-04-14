@@ -75,7 +75,7 @@ final class BattleService {
         enemy.health -= battle.battlePlayer.damage
         battle.replace(enemy: enemy)
         if enemy.health <= 0 {
-            mainStore.player.money += details.money
+            mainStore.player.addMoney(details.money)
             print("Killed \(enemy.kind.rawValue)")
         }
     }

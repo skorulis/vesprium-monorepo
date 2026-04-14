@@ -29,4 +29,26 @@ struct PlayerCharacterDamageTests {
         // Base damage: 12 / 2 = 6, then +50% derived damage bonus.
         #expect(player.damage == 9)
     }
+
+    @Test func rewardMoneyMultiplierIsOneAtDefaultCharisma() {
+        let player = PlayerCharacter()
+
+        #expect(player.rewardMoneyMultiplier == 1.0)
+    }
+
+    @Test func rewardMoneyMultiplierIncreasesByPointOnePerCharismaPoint() {
+        var player = PlayerCharacter()
+        player.attributes[.charisma] = 14
+
+        #expect(player.rewardMoneyMultiplier == 1.4)
+    }
+
+    @Test func rewardMoneyMultiplierUsesEffectiveCharismaWithEnhancements() {
+        var player = PlayerCharacter()
+        player.attributes[.charisma] = 10
+        player.enhancements.installed = [.faceSculpting]
+
+        // 10 charisma with +25% multiplicative bonus -> 12 effective charisma.
+        #expect(player.rewardMoneyMultiplier == 1.2)
+    }
 }
