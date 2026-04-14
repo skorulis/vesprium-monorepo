@@ -23,7 +23,7 @@ import Util
         self.battleService = battleService
         self.mainStore = mainStore
 
-        let battle = battleService.makeBattle()
+        let battle = battleService.makeBattle(level: mainStore.gameState.currentLevel)
         self.model = .init(battle: battle)
     }
 

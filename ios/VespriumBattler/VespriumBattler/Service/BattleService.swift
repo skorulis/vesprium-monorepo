@@ -17,11 +17,11 @@ final class BattleService {
         self.enemyService = enemyService
     }
 
-    func makeBattle() -> Battle {
+    func makeBattle(level: Int) -> Battle {
         let battlePlayer = BattlePlayer(player: mainStore.player)
         return Battle(
-            level: 1,
-            enemyCount: 5,
+            level: level,
+            enemyCount: 5 + level,
             battlePlayer: battlePlayer,
         )
     }

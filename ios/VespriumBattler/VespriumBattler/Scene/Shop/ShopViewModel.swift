@@ -95,6 +95,7 @@ extension ShopViewModel {
     }
 
     func goToNextBattle() {
+        mainStore.gameState.currentLevel += 1
         mainStore.gameState.phase = .battle
     }
 
