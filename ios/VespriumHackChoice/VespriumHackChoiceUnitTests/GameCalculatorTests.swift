@@ -89,7 +89,7 @@ struct GameCalculatorTests {
             job: .farming,
             activities: [
                 .activity(.school),
-                .activity(.languages)
+                .activity(.languages),
             ]
         )
 
@@ -104,7 +104,7 @@ struct GameCalculatorTests {
             activities: [
                 .activity(.school),
                 .activity(.languages),
-                .activity(.meditation)
+                .activity(.meditation),
             ]
         )
 

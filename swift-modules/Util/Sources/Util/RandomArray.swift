@@ -64,7 +64,7 @@ public struct RandomArray<ItemType> {
     func firstIndex(where predicate: (ItemType) throws -> Bool) rethrows -> Int? {
         return try allItems.firstIndex(where: predicate)
     }
-    
+
     public mutating func remove(index: Int) {
         removedIndexes.insert(index)
     }

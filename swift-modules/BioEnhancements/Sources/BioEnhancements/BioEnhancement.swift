@@ -118,9 +118,17 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
             return []
         }
     }
-    
+
     public var derivedAttributeBonuses: [DerivedAttributeBonus] {
         switch self {
+        case .subdermalArmor:
+            return [
+                DerivedAttributeBonus(attribute: .damageAbsorbtion, value: 1, kind: .additive)
+            ]
+        case .thickendedSkin:
+            return [
+                DerivedAttributeBonus(attribute: .damageAbsorbtion, value: 1, kind: .additive)
+            ]
         case .raptorClaws:
             return [
                 DerivedAttributeBonus(attribute: .damage, value: 50, kind: .multiplicative)

@@ -15,7 +15,7 @@ public struct Bonus<AttributeType: Equatable> where AttributeType: CustomStringC
     public let attribute: AttributeType
     public let value: Int
     public let kind: BonusKind
-    
+
     public init(attribute: AttributeType, value: Int, kind: BonusKind = .additive) {
         self.attribute = attribute
         self.value = value
@@ -38,7 +38,7 @@ public struct Bonus<AttributeType: Equatable> where AttributeType: CustomStringC
         }
         return result
     }
-    
+
     public var description: String {
         switch kind {
         case .additive:

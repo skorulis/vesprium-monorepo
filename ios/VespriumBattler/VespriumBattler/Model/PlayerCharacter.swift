@@ -26,24 +26,32 @@ struct PlayerCharacter: Codable, Sendable, Equatable {
             attribute: .damage
         )
     }
+    
+    var damageAbsorbtion: Int {
+        return DerivedAttributeBonus.adjustedValue(
+            base: 0,
+            bonuses: enhancements.derivedAttributeBonuses,
+            attribute: .damageAbsorbtion
+        )
+    }
 
     var mentalAbilities: [MentalAbility] {
         return [.focusSpike]
     }
-    
+
     var maxPhysicalBurnout: Int {
         max(effectiveAttributes[.vitality] - enhancements.strain.physical, 1)
     }
-    
+
     var maxMentalBurnout: Int {
         max(effectiveAttributes[.stability] - enhancements.strain.mental, 1)
     }
-    
+
     mutating func addMoney(_ amount: Int) {
         let total = Double(amount) * rewardMoneyMultiplier
         money += Int(round(total))
     }
-    
+
     // How much extra money is gained from rewards
     var rewardMoneyMultiplier: Double {
         let base = effectiveAttributes[.charisma] - Attribute.defaultValue

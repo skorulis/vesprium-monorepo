@@ -2,7 +2,7 @@
 ///
 /// Add new cases here as concrete statistics are defined; raw values stay stable for persistence.
 public enum Attribute: String, Codable, CaseIterable, Hashable, Sendable, CustomStringConvertible {
-    
+
     /// Raw physical power: lifting, striking, and sustained exertion.
     case strength
 
@@ -26,6 +26,6 @@ public enum Attribute: String, Codable, CaseIterable, Hashable, Sendable, Custom
     public var name: String {
         String(describing: self).capitalized
     }
-    
+
     public var description: String { name }
 }

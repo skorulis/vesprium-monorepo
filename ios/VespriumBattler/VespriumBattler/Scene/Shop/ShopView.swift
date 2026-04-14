@@ -219,7 +219,7 @@ extension ShopView {
         }
 
         var strainIncreaseText: [String] { strain.descriptionLines }
-            
+
     }
 
     struct Model {

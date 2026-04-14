@@ -21,7 +21,7 @@ final class BattleService {
         let battlePlayer = BattlePlayer(player: mainStore.player)
         return Battle(
             level: level,
-            enemyCount: 5 + level,
+            enemyCount: 4 + level,
             battlePlayer: battlePlayer,
         )
     }
@@ -93,7 +93,8 @@ final class BattleService {
         )
 
         guard hitChance.check() else { return }
-        battle.battlePlayer.health -= details.damage
+        let damage = (details.damage - battle.battlePlayer.player.damageAbsorbtion)
+        battle.battlePlayer.health -= damage
         battle.battlePlayer.health = max(battle.battlePlayer.health, 0)
     }
 

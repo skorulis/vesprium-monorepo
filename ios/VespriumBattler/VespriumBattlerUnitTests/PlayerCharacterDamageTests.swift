@@ -30,6 +30,26 @@ struct PlayerCharacterDamageTests {
         #expect(player.damage == 9)
     }
 
+    @Test func damageAbsorbtionIsZeroByDefault() {
+        let player = PlayerCharacter()
+
+        #expect(player.damageAbsorbtion == 0)
+    }
+
+    @Test func damageAbsorbtionIncludesArmorEnhancements() {
+        var player = PlayerCharacter()
+        player.enhancements.installed = [.subdermalArmor]
+
+        #expect(player.damageAbsorbtion == 1)
+    }
+
+    @Test func damageAbsorbtionStacksAcrossEnhancements() {
+        var player = PlayerCharacter()
+        player.enhancements.installed = [.subdermalArmor, .thickendedSkin]
+
+        #expect(player.damageAbsorbtion == 2)
+    }
+
     @Test func rewardMoneyMultiplierIsOneAtDefaultCharisma() {
         let player = PlayerCharacter()
 

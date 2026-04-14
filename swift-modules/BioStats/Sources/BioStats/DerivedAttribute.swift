@@ -3,8 +3,11 @@
 import Foundation
 
 public enum DerivedAttribute: String, Codable, CaseIterable, Hashable, Sendable, CustomStringConvertible {
- 
+
     case damage
     
+    // Absolute damage reduction
+    case damageAbsorbtion
+
     public var description: String { rawValue.capitalized }
 }

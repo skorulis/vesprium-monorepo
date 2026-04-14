@@ -55,7 +55,7 @@ enum EnemyKind: String, Codable, Sendable, Equatable, CaseIterable {
                 damage: 2,
                 agility: 8,
                 attackRate: 3,
-                maxHealth: 25,
+                maxHealth: 20,
                 money: 15,
                 startLevel: 1,
             )

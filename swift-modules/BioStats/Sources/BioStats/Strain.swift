@@ -11,7 +11,7 @@ public struct Strain: Equatable, Sendable {
         self.physical = physical
         self.mental = mental
     }
-    
+
     public static var none: Strain { Strain() }
 
     public func normalized() -> Strain {
@@ -21,7 +21,7 @@ public struct Strain: Equatable, Sendable {
     public static func + (lhs: Strain, rhs: Strain) -> Strain {
         return Strain(physical: lhs.physical + rhs.physical, mental: lhs.mental + rhs.mental)
     }
-    
+
     public var descriptionLines: [String] {
         var values: [String] = []
         if physical > 0 {
