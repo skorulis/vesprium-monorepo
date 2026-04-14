@@ -160,4 +160,29 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
             return .none
         }
     }
+    
+    public var method: EnhancementMethod {
+        switch self {
+        case .chlorophyllSkin:
+            return .geneGraft
+        case .barometricEars:
+            return .mechanicalImplant
+        case .muscleEnergyImplants:
+            return .geneGraft
+        case .brainOverclock:
+            return .mechanicalImplant
+        case .subdermalArmor:
+            return .mechanicalImplant
+        case .thickendedSkin:
+            return .geneGraft
+        case .faceSculpting:
+            return .surgery
+        case .socialPheromoneGlands:
+            return .geneGraft
+        case .oxygenatedBlood:
+            return .geneGraft
+        case .raptorClaws:
+            return .geneGraft
+        }
+    }
 }
