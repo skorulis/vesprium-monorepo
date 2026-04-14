@@ -16,187 +16,186 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
     case oxygenatedBlood
     case raptorClaws
     case retractableClaws
-    
 
     public var name: String {
         rawValue.fromCaseName
     }
 
     public var text: String {
-        switch self {
-        case .chlorophyllSkin:
-            return "Absorbs energy from the sun to reduce food needs"
-        case .barometricEars:
-            return "Eardrums sensitive enough to detect changes in barometric pressure"
-        case .muscleEnergyImplants:
-            return "Implants that hold energy that give a boost to strength when needed"
-        case .brainOverclock:
-            return "Forces the neurons in the brain to transmit faster increasing overall thought processing"
-        case .subdermalArmor:
-            return "Metal plates embedded in the body's skin that reduces damage"
-        case .thickendedSkin:
-            return "Thicker skin that reduces damage"
-        case .faceSculpting:
-            return "Brings out the natural beauty of the face"
-        case .socialPheromoneGlands:
-            return "Controlled pheromone release improves social influence"
-        case .oxygenatedBlood:
-            return "Engineered blood proteins carry oxygen more efficiently"
-        case .raptorClaws:
-            return "Bone claws embedded into the fingers"
-        case .retractableClaws:
-            return "Metal claws that can be hidden back inside the hands when not in use"
-        }
+        details.text
     }
 
     public var technicalDetails: String? {
-        switch self {
-        case .muscleEnergyImplants:
-            return "Fairly simple biological implants which store excess energy while inactive and release it when the muscles are under high stress"
-        case .brainOverclock:
-            return "A crystal and bio battery implanted in the back of the head provides a constant pulse which forces neurons to work overtime"
-        default:
-            return nil
-        }
+        details.technicalDetails
     }
 
     public var baseCost: Int {
-        switch self {
-        case .chlorophyllSkin:
-            return 100
-        case .barometricEars:
-            return 100
-        case .muscleEnergyImplants:
-            return 200
-        case .brainOverclock:
-            return 500
-        case .subdermalArmor:
-            return 200
-        case .thickendedSkin:
-            return 200
-        case .faceSculpting:
-            return 100
-        case .socialPheromoneGlands:
-            return 180
-        case .oxygenatedBlood:
-            return 260
-        case .raptorClaws:
-            return 150
-        case .retractableClaws:
-            return 200
-        }
+        details.baseCost
     }
 
     public var attributeBonuses: [AttributeBonus] {
-        switch self {
-        case .chlorophyllSkin:
-            return [AttributeBonus(attribute: .stability, value: -1)]
-        case .muscleEnergyImplants:
-            return [AttributeBonus(attribute: .strength, value: 50, kind: .multiplicative)]
-        case .brainOverclock:
-            return [
-                AttributeBonus(attribute: .cognition, value: 50, kind: .multiplicative),
-                AttributeBonus(attribute: .agility, value: 25, kind: .multiplicative),
-            ]
-        case .thickendedSkin:
-            return [
-                AttributeBonus(attribute: .charisma, value: -10, kind: .multiplicative),
-            ]
-        case .faceSculpting:
-            return [
-                AttributeBonus(attribute: .charisma, value: 25, kind: .multiplicative),
-            ]
-        case .socialPheromoneGlands:
-            return [
-                AttributeBonus(attribute: .charisma, value: 30, kind: .multiplicative),
-                AttributeBonus(attribute: .stability, value: -10, kind: .multiplicative),
-            ]
-        case .oxygenatedBlood:
-            return [
-                AttributeBonus(attribute: .strength, value: 20, kind: .multiplicative),
-                AttributeBonus(attribute: .agility, value: 20, kind: .multiplicative),
-            ]
-        case .raptorClaws:
-            return [
-                AttributeBonus(attribute: .agility, value: -10, kind: .multiplicative),
-            ]
-        default:
-            return []
-        }
+        details.attributeBonuses
     }
 
     public var derivedAttributeBonuses: [DerivedAttributeBonus] {
-        switch self {
-        case .subdermalArmor:
-            return [
-                DerivedAttributeBonus(attribute: .damageAbsorbtion, value: 1, kind: .additive)
-            ]
-        case .thickendedSkin:
-            return [
-                DerivedAttributeBonus(attribute: .damageAbsorbtion, value: 1, kind: .additive)
-            ]
-        case .raptorClaws:
-            return [
-                DerivedAttributeBonus(attribute: .damage, value: 50, kind: .multiplicative)
-            ]
-        case .retractableClaws:
-            return [
-                DerivedAttributeBonus(attribute: .damage, value: 50, kind: .multiplicative)
-            ]
-        default:
-            return []
-        }
+        details.derivedAttributeBonuses
     }
 
     public var strain: Strain {
-        switch self {
-        case .chlorophyllSkin:
-            return .init(physical: 1)
-        case .barometricEars:
-            return .init()
-        case .muscleEnergyImplants:
-            return .init(physical: 2)
-        case .brainOverclock:
-            return .init(physical: 0, mental: 1)
-        case .subdermalArmor:
-            return .init(physical: 1)
-        case .thickendedSkin:
-            return .init(physical: 1)
-        case .oxygenatedBlood:
-            return .init(physical: 2)
-        case .raptorClaws:
-            return .init(physical: 1)
-        case .retractableClaws:
-            return .init(physical: 2)
-        case .faceSculpting, .socialPheromoneGlands:
-            return .none
-        }
+        details.strain
     }
     
     public var method: EnhancementMethod {
+        details.method
+    }
+
+    private var details: EnhancementDetails {
         switch self {
         case .chlorophyllSkin:
-            return .geneGraft
+            return .init(
+                text: "Absorbs energy from the sun to reduce food needs",
+                baseCost: 100,
+                attributeBonuses: [AttributeBonus(attribute: .stability, value: -1)],
+                strain: .init(physical: 1),
+                method: .geneGraft
+            )
         case .barometricEars:
-            return .mechanicalImplant
+            return .init(
+                text: "Eardrums sensitive enough to detect changes in barometric pressure",
+                baseCost: 100,
+                method: .mechanicalImplant
+            )
         case .muscleEnergyImplants:
-            return .geneGraft
+            return .init(
+                text: "Implants that hold energy that give a boost to strength when needed",
+                technicalDetails: "Fairly simple biological implants which store excess energy while inactive and release it when the muscles are under high stress",
+                baseCost: 200,
+                attributeBonuses: [AttributeBonus(attribute: .strength, value: 50, kind: .multiplicative)],
+                strain: .init(physical: 2),
+                method: .geneGraft
+            )
         case .brainOverclock:
-            return .mechanicalImplant
+            return .init(
+                text: "Forces the neurons in the brain to transmit faster increasing overall thought processing",
+                technicalDetails: "A crystal and bio battery implanted in the back of the head provides a constant pulse which forces neurons to work overtime",
+                baseCost: 500,
+                attributeBonuses: [
+                    AttributeBonus(attribute: .cognition, value: 50, kind: .multiplicative),
+                    AttributeBonus(attribute: .agility, value: 25, kind: .multiplicative),
+                ],
+                strain: .init(physical: 0, mental: 1),
+                method: .mechanicalImplant
+            )
         case .subdermalArmor:
-            return .mechanicalImplant
+            return .init(
+                text: "Metal plates embedded in the body's skin that reduces damage",
+                baseCost: 200,
+                derivedAttributeBonuses: [
+                    DerivedAttributeBonus(attribute: .damageAbsorbtion, value: 1, kind: .additive)
+                ],
+                strain: .init(physical: 1),
+                method: .mechanicalImplant
+            )
         case .thickendedSkin:
-            return .geneGraft
+            return .init(
+                text: "Thicker skin that reduces damage",
+                baseCost: 200,
+                attributeBonuses: [
+                    AttributeBonus(attribute: .charisma, value: -10, kind: .multiplicative),
+                ],
+                derivedAttributeBonuses: [
+                    DerivedAttributeBonus(attribute: .damageAbsorbtion, value: 1, kind: .additive)
+                ],
+                strain: .init(physical: 1),
+                method: .geneGraft
+            )
         case .faceSculpting:
-            return .surgery
+            return .init(
+                text: "Brings out the natural beauty of the face",
+                baseCost: 100,
+                attributeBonuses: [
+                    AttributeBonus(attribute: .charisma, value: 25, kind: .multiplicative),
+                ],
+                method: .surgery
+            )
         case .socialPheromoneGlands:
-            return .geneGraft
+            return .init(
+                text: "Controlled pheromone release improves social influence",
+                baseCost: 180,
+                attributeBonuses: [
+                    AttributeBonus(attribute: .charisma, value: 30, kind: .multiplicative),
+                    AttributeBonus(attribute: .stability, value: -10, kind: .multiplicative),
+                ],
+                method: .geneGraft
+            )
         case .oxygenatedBlood:
-            return .geneGraft
+            return .init(
+                text: "Engineered blood proteins carry oxygen more efficiently",
+                baseCost: 260,
+                attributeBonuses: [
+                    AttributeBonus(attribute: .strength, value: 20, kind: .multiplicative),
+                    AttributeBonus(attribute: .agility, value: 20, kind: .multiplicative),
+                ],
+                strain: .init(physical: 2),
+                method: .geneGraft
+            )
         case .raptorClaws:
-            return .geneGraft
+            return .init(
+                text: "Bone claws embedded into the fingers",
+                baseCost: 150,
+                attributeBonuses: [
+                    AttributeBonus(attribute: .agility, value: -10, kind: .multiplicative),
+                ],
+                derivedAttributeBonuses: [
+                    DerivedAttributeBonus(attribute: .damage, value: 50, kind: .multiplicative)
+                ],
+                strain: .init(physical: 1),
+                method: .geneGraft,
+                excludes: [.retractableClaws],
+            )
         case .retractableClaws:
-            return .mechanicalImplant
+            return .init(
+                text: "Metal claws that can be hidden back inside the hands when not in use",
+                baseCost: 200,
+                derivedAttributeBonuses: [
+                    DerivedAttributeBonus(attribute: .damage, value: 50, kind: .multiplicative)
+                ],
+                strain: .init(physical: 2),
+                method: .mechanicalImplant,
+                excludes: [.raptorClaws],
+            )
         }
+    }
+    
+}
+
+private struct EnhancementDetails {
+    let text: String
+    let technicalDetails: String?
+    let baseCost: Int
+    let attributeBonuses: [AttributeBonus]
+    let derivedAttributeBonuses: [DerivedAttributeBonus]
+    let strain: Strain
+    let method: EnhancementMethod
+    let excludes: Set<BioEnhancement>
+
+    init(
+        text: String,
+        technicalDetails: String? = nil,
+        baseCost: Int,
+        attributeBonuses: [AttributeBonus] = [],
+        derivedAttributeBonuses: [DerivedAttributeBonus] = [],
+        strain: Strain = .none,
+        method: EnhancementMethod,
+        excludes: Set<BioEnhancement> = []
+    ) {
+        self.text = text
+        self.technicalDetails = technicalDetails
+        self.baseCost = baseCost
+        self.attributeBonuses = attributeBonuses
+        self.derivedAttributeBonuses = derivedAttributeBonuses
+        self.strain = strain
+        self.method = method
+        self.excludes = excludes
     }
 }
