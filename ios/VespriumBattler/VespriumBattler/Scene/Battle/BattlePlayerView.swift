@@ -31,7 +31,7 @@ struct BattlePlayerView: View {
         }
         .frame(height: 140)
     }
-    
+
     private var physicalInformation: some View {
         VStack(alignment: .trailing, spacing: 0) {
             Text("STR: \(player.effectiveAttributes[.strength])")
@@ -72,7 +72,7 @@ struct BattlePlayerView: View {
 }
 
 private extension BattlePlayerView {
-    
+
     var player: PlayerCharacter { battle.battlePlayer.player }
 
     var hitChanceText: String {

@@ -30,6 +30,8 @@ struct BattlePlayer: Codable, Sendable, Equatable {
         return physicalBurnout / Double(player.effectiveAttributes[.vitality])
     }
 
+    var physicalBurnoutChance: Double = 0
+
     /// Time until the ability is available
     var abilityCooldowns: [MentalAbility: Double] = [:]
 
@@ -58,6 +60,10 @@ struct BattlePlayer: Codable, Sendable, Equatable {
         physicalBurnout += burnoutChange * time
         physicalBurnout = max(physicalBurnout, 0)
         physicalBurnout = min(physicalBurnout, Double(player.effectiveAttributes[.vitality]))
+
+        if physicalBurnoutFraction >= 0.9 {
+            physicalBurnoutChance += physicalBurnoutFraction * time * 0.25
+        }
 
         mentalBurnout -= time
         mentalBurnout = max(mentalBurnout, 0)

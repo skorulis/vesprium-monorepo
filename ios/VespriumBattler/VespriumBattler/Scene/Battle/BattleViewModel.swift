@@ -1,9 +1,11 @@
 // Created by Alex Skorulis on 13/4/2026.
 
 import ASKCoordinator
+import BioStats
 import Foundation
 import Knit
 import KnitMacros
+import Util
 
 @MainActor @Observable final class BattleViewModel: CoordinatorViewModel {
     weak var coordinator: ASKCoordinator.Coordinator?
@@ -88,7 +90,17 @@ private extension BattleViewModel {
                 physical: physicalExertion,
                 time: BattleActionTimers.playerTickTime
             )
+            checkPhysicalBurnout(battle: &battle)
             battleService.playerTick(time: BattleActionTimers.playerTickTime, battle: &battle)
+        }
+    }
+
+    func checkPhysicalBurnout(battle: inout Battle) {
+        let chance = Chance(battle.battlePlayer.physicalBurnoutChance)
+        if chance.check() {
+            battle.battlePlayer.physicalBurnoutChance = 0
+            let attribute: Attribute  = Chance(0.5).check() ? .strength : .agility
+            battle.battlePlayer.player.attributes[attribute] -= 1
         }
     }
 
