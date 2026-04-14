@@ -45,14 +45,14 @@ private extension BattleView {
                         ForEach(viewModel.enemies, id: \.id) { enemy in
                             EnemyChip(
                                 enemy: enemy,
-                                isTargeted: enemy.id == viewModel.currentTargetedEnemyID,
-                                damageEvents: viewModel.damageEvents(for: enemy.id),
+                                isTargeted: enemy.id == model.currentTargetedEnemyID,
+                                damageEvents: model.damageEvents(for: enemy.id),
                                 action: { viewModel.selectTarget(enemyID: enemy.id) }
                             )
                         }
                     }
-                    .padding(.vertical, 4)
                 }
+                .scrollClipDisabled(true)
             }
         }
     }
@@ -140,6 +140,19 @@ extension BattleView {
     struct Model {
         var battle: Battle
         var physicalExertion = 0.8
+        var enemyDamageEvents: [UUID: [DamageEvent]] = [:]
+        
+        var currentTargetedEnemyID: UUID? {
+            if let targetedEnemyID = battle.targetedEnemyID,
+               battle.enemies.contains(where: { $0.id == targetedEnemyID }) {
+                return targetedEnemyID
+            }
+            return battle.enemies.first?.id
+        }
+        
+        func damageEvents(for enemyID: UUID) -> [DamageEvent] {
+            enemyDamageEvents[enemyID] ?? []
+        }
     }
 }
 

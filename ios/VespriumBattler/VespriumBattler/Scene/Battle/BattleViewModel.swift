@@ -8,10 +8,6 @@ import KnitMacros
 import Util
 
 @MainActor @Observable final class BattleViewModel: CoordinatorViewModel {
-    struct DamageEvent: Identifiable {
-        let id = UUID()
-        let amount: Int
-    }
 
     weak var coordinator: ASKCoordinator.Coordinator?
 
@@ -21,8 +17,7 @@ import Util
     var model: BattleView.Model
     private var actionTimers = BattleActionTimers()
     private var hasPresentedBattleOutcomeDialog = false
-    private(set) var enemyDamageEvents: [UUID: [DamageEvent]] = [:]
-
+    
     @Resolvable<Resolver>
     init(battleService: BattleService, mainStore: MainStore) {
         self.battleService = battleService
@@ -34,14 +29,6 @@ import Util
 
     var enemies: [Enemy] {
         model.battle.enemies
-    }
-
-    var currentTargetedEnemyID: UUID? {
-        if let targetedEnemyID = model.battle.targetedEnemyID,
-           model.battle.enemies.contains(where: { $0.id == targetedEnemyID }) {
-            return targetedEnemyID
-        }
-        return model.battle.enemies.first?.id
     }
 
     var playerHealth: Int {
@@ -62,10 +49,6 @@ import Util
 
     func canActivate(_ ability: MentalAbility) -> Bool {
         remainingCooldown(for: ability) <= 0
-    }
-
-    func damageEvents(for enemyID: UUID) -> [DamageEvent] {
-        enemyDamageEvents[enemyID] ?? []
     }
 }
 
@@ -189,27 +172,27 @@ private extension BattleViewModel {
 
     func enqueueDamageEvent(enemyID: UUID, amount: Int) {
         let event = DamageEvent(amount: amount)
-        enemyDamageEvents[enemyID, default: []].append(event)
+        model.enemyDamageEvents[enemyID, default: []].append(event)
 
         Task { [weak self] in
             try? await Task.sleep(nanoseconds: 900_000_000)
-            await self?.removeDamageEvent(enemyID: enemyID, eventID: event.id)
+            self?.removeDamageEvent(enemyID: enemyID, eventID: event.id)
         }
     }
 
     func removeDamageEvent(enemyID: UUID, eventID: UUID) {
-        guard var events = enemyDamageEvents[enemyID] else { return }
+        guard var events = model.enemyDamageEvents[enemyID] else { return }
         events.removeAll { $0.id == eventID }
         if events.isEmpty {
-            enemyDamageEvents.removeValue(forKey: enemyID)
+            model.enemyDamageEvents.removeValue(forKey: enemyID)
         } else {
-            enemyDamageEvents[enemyID] = events
+            model.enemyDamageEvents[enemyID] = events
         }
     }
 
     func pruneDamageEventsForExistingEnemies() {
         let validEnemyIDs = Set(model.battle.enemies.map(\.id))
-        enemyDamageEvents = enemyDamageEvents.filter { validEnemyIDs.contains($0.key) }
+        model.enemyDamageEvents = model.enemyDamageEvents.filter { validEnemyIDs.contains($0.key) }
     }
 }
 

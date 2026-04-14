@@ -23,7 +23,7 @@ struct FloatingDamageNumberView: View {
                     scale = 1.03
                 }
                 withAnimation(.easeOut(duration: 0.8)) {
-                    yOffset = -32
+                    yOffset = -24
                     opacity = 0
                 }
             }
