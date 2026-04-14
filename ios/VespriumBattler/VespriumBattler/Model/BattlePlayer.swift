@@ -1,5 +1,6 @@
 // Created by Alex Skorulis on 13/4/2026.
 
+import BioEnhancements
 import BioStats
 import Foundation
 
@@ -20,13 +21,13 @@ struct BattlePlayer: Codable, Sendable, Equatable {
     var mentalBurnout: Double = 0
 
     var mentalBurnoutFraction: Double {
-        return mentalBurnout / Double(player.effectiveAttributes[.stability])
+        return mentalBurnout / Double(player.maxMentalBurnout)
     }
 
     var physicalBurnout: Burnout = .init()
 
     var physicalBurnoutFraction: Double {
-        return physicalBurnout.total / Double(player.effectiveAttributes[.vitality])
+        return physicalBurnout.total / Double(player.maxPhysicalBurnout)
     }
 
     /// Time until the ability is available
@@ -45,6 +46,11 @@ struct BattlePlayer: Codable, Sendable, Equatable {
         return Int(round(value))
     }
 
+    var damage: Int {
+        let value = Double(player.damage) * averagedPhysicalExertion
+        return Int(round(value))
+    }
+
     mutating func activate(ability: MentalAbility) {
         abilityCooldowns[ability] = ability.cooldown
         activeAbilities[ability] = ability.duration
@@ -56,7 +62,7 @@ struct BattlePlayer: Codable, Sendable, Equatable {
 
         physicalBurnout.total += burnoutChange * time
         physicalBurnout.total = max(physicalBurnout.total, 0)
-        physicalBurnout.total = min(physicalBurnout.total, Double(player.effectiveAttributes[.vitality]))
+        physicalBurnout.total = min(physicalBurnout.total, Double(player.maxPhysicalBurnout))
 
         if physicalBurnoutFraction >= 0.9 {
             physicalBurnout.decayChance += physicalBurnoutFraction * time * 0.25

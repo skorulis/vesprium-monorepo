@@ -65,29 +65,7 @@ extension ShopView: View {
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
 
-            if item.attributeBonuses.isEmpty == false {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Attribute Bonuses")
-                        .font(.caption.weight(.semibold))
-                        .foregroundStyle(.secondary)
-                    ForEach(item.attributeBonusText, id: \.self) { text in
-                        Text(text)
-                            .font(.caption)
-                    }
-                }
-            }
-            
-            if item.strainIncreaseText.isEmpty == false {
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Strain Increases")
-                        .font(.caption.weight(.semibold))
-                        .foregroundStyle(.secondary)
-                    ForEach(item.strainIncreaseText, id: \.self) { text in
-                        Text(text)
-                            .font(.caption)
-                    }
-                }
-            }
+            bonuses(item: item)
 
             HStack {
                 Spacer()
@@ -103,6 +81,25 @@ extension ShopView: View {
             RoundedRectangle(cornerRadius: 10)
                 .fill(.ultraThinMaterial)
         )
+    }
+
+    private func bonuses(item: ItemRow) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            ForEach(item.attributeBonusText, id: \.self) { text in
+                Text(text)
+                    .font(.caption)
+            }
+
+            ForEach(item.derivedAttributeBoostsText, id: \.self) { text in
+                Text(text)
+                    .font(.caption)
+            }
+
+            ForEach(item.strainIncreaseText, id: \.self) { text in
+                Text(text)
+                    .font(.caption)
+            }
+        }
     }
 }
 
@@ -155,7 +152,16 @@ extension ShopView {
                 return training.attributeBonuses
             }
         }
-        
+
+        var derivedAttributeBonuses: [DerivedAttributeBonus] {
+            switch self {
+            case let .enhancement(enhancement):
+                return enhancement.derivedAttributeBonuses
+            case .training:
+                return []
+            }
+        }
+
         var strain: Strain {
             switch self {
             case let .enhancement(enhancement):
@@ -202,6 +208,7 @@ extension ShopView {
         var description: String { option.description }
         var cost: Int { option.cost }
         var attributeBonuses: [AttributeBonus] { option.attributeBonuses }
+        var derivedAttributeBonuses: [DerivedAttributeBonus] { option.derivedAttributeBonuses }
         var strain: Strain { option.strain }
         var attributeBonusText: [String] {
             attributeBonuses.map { bonus in
@@ -215,14 +222,27 @@ extension ShopView {
                 }
             }
         }
-        
+
+        var derivedAttributeBoostsText: [String] {
+            derivedAttributeBonuses.map { bonus in
+                switch bonus.kind {
+                case .additive:
+                    let sign = bonus.value >= 0 ? "+" : ""
+                    return "\(bonus.attribute.rawValue.capitalized): \(sign)\(bonus.value)"
+                case .multiplicative:
+                    let sign = bonus.value >= 0 ? "+" : ""
+                    return "\(bonus.attribute.rawValue.capitalized): \(sign)\(bonus.value)%"
+                }
+            }
+        }
+
         var strainIncreaseText: [String] {
             var values: [String] = []
             if strain.physical > 0 {
-                values.append("Physical: +\(strain.physical)")
+                values.append("Physical Strain: +\(strain.physical)")
             }
             if strain.mental > 0 {
-                values.append("Mental: +\(strain.mental)")
+                values.append("Mental Strain: +\(strain.mental)")
             }
             return values
         }

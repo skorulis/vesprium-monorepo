@@ -19,11 +19,23 @@ struct PlayerCharacter: Codable, Sendable, Equatable {
     }
 
     var damage: Int {
-        let str = effectiveAttributes[.strength]
-        return str / 2
+        let base = effectiveAttributes[.strength] / 2
+        return DerivedAttributeBonus.adjustedValue(
+            base: base,
+            bonuses: enhancements.derivedAttributeBonuses,
+            attribute: .damage
+        )
     }
 
     var mentalAbilities: [MentalAbility] {
         return [.focusSpike]
+    }
+    
+    var maxPhysicalBurnout: Int {
+        max(effectiveAttributes[.vitality] - enhancements.strain.physical, 1)
+    }
+    
+    var maxMentalBurnout: Int {
+        max(effectiveAttributes[.stability] - enhancements.strain.mental, 1)
     }
 }

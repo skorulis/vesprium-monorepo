@@ -72,9 +72,7 @@ final class BattleService {
             return
         }
 
-        let damage = Double(battle.battlePlayer.player.damage) * battle.battlePlayer.averagedPhysicalExertion
-
-        enemy.health -= Int(round(damage))
+        enemy.health -= battle.battlePlayer.damage
         battle.replace(enemy: enemy)
         if enemy.health <= 0 {
             mainStore.player.money += details.money

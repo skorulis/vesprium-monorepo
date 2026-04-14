@@ -16,6 +16,10 @@ public struct EnhancementValues: Codable, Sendable, Equatable {
         return installed.flatMap { $0.attributeBonuses }
     }
     
+    public var derivedAttributeBonuses: [DerivedAttributeBonus] {
+        return installed.flatMap { $0.derivedAttributeBonuses }
+    }
+    
     /// The total base strain from the installed components
     public var strain: Strain {
         return installed.reduce(Strain()) { $0 + $1.strain }
