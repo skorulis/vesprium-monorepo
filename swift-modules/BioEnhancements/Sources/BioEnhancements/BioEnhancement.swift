@@ -18,6 +18,7 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable, 
     case retractableClaws
     case extraAdrenalGlands
     case psychicUnblock
+    case fastNervousSystem
 
     public var id: String { rawValue}
 
@@ -182,6 +183,16 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable, 
                 baseCost: 200,
                 strain: .init(mental: 2),
                 method: .surgery,
+            )
+        case .fastNervousSystem:
+            return .init(
+                text: "Improve the speed that singnals are transmitted down the nerves",
+                baseCost: 200,
+                derivedAttributeBonuses: [
+                    DerivedAttributeBonus(attribute: .reflexes, value: 50, kind: .multiplicative),
+                ],
+                strain: .init(mental: 2),
+                method: .geneGraft,
             )
         }
     }

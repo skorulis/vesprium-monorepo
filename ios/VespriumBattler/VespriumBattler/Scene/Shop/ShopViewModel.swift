@@ -15,12 +15,14 @@ import Util
     var model: ShopView.Model
 
     private let mainStore: MainStore
+    private let shopService: ShopService
 
     private var cancellables: Set<AnyCancellable> = []
 
     @Resolvable<Resolver>
     init(mainStore: MainStore, shopService: ShopService) {
         self.mainStore = mainStore
+        self.shopService = shopService
         self.model = ShopView.Model(
             nextLevel: mainStore.gameState.currentLevel + 1,
             player: mainStore.player,
@@ -87,5 +89,9 @@ extension ShopViewModel {
 
     func showPlayer() {
         coordinator?.push(MainPath.player)
+    }
+    
+    func refreshStore() {
+        model.shopItems = shopService.createShopItems()
     }
 }

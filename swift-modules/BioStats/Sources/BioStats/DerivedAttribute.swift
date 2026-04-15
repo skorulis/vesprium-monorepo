@@ -15,6 +15,9 @@ public enum DerivedAttribute: String, Codable, CaseIterable, Hashable, Sendable,
 
     // Chance to hit an enemy
     case hitChance
+    
+    // How fast you can react
+    case reflexes
 
     public var description: String {
         rawValue.fromCaseName

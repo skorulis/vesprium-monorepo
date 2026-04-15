@@ -67,5 +67,9 @@ struct PlayerCharacter: Codable, Sendable, Equatable {
         let base = effectiveAttributes[.charisma] - Attribute.defaultValue
         return 1 + (0.05 * Double(base))
     }
+    
+    var baseStrain: Strain {
+        enhancements.strain
+    }
 
 }

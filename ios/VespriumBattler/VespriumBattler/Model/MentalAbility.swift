@@ -13,6 +13,7 @@ enum Ability: String, Codable, Sendable, Equatable, CaseIterable, ShopItem {
     case slowMotion
     case precisionStrike
     case psychicBlast
+    case reflexBoost
 
     private struct AbilityDetails {
         let text: String
@@ -69,6 +70,16 @@ enum Ability: String, Codable, Sendable, Equatable, CaseIterable, ShopItem {
                 attributeBonuses: [],
                 derivedAttributeBonuses: [],
                 cost: 0 // Not purchaseable
+            )
+        case .reflexBoost:
+            return AbilityDetails(
+                text: "Boost reflexes to improving dodging",
+                duration: 2,
+                strain: Strain(mental: 4),
+                iconSystemName: "hare.fill",
+                attributeBonuses: [],
+                derivedAttributeBonuses: [],
+                cost: 100
             )
         }
     }

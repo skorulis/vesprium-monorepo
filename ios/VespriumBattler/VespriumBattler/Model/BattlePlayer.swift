@@ -75,7 +75,7 @@ struct BattlePlayer: Codable, Sendable, Equatable {
     mutating func updateExertion(time: TimeInterval) {
 
         physicalBurnout.total -= time
-        physicalBurnout.total = max(physicalBurnout.total, Double(player.enhancements.strain.physical))
+        physicalBurnout.total = max(physicalBurnout.total, Double(player.baseStrain.physical))
 
         if physicalBurnoutFraction > 1 {
             physicalBurnout.decayChance += physicalBurnoutFraction * time * 0.25
@@ -84,7 +84,7 @@ struct BattlePlayer: Codable, Sendable, Equatable {
         }
 
         mentalBurnout.total -= time
-        mentalBurnout.total = max(mentalBurnout.total, Double(player.enhancements.strain.mental))
+        mentalBurnout.total = max(mentalBurnout.total, Double(player.baseStrain.mental))
 
         if mentalBurnoutFraction > 1 {
             mentalBurnout.decayChance += mentalBurnoutFraction * time * 0.25

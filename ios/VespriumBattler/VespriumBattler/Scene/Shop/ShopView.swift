@@ -29,16 +29,63 @@ extension ShopView: View {
     }
 
     private var header: some View {
-        HStack {
-            Text("Money: \(viewModel.model.player.money)")
-                .font(.headline.monospacedDigit())
-            Spacer()
-            Button("Player") {
-                viewModel.showPlayer()
+        VStack(alignment: .leading, spacing: 12) {
+            HStack {
+                Text("Money: \(viewModel.model.player.money)")
+                    .font(.headline.monospacedDigit())
+                Spacer()
+                
+                Button(action: viewModel.refreshStore) {
+                    Image(systemName: "arrow.trianglehead.clockwise")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 16, height: 16)
+                }
+                .buttonStyle(.bordered)
+                
+                Button(action: viewModel.showPlayer) {
+                    Image(systemName: "person.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 16, height: 16)
+                }
+                .buttonStyle(.bordered)
             }
-            .buttonStyle(.bordered)
+
+            strainBar(
+                title: "Physical Strain",
+                current: viewModel.model.player.baseStrain.physical,
+                maxValue: viewModel.model.player.maxPhysicalBurnout,
+                tint: .orange
+            )
+
+            strainBar(
+                title: "Mental Strain",
+                current: viewModel.model.player.baseStrain.mental,
+                maxValue: viewModel.model.player.maxMentalBurnout,
+                tint: .purple
+            )
         }
         .padding(16)
+    }
+
+    private func strainBar(title: String, current: Int, maxValue: Int, tint: Color) -> some View {
+        let normalizedMax = max(1, maxValue)
+        let clampedCurrent = min(max(current, 0), normalizedMax)
+
+        return VStack(alignment: .leading, spacing: 4) {
+            HStack {
+                Text(title)
+                    .font(.subheadline.weight(.semibold))
+                Spacer()
+                Text("\(clampedCurrent)/\(normalizedMax)")
+                    .font(.caption.monospacedDigit())
+                    .foregroundStyle(.secondary)
+            }
+
+            ProgressView(value: Double(clampedCurrent), total: Double(normalizedMax))
+                .tint(tint)
+        }
     }
 
     private var itemList: some View {
@@ -256,7 +303,7 @@ extension ShopView {
 
 #Preview {
     let assembler = VespriumBattlerAssembly.testing()
-    assembler.resolver.mainStore().player.money = 500
+    assembler.resolver.mainStore().player.money = 1500
     let viewModel = assembler.resolver.shopViewModel()
     viewModel.model.shopItems = assembler.resolver.shopService().allShopOptions()
     return ShopView(viewModel: viewModel)

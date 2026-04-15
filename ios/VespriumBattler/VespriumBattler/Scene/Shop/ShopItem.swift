@@ -4,7 +4,7 @@ import Foundation
 import BioStats
 import BioEnhancements
 
-protocol ShopItem: EntityBoost, Equatable {
+protocol ShopItem: EntityBoost {
     var cost: Int { get }
     var grantedAbility: Ability? { get }
 }
@@ -12,6 +12,12 @@ protocol ShopItem: EntityBoost, Equatable {
 extension ShopItem {
     func canPurchase(player: PlayerCharacter) -> Bool {
         guard player.money >= cost else { return false }
+        let finalStain = player.baseStrain + self.strain
+        if finalStain.physical > player.effectiveAttributes[.vitality] ||
+            finalStain.mental > player.effectiveAttributes[.stability] {
+            return false
+        }
+
         if let enhancement = self as? BioEnhancement {
             if player.enhancements.isUnavailable(enhancement) {
                 return false
