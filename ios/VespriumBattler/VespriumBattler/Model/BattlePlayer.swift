@@ -14,14 +14,11 @@ struct BattlePlayer: Codable, Sendable, Equatable {
     /// Time that has accumulated in order to perform the next attack
     var storedTime: Double = 0
 
-    /// Exertion averaged over time to prevent quick changes
-    var averagedPhysicalExertion: Double = 0
-
     /// Total mental burnout
-    var mentalBurnout: Double = 0
+    var mentalBurnout: Burnout = .init()
 
     var mentalBurnoutFraction: Double {
-        return mentalBurnout / Double(player.maxMentalBurnout)
+        return mentalBurnout.total / Double(player.maxMentalBurnout)
     }
 
     var physicalBurnout: Burnout = .init()
@@ -39,9 +36,14 @@ struct BattlePlayer: Codable, Sendable, Equatable {
 
     /// Abilities that are active
     var activeAbilities: [MentalAbility: Double] = [:]
-    
+
     var derivedAttributeBonuses: [DerivedAttributeBonus] {
-        return player.enhancements.derivedAttributeBonuses + activeAbilities.keys.flatMap { $0.derivedAttributeBonuses }
+        return player.enhancements.derivedAttributeBonuses
+            + activeAbilities.keys.flatMap { $0.derivedAttributeBonuses }
+    }
+
+    var attributeBonuses: [AttributeBonus] {
+        return player.enhancements.attributeBonuses // + activeAbilities.keys.flatMap(\.attributeBonuses)
     }
 
     init(player: PlayerCharacter) {
@@ -50,51 +52,48 @@ struct BattlePlayer: Codable, Sendable, Equatable {
     }
 
     var agility: Int {
-        let value = Double(player.effectiveAttributes[.agility]) * averagedPhysicalExertion
-        return Int(round(value))
+        let base = player.effectiveAttributes[.agility]
+        return AttributeBonus.adjustedValue(
+            base: base,
+            bonuses: attributeBonuses,
+            attribute: .agility
+        )
     }
 
     var damage: Int {
         let base = player.effectiveAttributes[.strength] / 2
-        let adjusted = DerivedAttributeBonus.adjustedValue(
+        return DerivedAttributeBonus.adjustedValue(
             base: base,
             bonuses: derivedAttributeBonuses,
             attribute: .damage
         )
-        
-        return adjusted
     }
 
     mutating func activate(ability: MentalAbility) {
         abilityCooldowns[ability] = ability.cooldown
         activeAbilities[ability] = ability.duration
-        mentalBurnout += Double(ability.strain.mental)
+        mentalBurnout.total += Double(ability.strain.mental)
         physicalBurnout.total += Double(ability.strain.physical)
     }
 
-    mutating func updateExertion(physical: Double, time: TimeInterval) {
-        averagedPhysicalExertion = averagedPhysicalExertion * (1 - time) + physical * time
+    mutating func updateExertion(time: TimeInterval) {
 
-        physicalBurnout.total += burnoutChange * time
-        physicalBurnout.total = max(physicalBurnout.total, 0)
-        physicalBurnout.total = min(physicalBurnout.total, Double(player.maxPhysicalBurnout))
+        physicalBurnout.total -= time
+        physicalBurnout.total = max(physicalBurnout.total, Double(player.enhancements.strain.physical))
 
-        if physicalBurnoutFraction >= 0.9 {
+        if physicalBurnoutFraction > 1 {
             physicalBurnout.decayChance += physicalBurnoutFraction * time * 0.25
         } else {
             physicalBurnout.decayChance = 0
         }
 
-        mentalBurnout -= time
-        mentalBurnout = max(mentalBurnout, 0)
-    }
-
-    var burnoutChange: Double {
-        let burnoutCutoff = 0.8
-        if averagedPhysicalExertion > burnoutCutoff {
-            return (averagedPhysicalExertion - burnoutCutoff) / (1 - burnoutCutoff)
+        mentalBurnout.total -= time
+        mentalBurnout.total = max(mentalBurnout.total, Double(player.enhancements.strain.mental))
+        
+        if mentalBurnoutFraction > 1 {
+            mentalBurnout.decayChance += mentalBurnoutFraction * time * 0.25
         } else {
-            return -(burnoutCutoff - averagedPhysicalExertion) / burnoutCutoff
+            mentalBurnout.decayChance = 0
         }
     }
 

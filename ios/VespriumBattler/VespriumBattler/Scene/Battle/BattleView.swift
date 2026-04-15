@@ -22,10 +22,10 @@ extension BattleView: View {
                     damageEvents: model.playerDamageEvents
                 )
                 mentalAbilitiesSection
-                exertionSection
-                enemySection
-                
                 playerHealthSection
+                enemySection
+
+                
             }
             .padding(16)
         }
@@ -60,19 +60,6 @@ private extension BattleView {
                 }
                 .scrollClipDisabled(true)
             }
-        }
-    }
-
-    var exertionSection: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            Text("Exertion")
-                .font(.headline)
-
-            LabeledSliderRow(
-                title: "Physical",
-                value: $viewModel.model.physicalExertion,
-                range: 0...model.battle.battlePlayer.maxExertionFraction,
-            )
         }
     }
 
@@ -140,7 +127,6 @@ private struct LabeledSliderRow: View {
 extension BattleView {
     struct Model {
         var battle: Battle
-        var physicalExertion = 0.8
         var enemyDamageEvents: [UUID: [DamageEvent]] = [:]
         var playerDamageEvents: [DamageEvent] = []
 

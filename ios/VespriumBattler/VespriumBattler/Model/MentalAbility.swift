@@ -64,7 +64,7 @@ enum MentalAbility: String, Codable, Sendable, Equatable, CaseIterable {
             return Image(systemName: "dot.scope")
         }
     }
-    
+
     var derivedAttributeBonuses: [DerivedAttributeBonus] {
         switch self {
         case .hardPush:

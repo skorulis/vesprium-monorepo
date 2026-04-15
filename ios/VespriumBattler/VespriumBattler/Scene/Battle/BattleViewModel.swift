@@ -92,16 +92,12 @@ private extension BattleViewModel {
     }
 
     func playerTick() {
-        let physicalExertion = model.physicalExertion
         var enemyDamageByID: [UUID: Int] = [:]
         updateBattle { battle in
             let previousHealthByEnemyID = Dictionary(
                 uniqueKeysWithValues: battle.enemies.map { ($0.id, $0.health) }
             )
-            battle.battlePlayer.updateExertion(
-                physical: physicalExertion,
-                time: BattleActionTimers.playerTickTime
-            )
+            battle.battlePlayer.updateExertion(time: BattleActionTimers.playerTickTime)
             checkPhysicalBurnout(battle: &battle)
             battleService.playerTick(time: BattleActionTimers.playerTickTime, battle: &battle)
 

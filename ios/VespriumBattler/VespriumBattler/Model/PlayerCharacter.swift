@@ -40,11 +40,11 @@ struct PlayerCharacter: Codable, Sendable, Equatable {
     }
 
     var maxPhysicalBurnout: Int {
-        max(effectiveAttributes[.vitality] - enhancements.strain.physical, 1)
+        effectiveAttributes[.vitality]
     }
 
     var maxMentalBurnout: Int {
-        max(effectiveAttributes[.stability] - enhancements.strain.mental, 1)
+        effectiveAttributes[.stability]
     }
 
     var maxExertion: Int {
