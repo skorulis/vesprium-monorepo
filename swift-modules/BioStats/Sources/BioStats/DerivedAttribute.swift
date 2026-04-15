@@ -11,7 +11,10 @@ public enum DerivedAttribute: String, Codable, CaseIterable, Hashable, Sendable,
     case damageAbsorbtion
 
     // How much further physical exertion can be pushed over 100%
-    case physicalExertion
+    case maxPhysicalExertion
+    
+    // Chance to hit an enemy
+    case hitChance
 
     public var description: String {
         rawValue.fromCaseName

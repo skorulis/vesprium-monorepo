@@ -17,7 +17,7 @@ enum MentalAbility: String, Codable, Sendable, Equatable, CaseIterable {
         case .focusSpike:
             return "Slows player perception of time for 5s"
         case .precisionStrike:
-            return "Doubles chance to hit for 5s"
+            return "50% higher chance to hit"
         }
     }
 
@@ -28,7 +28,7 @@ enum MentalAbility: String, Codable, Sendable, Equatable, CaseIterable {
         case .focusSpike:
             return 5
         case .precisionStrike:
-            return 5
+            return 2
         }
     }
 
@@ -59,6 +59,10 @@ enum MentalAbility: String, Codable, Sendable, Equatable, CaseIterable {
         case .hardPush:
             return [
                 DerivedAttributeBonus(attribute: .damage, value: 50, kind: .multiplicative),
+            ]
+        case .precisionStrike:
+            return [
+                DerivedAttributeBonus(attribute: .hitChance, value: 50, kind: .multiplicative),
             ]
         default:
             return []

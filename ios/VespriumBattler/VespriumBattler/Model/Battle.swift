@@ -1,6 +1,8 @@
 // Created by Alex Skorulis on 13/4/2026.
 
+import BioStats
 import Foundation
+import Util
 
 struct Battle: Codable, Sendable, Equatable {
     /// The level of the battle for enemy scaling
@@ -42,12 +44,18 @@ struct Battle: Codable, Sendable, Equatable {
     }
 
     /// Returns the currently targeted enemy ID, falling back to first alive enemy.
-    mutating func resolvedTargetEnemyID() -> UUID? {
+    func resolvedTargetEnemyID() -> UUID? {
         if let targetedEnemyID, enemies.contains(where: { $0.id == targetedEnemyID }) {
             return targetedEnemyID
         }
-        targetedEnemyID = enemies.first?.id
-        return targetedEnemyID
+        return enemies.first?.id
+    }
+    
+    var targettedEnemy: Enemy? {
+        guard let targetEnemyID = resolvedTargetEnemyID(),
+              let enemy = enemies.first(where: { $0.id == targetEnemyID }) else { return nil }
+        
+        return enemy
     }
 
     var state: BattleState {
@@ -58,6 +66,22 @@ struct Battle: Codable, Sendable, Equatable {
             return .won
         }
         return .ongoing
+    }
+    
+    var playerHitChance: Chance? {
+        guard let target = targettedEnemy else { return nil }
+        let base = BattleCalculator().hitChance(
+            attackerAgility: battlePlayer.agility,
+            defenderAgility: target.details.agility
+        ).percent
+        
+        let adjusted = DerivedAttributeBonus.adjustedValue(
+            base: Int(base),
+            bonuses: battlePlayer.derivedAttributeBonuses,
+            attribute: .hitChance
+        )
+        
+        return Chance(percent: adjusted)
     }
 }
 

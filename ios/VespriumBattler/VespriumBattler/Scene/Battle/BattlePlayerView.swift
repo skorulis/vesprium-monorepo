@@ -87,16 +87,11 @@ private extension BattlePlayerView {
     var player: PlayerCharacter { battle.battlePlayer.player }
 
     var hitChanceText: String {
-        guard let target = battle.enemies.first else {
+        guard let chance = battle.playerHitChance else {
             return "--"
         }
 
-        return calculator
-            .hitChance(
-                attackerAgility: battle.battlePlayer.agility,
-                defenderAgility: target.details.agility
-            )
-            .percentageString(decimalPlaces: 0)
+        return chance.percentageString(decimalPlaces: 0)
     }
 
     var damageText: String {

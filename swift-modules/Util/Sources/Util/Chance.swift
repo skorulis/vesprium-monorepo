@@ -20,6 +20,8 @@ public struct Chance: Codable, Hashable {
 
     /// The underlying fractional value, guaranteed to be between 0 and 1.
     public var fraction: Double { value }
+    
+    public var percent: Double { value * 100 }
 
     /// Returns the chance formatted as a percentage string, e.g. "12.5%".
     public func percentageString(decimalPlaces: Int = 1) -> String {

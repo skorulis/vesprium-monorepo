@@ -166,7 +166,7 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
                 text: "Allows producing a higher level of adrenaline when needed",
                 baseCost: 150,
                 derivedAttributeBonuses: [
-                    DerivedAttributeBonus(attribute: .physicalExertion, value: 20, kind: .additive),
+                    DerivedAttributeBonus(attribute: .maxPhysicalExertion, value: 50, kind: .multiplicative),
                 ],
                 strain: .init(physical: 1),
                 method: .surgery,

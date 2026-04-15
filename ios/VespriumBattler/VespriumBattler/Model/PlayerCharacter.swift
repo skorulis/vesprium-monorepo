@@ -51,7 +51,7 @@ struct PlayerCharacter: Codable, Sendable, Equatable {
         return DerivedAttributeBonus.adjustedValue(
             base: 100,
             bonuses: enhancements.derivedAttributeBonuses,
-            attribute: .physicalExertion
+            attribute: .maxPhysicalExertion
         )
     }
 
