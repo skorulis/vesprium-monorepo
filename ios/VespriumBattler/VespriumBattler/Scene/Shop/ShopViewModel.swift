@@ -30,7 +30,7 @@ import Util
             return 1
         }
 
-        var items: [ShopView.ItemRow] = []
+        var items: [ShopItem] = []
         var checkCount = 0
         while checkCount < 10 && items.count < 5 {
             checkCount += 1
@@ -38,7 +38,7 @@ import Util
                 continue
             }
             enhancementArray.remove(index: index)
-            items.append(ShopView.ItemRow(id: UUID(), option: .enhancement(item)))
+            items.append(item)
         }
 
         for attribute in Attribute.allCases.shuffled().prefix(2) {
@@ -47,7 +47,7 @@ import Util
                 amount: 1,
                 cost: 40
             )
-            items.append(ShopView.ItemRow(id: UUID(), option: .training(training)))
+            items.append(training)
         }
 
         self.model = ShopView.Model(
@@ -67,13 +67,15 @@ import Util
 
 extension ShopViewModel {
 
-    func purchase(_ item: ShopView.ItemRow) {
-        switch item.option {
-        case let .enhancement(enhancement):
+    func purchase(_ item: ShopItem) {
+        if let enhancement = item as? BioEnhancement {
             purchaseEnhancement(enhancement)
-        case let .training(training):
+        } else if let training = item as? ShopView.TrainingOption {
             purchaseTraining(training)
+        } else {
+            fatalError("Unexpected item \(item)")
         }
+
         model.shopItems = model.shopItems.filter { $0.id != item.id }
     }
 

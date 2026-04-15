@@ -39,7 +39,7 @@ extension ShopView: View {
     private var itemList: some View {
         ScrollView {
             LazyVStack(alignment: .leading, spacing: 12) {
-                ForEach(viewModel.model.shopItems) { item in
+                ForEach(viewModel.model.shopItems, id: \.id) { item in
                     optionCell(item: item)
                 }
             }
@@ -57,15 +57,15 @@ extension ShopView: View {
         }
     }
 
-    private func optionCell(item: ItemRow) -> some View {
+    private func optionCell(item: ShopItem) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack(alignment: .firstTextBaseline) {
-                Text(item.title)
+                Text(item.name)
                     .font(.headline)
                 Spacer()
             }
 
-            Text(item.description)
+            Text(item.text)
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
 
@@ -87,7 +87,7 @@ extension ShopView: View {
         )
     }
 
-    private func bonuses(item: ItemRow) -> some View {
+    private func bonuses(item: ShopItem) -> some View {
         VStack(alignment: .leading, spacing: 4) {
             ForEach(item.attributeBonusText, id: \.self) { text in
                 Text(text)
@@ -175,21 +175,17 @@ extension ShopView {
             }
         }
 
-        func canPurchase(player: PlayerCharacter) -> Bool {
-            guard player.money >= cost else { return false }
-            switch self {
-            case let .enhancement(enhancement):
-                if player.enhancements.isUnavailable(enhancement) {
-                    return false
-                }
-                return player.enhancements.installed.contains(enhancement) == false
-            case .training:
-                return true
-            }
-        }
     }
 
-    struct TrainingOption {
+    struct TrainingOption: ShopItem {
+        var id: String {
+            "training-\(attribute.rawValue)-\(amount)-\(cost)"
+        }
+
+        var derivedAttributeBonuses: [BioStats.DerivedAttributeBonus] { [] }
+
+        var strain: BioStats.Strain { Strain() }
+
         let attribute: Attribute
         let amount: Int
         let cost: Int
@@ -207,35 +203,13 @@ extension ShopView {
         }
     }
 
-    struct ItemRow: Identifiable {
-        let id: UUID
-        let option: ShopOption
-
-        var title: String { option.title }
-        var description: String { option.description }
-        var cost: Int { option.cost }
-        var attributeBonuses: [AttributeBonus] { option.attributeBonuses }
-        var derivedAttributeBonuses: [DerivedAttributeBonus] { option.derivedAttributeBonuses }
-        var strain: Strain { option.strain }
-        var attributeBonusText: [String] {
-            attributeBonuses.map { $0.description }
-        }
-
-        var derivedAttributeBoostsText: [String] {
-            derivedAttributeBonuses.map { $0.description }
-        }
-
-        var strainIncreaseText: [String] { strain.descriptionLines }
-
-    }
-
     struct Model {
         let nextLevel: Int
         var player: PlayerCharacter
-        var shopItems: [ItemRow]
+        var shopItems: [ShopItem]
 
-        func canPurchase(item: ItemRow) -> Bool {
-            item.option.canPurchase(player: player)
+        func canPurchase(item: ShopItem) -> Bool {
+            item.canPurchase(player: player)
         }
     }
 }

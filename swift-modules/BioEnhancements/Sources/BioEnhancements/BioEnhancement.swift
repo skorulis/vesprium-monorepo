@@ -4,7 +4,7 @@ import Foundation
 import BioStats
 import Util
 
-public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
+public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable, EntityBoost {
     case chlorophyllSkin
     case barometricEars
     case muscleEnergyImplants
@@ -19,9 +19,13 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
     case extraAdrenalGlands
     case pscycicUnblock
 
+    public var id: String { rawValue}
+
     public var name: String {
         rawValue.fromCaseName
     }
+
+    public var description: String { name }
 
     public var text: String {
         details.text
