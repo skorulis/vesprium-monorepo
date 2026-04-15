@@ -50,11 +50,11 @@ struct Battle: Codable, Sendable, Equatable {
         }
         return enemies.first?.id
     }
-    
+
     var targettedEnemy: Enemy? {
         guard let targetEnemyID = resolvedTargetEnemyID(),
               let enemy = enemies.first(where: { $0.id == targetEnemyID }) else { return nil }
-        
+
         return enemy
     }
 
@@ -67,20 +67,20 @@ struct Battle: Codable, Sendable, Equatable {
         }
         return .ongoing
     }
-    
+
     var playerHitChance: Chance? {
         guard let target = targettedEnemy else { return nil }
         let base = BattleCalculator().hitChance(
             attackerAgility: battlePlayer.agility,
             defenderAgility: target.details.agility
         ).percent
-        
+
         let adjusted = DerivedAttributeBonus.adjustedValue(
             base: Int(base),
             bonuses: battlePlayer.derivedAttributeBonuses,
             attribute: .hitChance
         )
-        
+
         return Chance(percent: adjusted)
     }
 }

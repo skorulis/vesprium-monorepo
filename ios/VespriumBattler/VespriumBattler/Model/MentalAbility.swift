@@ -9,6 +9,7 @@ enum MentalAbility: String, Codable, Sendable, Equatable, CaseIterable {
     case hardPush // TODO: Rename
     case focusSpike
     case precisionStrike
+    case psychicBlast
 
     var text: String {
         switch self {
@@ -18,6 +19,8 @@ enum MentalAbility: String, Codable, Sendable, Equatable, CaseIterable {
             return "Slows player perception of time for 5s"
         case .precisionStrike:
             return "50% higher chance to hit"
+        case .psychicBlast:
+            return "Emits mental energy to stun enemies"
         }
     }
 
@@ -29,6 +32,8 @@ enum MentalAbility: String, Codable, Sendable, Equatable, CaseIterable {
             return 5
         case .precisionStrike:
             return 2
+        case .psychicBlast:
+            return 0
         }
     }
 
@@ -40,6 +45,8 @@ enum MentalAbility: String, Codable, Sendable, Equatable, CaseIterable {
             return Strain(mental: 7)
         case .precisionStrike:
             return Strain(mental: 5)
+        case .psychicBlast:
+            return Strain(mental: 8)
         }
     }
 
@@ -51,6 +58,8 @@ enum MentalAbility: String, Codable, Sendable, Equatable, CaseIterable {
             return Image(systemName: "sparkle")
         case .precisionStrike:
             return Image(systemName: "dot.scope")
+        case .psychicBlast:
+            return Image(systemName: "brain")
         }
     }
 

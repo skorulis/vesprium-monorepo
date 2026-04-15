@@ -25,7 +25,6 @@ extension BattleView: View {
                 playerHealthSection
                 enemySection
 
-                
             }
             .padding(16)
         }

@@ -12,7 +12,7 @@ public enum DerivedAttribute: String, Codable, CaseIterable, Hashable, Sendable,
 
     // How much further physical exertion can be pushed over 100%
     case maxPhysicalExertion
-    
+
     // Chance to hit an enemy
     case hitChance
 

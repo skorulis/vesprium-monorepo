@@ -105,14 +105,3 @@ extension ShopViewModel {
         coordinator?.push(MainPath.player)
     }
 }
-
-extension BioEnhancement {
-    var isUseless: Bool {
-        switch self {
-        case .chlorophyllSkin, .barometricEars:
-            return true
-        default:
-            return false
-        }
-    }
-}

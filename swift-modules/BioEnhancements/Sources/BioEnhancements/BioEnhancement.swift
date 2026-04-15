@@ -17,6 +17,7 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
     case raptorClaws
     case retractableClaws
     case extraAdrenalGlands
+    case pscycicUnblock
 
     public var name: String {
         rawValue.fromCaseName
@@ -169,6 +170,13 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable {
                     DerivedAttributeBonus(attribute: .maxPhysicalExertion, value: 50, kind: .multiplicative),
                 ],
                 strain: .init(physical: 1),
+                method: .surgery,
+            )
+        case .pscycicUnblock:
+            return .init(
+                text: "Remove the limiter on the brain to unlock latent abilities",
+                baseCost: 200,
+                strain: .init(mental: 2),
                 method: .surgery,
             )
         }
