@@ -35,16 +35,6 @@ final class BattleService {
     }
 
     func updateAbilityCooldowns(battlePlayer: inout BattlePlayer, time: TimeInterval) {
-        let cooldowns = battlePlayer.abilityCooldowns
-        for (ability, remaining) in cooldowns {
-            let next = max(0, remaining - time)
-            if next == 0 {
-                battlePlayer.abilityCooldowns.removeValue(forKey: ability)
-            } else {
-                battlePlayer.abilityCooldowns[ability] = next
-            }
-        }
-
         let active = battlePlayer.activeAbilities
         for (ability, remaining) in active {
             let next = max(0, remaining - time)

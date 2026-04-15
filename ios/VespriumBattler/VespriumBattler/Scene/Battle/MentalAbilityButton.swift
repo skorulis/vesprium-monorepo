@@ -46,8 +46,8 @@ struct MentalAbilityButton: View {
 
 private extension MentalAbilityButton {
     var cooldownFractionRemaining: Double {
-        guard ability.cooldown > 0 else { return 0 }
-        return min(1, max(0, cooldownRemaining / ability.cooldown))
+        guard ability.duration > 0 else { return 0 }
+        return min(1, max(0, cooldownRemaining / ability.duration))
     }
 }
 

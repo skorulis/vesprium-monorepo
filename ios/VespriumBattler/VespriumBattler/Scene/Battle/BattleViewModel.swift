@@ -44,7 +44,7 @@ import Util
     }
 
     func remainingCooldown(for ability: MentalAbility) -> TimeInterval {
-        model.battle.battlePlayer.abilityCooldowns[ability] ?? 0
+        model.battle.battlePlayer.activeAbilities[ability] ?? 0
     }
 
     func canActivate(_ ability: MentalAbility) -> Bool {

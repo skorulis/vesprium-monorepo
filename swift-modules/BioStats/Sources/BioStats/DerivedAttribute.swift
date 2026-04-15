@@ -1,6 +1,7 @@
 //  Created by Alex Skorulis on 14/4/2026.
 
 import Foundation
+import Util
 
 public enum DerivedAttribute: String, Codable, CaseIterable, Hashable, Sendable, CustomStringConvertible {
 
@@ -12,5 +13,7 @@ public enum DerivedAttribute: String, Codable, CaseIterable, Hashable, Sendable,
     // How much further physical exertion can be pushed over 100%
     case physicalExertion
 
-    public var description: String { rawValue.capitalized }
+    public var description: String {
+        rawValue.fromCaseName
+    }
 }

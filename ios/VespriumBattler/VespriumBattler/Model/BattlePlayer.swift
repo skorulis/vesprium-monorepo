@@ -31,9 +31,6 @@ struct BattlePlayer: Codable, Sendable, Equatable {
         return Double(player.maxExertion) / 100
     }
 
-    /// Time until the ability is available
-    var abilityCooldowns: [MentalAbility: Double] = [:]
-
     /// Abilities that are active
     var activeAbilities: [MentalAbility: Double] = [:]
 
@@ -70,7 +67,6 @@ struct BattlePlayer: Codable, Sendable, Equatable {
     }
 
     mutating func activate(ability: MentalAbility) {
-        abilityCooldowns[ability] = ability.cooldown
         activeAbilities[ability] = ability.duration
         mentalBurnout.total += Double(ability.strain.mental)
         physicalBurnout.total += Double(ability.strain.physical)
@@ -89,7 +85,7 @@ struct BattlePlayer: Codable, Sendable, Equatable {
 
         mentalBurnout.total -= time
         mentalBurnout.total = max(mentalBurnout.total, Double(player.enhancements.strain.mental))
-        
+
         if mentalBurnoutFraction > 1 {
             mentalBurnout.decayChance += mentalBurnoutFraction * time * 0.25
         } else {

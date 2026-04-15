@@ -6,7 +6,7 @@ import SwiftUI
 
 enum MentalAbility: String, Codable, Sendable, Equatable, CaseIterable {
 
-    case hardPush
+    case hardPush // TODO: Rename
     case focusSpike
     case precisionStrike
 
@@ -18,17 +18,6 @@ enum MentalAbility: String, Codable, Sendable, Equatable, CaseIterable {
             return "Slows player perception of time for 5s"
         case .precisionStrike:
             return "Doubles chance to hit for 5s"
-        }
-    }
-
-    var cooldown: TimeInterval {
-        switch self {
-        case .hardPush:
-            return 3
-        case .focusSpike:
-            return 10
-        case .precisionStrike:
-            return 10
         }
     }
 
@@ -46,7 +35,7 @@ enum MentalAbility: String, Codable, Sendable, Equatable, CaseIterable {
     var strain: Strain {
         switch self {
         case .hardPush:
-            return Strain(physical: 2)
+            return Strain(physical: 5)
         case .focusSpike:
             return Strain(mental: 7)
         case .precisionStrike:
