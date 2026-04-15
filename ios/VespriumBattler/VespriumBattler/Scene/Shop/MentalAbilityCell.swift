@@ -46,7 +46,7 @@ struct MentalAbilityCell: View {
             LabeledContent("Duration", value: "\(Int(ability.duration))s")
                 .font(.caption)
                 .foregroundStyle(.secondary)
-            
+
             ShopItemBonusesView(item: ability)
 
             if let actionTitle, let action {

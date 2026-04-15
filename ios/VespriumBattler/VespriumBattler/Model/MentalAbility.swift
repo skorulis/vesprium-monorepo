@@ -7,98 +7,80 @@ import Util
 
 enum MentalAbility: String, Codable, Sendable, Equatable, CaseIterable, ShopItem {
 
-    case hardPush // TODO: Rename
+    // Be more aggressive
+    case aggression
+    
     case focusSpike
     case precisionStrike
     case psychicBlast
 
+    private struct AbilityDetails {
+        let text: String
+        let duration: TimeInterval
+        let strain: Strain
+        let iconSystemName: String
+        let attributeBonuses: [BioStats.AttributeBonus]
+        let derivedAttributeBonuses: [DerivedAttributeBonus]
+        let cost: Int
+    }
+
+    private var details: AbilityDetails {
+        switch self {
+        case .aggression:
+            return AbilityDetails(
+                text: "Boost damage by 50% for 2s",
+                duration: 2,
+                strain: Strain(physical: 5),
+                iconSystemName: "arrow.2.circlepath.circle",
+                attributeBonuses: [],
+                derivedAttributeBonuses: [
+                    DerivedAttributeBonus(attribute: .damage, value: 50, kind: .multiplicative),
+                ],
+                cost: 0 // Not purchaseable
+            )
+        case .focusSpike:
+            return AbilityDetails(
+                text: "Slows player perception of time for 5s",
+                duration: 5,
+                strain: Strain(mental: 7),
+                iconSystemName: "sparkle",
+                attributeBonuses: [],
+                derivedAttributeBonuses: [],
+                cost: 150
+            )
+        case .precisionStrike:
+            return AbilityDetails(
+                text: "50% higher chance to hit",
+                duration: 2,
+                strain: Strain(mental: 5),
+                iconSystemName: "dot.scope",
+                attributeBonuses: [],
+                derivedAttributeBonuses: [
+                    DerivedAttributeBonus(attribute: .hitChance, value: 50, kind: .multiplicative),
+                ],
+                cost: 150
+            )
+        case .psychicBlast:
+            return AbilityDetails(
+                text: "Emits mental energy to stun enemies",
+                duration: 0,
+                strain: Strain(mental: 8),
+                iconSystemName: "brain",
+                attributeBonuses: [],
+                derivedAttributeBonuses: [],
+                cost: 0 // Not purchaseable
+            )
+        }
+    }
+
     var id: String { rawValue }
     var name: String { rawValue.fromCaseName }
-
-    var text: String {
-        switch self {
-        case .hardPush:
-            return "Boost damage by 50% for 2s"
-        case .focusSpike:
-            return "Slows player perception of time for 5s"
-        case .precisionStrike:
-            return "50% higher chance to hit"
-        case .psychicBlast:
-            return "Emits mental energy to stun enemies"
-        }
-    }
-
-    var duration: TimeInterval {
-        switch self {
-        case .hardPush:
-            return 2
-        case .focusSpike:
-            return 5
-        case .precisionStrike:
-            return 2
-        case .psychicBlast:
-            return 0
-        }
-    }
-
-    var strain: Strain {
-        switch self {
-        case .hardPush:
-            return Strain(physical: 5)
-        case .focusSpike:
-            return Strain(mental: 7)
-        case .precisionStrike:
-            return Strain(mental: 5)
-        case .psychicBlast:
-            return Strain(mental: 8)
-        }
-    }
-
-    var icon: Image {
-        switch self {
-        case .hardPush:
-            return Image(systemName: "arrow.2.circlepath.circle")
-        case .focusSpike:
-            return Image(systemName: "sparkle")
-        case .precisionStrike:
-            return Image(systemName: "dot.scope")
-        case .psychicBlast:
-            return Image(systemName: "brain")
-        }
-    }
-
-    var attributeBonuses: [BioStats.AttributeBonus] {
-        switch self {
-        default:
-            return []
-        }
-    }
-
-    var derivedAttributeBonuses: [DerivedAttributeBonus] {
-        switch self {
-        case .hardPush:
-            return [
-                DerivedAttributeBonus(attribute: .damage, value: 50, kind: .multiplicative),
-            ]
-        case .precisionStrike:
-            return [
-                DerivedAttributeBonus(attribute: .hitChance, value: 50, kind: .multiplicative),
-            ]
-        default:
-            return []
-        }
-    }
-
-    var cost: Int {
-        switch self {
-        case .focusSpike:
-            return 150
-        case .precisionStrike:
-            return 150
-        default:
-            return 0 // Not purchaseable
-        }
-    }
-
+    var text: String { details.text }
+    var duration: TimeInterval { details.duration }
+    var strain: Strain { details.strain }
+    var icon: Image { Image(systemName: details.iconSystemName) }
+    var attributeBonuses: [BioStats.AttributeBonus] { details.attributeBonuses }
+    var derivedAttributeBonuses: [DerivedAttributeBonus] { details.derivedAttributeBonuses }
+    var cost: Int { details.cost }
     var grantedAbility: MentalAbility? { self }
 }

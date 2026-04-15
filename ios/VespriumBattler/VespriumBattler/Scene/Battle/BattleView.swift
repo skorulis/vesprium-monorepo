@@ -136,7 +136,7 @@ extension BattleView {
             }
             return battle.enemies.first?.id
         }
-        
+
         var abilities: [MentalAbility] { battle.battlePlayer.player.allAbilities }
 
         func damageEvents(for enemyID: UUID) -> [DamageEvent] {
