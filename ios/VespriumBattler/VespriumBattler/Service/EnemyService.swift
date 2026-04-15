@@ -13,7 +13,7 @@ final class EnemyService {
     func make(battleLevel: Int) -> Enemy {
         let options = EnemyKind.allCases.filter { $0.details.startLevel <= battleLevel }
         let array = RandomArray(items: options, score: { $0.details.rarity })
-        let type = array.random ?? .rat
+        let type = array.random ?? .streetUrchin
         return .init(kind: type)
     }
 }

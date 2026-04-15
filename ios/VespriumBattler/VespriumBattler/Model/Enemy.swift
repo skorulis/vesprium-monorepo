@@ -34,14 +34,15 @@ struct EnemyDetails: Codable, Sendable, Equatable {
     var rarity: Double = 1
 }
 
+// Enemies should all be humanoid characters with enhanced abilities
 enum EnemyKind: String, Codable, Sendable, Equatable, CaseIterable {
-    case rat
+    case streetUrchin
     case hobo
-    case spider
+    case junkie
 
     var details: EnemyDetails {
         switch self {
-        case .rat:
+        case .streetUrchin:
             return EnemyDetails(
                 damage: 1,
                 agility: 12,
@@ -59,8 +60,8 @@ enum EnemyKind: String, Codable, Sendable, Equatable, CaseIterable {
                 money: 15,
                 startLevel: 1,
             )
-        case .spider:
-            // TODO: Spiders should have a poison ability
+        case .junkie:
+            // TODO: junkie should have a poison ability
             return EnemyDetails(
                 damage: 3,
                 agility: 10,

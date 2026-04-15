@@ -1,6 +1,7 @@
 // Created by Alex Skorulis on 14/4/2026.
 
 import BioStats
+import Knit
 import SwiftUI
 import Util
 
@@ -12,25 +13,25 @@ struct BattlePlayerView: View {
     private let calculator = BattleCalculator()
 
     var body: some View {
-        ZStack(alignment: .topTrailing) {
-            RoundedRectangle(cornerRadius: 16, style: .continuous)
-                .fill(.thinMaterial)
-
+        HStack(alignment: .top) {
+            physicalInformation
+            
+            Spacer()
+            
             VStack(spacing: 10) {
                 Image(systemName: "person.circle.fill")
                     .font(.system(size: 64))
                     .foregroundStyle(.blue)
-
-                HStack(spacing: 30) {
-                    physicalBurnoutGauge
-                    mentalBurnoutGauge
-                }
             }
-            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
+            
+            Spacer()
 
-            physicalInformation
+            mentalInformation
         }
-        .frame(height: 140)
+        .background(
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .fill(.thinMaterial)
+        )
         .overlay(alignment: .top) {
             ZStack {
                 ForEach(Array(damageEvents.enumerated()), id: \.element.id) { index, event in
@@ -43,15 +44,29 @@ struct BattlePlayerView: View {
     }
 
     private var physicalInformation: some View {
-        VStack(alignment: .trailing, spacing: 0) {
+        VStack(alignment: .leading, spacing: 0) {
+            physicalBurnoutGauge
+                .padding(.bottom, 20)
+            
             Text("STR: \(player.effectiveAttributes[.strength])")
-            Text("AGI: \(player.effectiveAttributes[.agility])")
+            Text("AGI: \(battlePlayer.agility)")
             Text("HIT: \(hitChanceText)")
-            Text("DMG: \(damageText)")
+            Text("DMG: \(battle.battlePlayer.damage)")
             AttackIndicatorView(fraction: attackProgressFraction)
+            
         }
         .font(.caption.weight(.semibold))
-        .foregroundStyle(.secondary)
+        .padding(12)
+    }
+    
+    private var mentalInformation: some View {
+        VStack(alignment: .trailing, spacing: 0) {
+            mentalBurnoutGauge
+                .padding(.bottom, 20)
+            Text("COG: \(player.effectiveAttributes[.cognition])")
+            Text("STA: \(player.effectiveAttributes[.stability])")
+        }
+        .font(.caption.weight(.semibold))
         .padding(12)
     }
 
@@ -84,6 +99,7 @@ struct BattlePlayerView: View {
 
 private extension BattlePlayerView {
 
+    var battlePlayer: BattlePlayer { battle.battlePlayer }
     var player: PlayerCharacter { battle.battlePlayer.player }
 
     var hitChanceText: String {
@@ -92,10 +108,6 @@ private extension BattlePlayerView {
         }
 
         return chance.percentageString(decimalPlaces: 0)
-    }
-
-    var damageText: String {
-        return "\(battle.battlePlayer.damage)"
     }
 
     var attackProgressFraction: Double {
@@ -121,4 +133,13 @@ private extension BattlePlayerView {
         }
         return nil
     }
+}
+
+#Preview {
+    let assembler = VespriumBattlerAssembly.testing()
+    BattlePlayerView(
+        battle: assembler.resolver.battleService().makeBattle(level: 1),
+        damageEvents: []
+    )
+    .padding()
 }
