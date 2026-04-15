@@ -4,7 +4,7 @@ import Foundation
 import BioStats
 import BioEnhancements
 
-protocol ShopItem: EntityBoost {
+protocol ShopItem: EntityBoost, Equatable {
     var cost: Int { get }
     var grantedAbility: Ability? { get }
 }

@@ -17,7 +17,7 @@ extension BioEnhancement {
 
     var grantedAbility: Ability? {
         switch self {
-        case .pscycicUnblock:
+        case .psychicUnblock:
             return .psychicBlast
         default:
             return nil

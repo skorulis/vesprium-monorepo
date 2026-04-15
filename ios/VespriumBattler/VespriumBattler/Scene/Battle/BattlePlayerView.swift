@@ -15,15 +15,15 @@ struct BattlePlayerView: View {
     var body: some View {
         HStack(alignment: .top) {
             physicalInformation
-            
+
             Spacer()
-            
+
             VStack(spacing: 10) {
                 Image(systemName: "person.circle.fill")
                     .font(.system(size: 64))
                     .foregroundStyle(.blue)
             }
-            
+
             Spacer()
 
             mentalInformation
@@ -47,18 +47,18 @@ struct BattlePlayerView: View {
         VStack(alignment: .leading, spacing: 0) {
             physicalBurnoutGauge
                 .padding(.bottom, 20)
-            
+
             Text("STR: \(player.effectiveAttributes[.strength])")
             Text("AGI: \(battlePlayer.agility)")
             Text("HIT: \(hitChanceText)")
             Text("DMG: \(battle.battlePlayer.damage)")
             AttackIndicatorView(fraction: attackProgressFraction)
-            
+
         }
         .font(.caption.weight(.semibold))
         .padding(12)
     }
-    
+
     private var mentalInformation: some View {
         VStack(alignment: .trailing, spacing: 0) {
             mentalBurnoutGauge

@@ -12,16 +12,7 @@ struct ShopView {
 extension ShopView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            HStack {
-                Text("Money: \(viewModel.model.player.money)")
-                    .font(.headline.monospacedDigit())
-                Spacer()
-                Button("Player") {
-                    viewModel.showPlayer()
-                }
-                .buttonStyle(.bordered)
-            }
-            .padding(16)
+            header
 
             if viewModel.model.shopItems.isEmpty {
                 Text("No new options available.")
@@ -32,8 +23,22 @@ extension ShopView: View {
 
             continueButton
         }
+        .animation(.easeOut, value: viewModel.model.shopItems.count)
 
         .navigationTitle("Shop")
+    }
+
+    private var header: some View {
+        HStack {
+            Text("Money: \(viewModel.model.player.money)")
+                .font(.headline.monospacedDigit())
+            Spacer()
+            Button("Player") {
+                viewModel.showPlayer()
+            }
+            .buttonStyle(.bordered)
+        }
+        .padding(16)
     }
 
     private var itemList: some View {
@@ -251,6 +256,7 @@ extension ShopView {
 
 #Preview {
     let assembler = VespriumBattlerAssembly.testing()
+    assembler.resolver.mainStore().player.money = 500
     let viewModel = assembler.resolver.shopViewModel()
     viewModel.model.shopItems = assembler.resolver.shopService().allShopOptions()
     return ShopView(viewModel: viewModel)

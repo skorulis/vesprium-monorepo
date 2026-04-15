@@ -20,7 +20,7 @@ struct EnemyChip: View {
     var body: some View {
         Button(action: action) {
             VStack(alignment: .leading, spacing: 6) {
-                Text(enemy.kind.rawValue.capitalized)
+                Text(enemy.name)
                     .font(.subheadline.weight(.semibold))
                 Text("HP \(enemy.health)")
                     .font(.caption)

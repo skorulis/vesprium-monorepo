@@ -41,6 +41,21 @@ public struct BioEnhancementCell: View {
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
 
+            if let grantedAbility = enhancement.grantedAbility {
+                HStack(spacing: 8) {
+                    Text("Grants")
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                    grantedAbility.icon
+                    Text(grantedAbility.name)
+                        .font(.subheadline)
+                }
+
+                Text(grantedAbility.text)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
+            }
+
             ShopItemBonusesView(item: enhancement)
 
             if let actionTitle, let action {

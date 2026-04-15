@@ -9,7 +9,7 @@ enum Ability: String, Codable, Sendable, Equatable, CaseIterable, ShopItem {
 
     // Boost physical aggressive
     case aggression
-    
+
     case slowMotion
     case precisionStrike
     case psychicBlast

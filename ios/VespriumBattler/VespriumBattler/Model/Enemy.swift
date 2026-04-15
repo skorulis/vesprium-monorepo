@@ -2,6 +2,7 @@
 
 import Foundation
 import BioStats
+import Util
 
 struct Enemy: Codable, Sendable, Equatable {
     let id: UUID
@@ -17,6 +18,7 @@ struct Enemy: Codable, Sendable, Equatable {
     }
 
     var details: EnemyDetails { kind.details }
+    var name: String { kind.rawValue.fromCaseName }
 }
 
 struct EnemyDetails: Codable, Sendable, Equatable {

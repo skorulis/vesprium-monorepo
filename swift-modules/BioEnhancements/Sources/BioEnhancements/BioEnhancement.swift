@@ -17,7 +17,7 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable, 
     case raptorClaws
     case retractableClaws
     case extraAdrenalGlands
-    case pscycicUnblock
+    case psychicUnblock
 
     public var id: String { rawValue}
 
@@ -85,7 +85,7 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable, 
                     AttributeBonus(attribute: .cognition, value: 50, kind: .multiplicative),
                     AttributeBonus(attribute: .agility, value: 25, kind: .multiplicative),
                 ],
-                strain: .init(physical: 0, mental: 1),
+                strain: .init(physical: 0, mental: 2),
                 method: .mechanicalImplant
             )
         case .subdermalArmor:
@@ -95,7 +95,7 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable, 
                 derivedAttributeBonuses: [
                     DerivedAttributeBonus(attribute: .damageAbsorbtion, value: 1, kind: .additive)
                 ],
-                strain: .init(physical: 1),
+                strain: .init(physical: 2),
                 method: .mechanicalImplant
             )
         case .thickendedSkin:
@@ -176,7 +176,7 @@ public enum BioEnhancement: String, Codable, Sendable, Equatable, CaseIterable, 
                 strain: .init(physical: 1),
                 method: .surgery,
             )
-        case .pscycicUnblock:
+        case .psychicUnblock:
             return .init(
                 text: "Remove the limiter on the brain to unlock latent abilities",
                 baseCost: 200,
