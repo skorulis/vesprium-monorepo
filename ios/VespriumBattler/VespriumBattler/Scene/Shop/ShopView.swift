@@ -57,34 +57,52 @@ extension ShopView: View {
         }
     }
 
+    @ViewBuilder
     private func optionCell(item: ShopItem) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            HStack(alignment: .firstTextBaseline) {
-                Text(item.name)
-                    .font(.headline)
-                Spacer()
-            }
-
-            Text(item.text)
-                .font(.subheadline)
-                .foregroundStyle(.secondary)
-
-            bonuses(item: item)
-
-            HStack {
-                Spacer()
-                Button("Purchase $\(item.cost)") {
+        if let enhancement = item as? BioEnhancement {
+            BioEnhancementCell(
+                enhancement: enhancement,
+                price: item.cost,
+                actionTitle: "Purchase $\(item.cost)",
+                isActionDisabled: !viewModel.model.canPurchase(item: item),
+                action: {
                     viewModel.purchase(item)
                 }
-                .buttonStyle(.borderedProminent)
-                .disabled(!viewModel.model.canPurchase(item: item))
+            )
+            .padding(12)
+            .background(
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(.ultraThinMaterial)
+            )
+        } else {
+            VStack(alignment: .leading, spacing: 8) {
+                HStack(alignment: .firstTextBaseline) {
+                    Text(item.name)
+                        .font(.headline)
+                    Spacer()
+                }
+
+                Text(item.text)
+                    .font(.subheadline)
+                    .foregroundStyle(.secondary)
+
+                bonuses(item: item)
+
+                HStack {
+                    Spacer()
+                    Button("Purchase $\(item.cost)") {
+                        viewModel.purchase(item)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .disabled(!viewModel.model.canPurchase(item: item))
+                }
             }
+            .padding(12)
+            .background(
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(.ultraThinMaterial)
+            )
         }
-        .padding(12)
-        .background(
-            RoundedRectangle(cornerRadius: 10)
-                .fill(.ultraThinMaterial)
-        )
     }
 
     private func bonuses(item: ShopItem) -> some View {

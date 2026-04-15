@@ -31,14 +31,7 @@ extension PlayerView: View {
                         .foregroundStyle(.secondary)
                 } else {
                     ForEach(viewModel.player.enhancements.installed, id: \.rawValue) { enhancement in
-                        VStack(alignment: .leading, spacing: 4) {
-                            Text(enhancement.name)
-                                .font(.headline)
-                            Text(enhancement.text)
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
-                        }
-                        .padding(.vertical, 4)
+                        BioEnhancementCell(enhancement: enhancement)
                     }
                 }
             }
