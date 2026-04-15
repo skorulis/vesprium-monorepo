@@ -5,9 +5,9 @@ import Foundation
 import SwiftUI
 import Util
 
-enum MentalAbility: String, Codable, Sendable, Equatable, CaseIterable, ShopItem {
+enum Ability: String, Codable, Sendable, Equatable, CaseIterable, ShopItem {
 
-    // Be more aggressive
+    // Boost physical aggressive
     case aggression
     
     case focusSpike
@@ -82,5 +82,5 @@ enum MentalAbility: String, Codable, Sendable, Equatable, CaseIterable, ShopItem
     var attributeBonuses: [BioStats.AttributeBonus] { details.attributeBonuses }
     var derivedAttributeBonuses: [DerivedAttributeBonus] { details.derivedAttributeBonuses }
     var cost: Int { details.cost }
-    var grantedAbility: MentalAbility? { self }
+    var grantedAbility: Ability? { self }
 }

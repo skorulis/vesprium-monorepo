@@ -39,11 +39,11 @@ import Util
         model.battle.battlePlayer.player.maxHealth
     }
 
-    func remainingCooldown(for ability: MentalAbility) -> TimeInterval {
+    func remainingCooldown(for ability: Ability) -> TimeInterval {
         model.battle.battlePlayer.activeAbilities[ability] ?? 0
     }
 
-    func canActivate(_ ability: MentalAbility) -> Bool {
+    func canActivate(_ ability: Ability) -> Bool {
         remainingCooldown(for: ability) <= 0
     }
 }
@@ -63,7 +63,7 @@ extension BattleViewModel {
         )
     }
 
-    func activate(_ ability: MentalAbility) {
+    func activate(_ ability: Ability) {
         guard canActivate(ability) else { return }
         updateBattle { battle in
             battle.battlePlayer.activate(ability: ability)

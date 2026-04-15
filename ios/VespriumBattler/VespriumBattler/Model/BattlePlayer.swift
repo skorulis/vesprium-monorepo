@@ -32,7 +32,7 @@ struct BattlePlayer: Codable, Sendable, Equatable {
     }
 
     /// Abilities that are active
-    var activeAbilities: [MentalAbility: Double] = [:]
+    var activeAbilities: [Ability: Double] = [:]
 
     var derivedAttributeBonuses: [DerivedAttributeBonus] {
         return player.enhancements.derivedAttributeBonuses
@@ -66,7 +66,7 @@ struct BattlePlayer: Codable, Sendable, Equatable {
         )
     }
 
-    mutating func activate(ability: MentalAbility) {
+    mutating func activate(ability: Ability) {
         activeAbilities[ability] = ability.duration
         mentalBurnout.total += Double(ability.strain.mental)
         physicalBurnout.total += Double(ability.strain.physical)

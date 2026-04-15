@@ -69,7 +69,7 @@ private extension BattleView {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 12) {
                         ForEach(model.abilities, id: \.self) { ability in
-                            MentalAbilityButton(
+                            AbilityButton(
                                 ability: ability,
                                 cooldownRemaining: viewModel.remainingCooldown(for: ability),
                                 action: {
@@ -137,7 +137,7 @@ extension BattleView {
             return battle.enemies.first?.id
         }
 
-        var abilities: [MentalAbility] { battle.battlePlayer.player.allAbilities }
+        var abilities: [Ability] { battle.battlePlayer.player.allAbilities }
 
         func damageEvents(for enemyID: UUID) -> [DamageEvent] {
             enemyDamageEvents[enemyID] ?? []

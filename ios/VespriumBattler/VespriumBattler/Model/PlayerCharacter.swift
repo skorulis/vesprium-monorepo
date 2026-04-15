@@ -35,9 +35,9 @@ struct PlayerCharacter: Codable, Sendable, Equatable {
         )
     }
 
-    var mentalAbilities: [MentalAbility] = [.aggression]
+    var mentalAbilities: [Ability] = [.aggression]
 
-    var allAbilities: [MentalAbility] {
+    var allAbilities: [Ability] {
         mentalAbilities + enhancements.installed.compactMap { $0.grantedAbility }
     }
 

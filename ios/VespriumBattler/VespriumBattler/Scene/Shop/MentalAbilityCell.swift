@@ -1,16 +1,16 @@
 import BioStats
 import SwiftUI
 
-/// Reusable presentation for a `MentalAbility` with optional shop affordances.
-struct MentalAbilityCell: View {
-    let ability: MentalAbility
+/// Reusable presentation for an `Ability` with optional shop affordances.
+struct AbilityCell: View {
+    let ability: Ability
     let price: Int?
     let actionTitle: String?
     let isActionDisabled: Bool
     let action: (() -> Void)?
 
     init(
-        ability: MentalAbility,
+        ability: Ability,
         price: Int? = nil,
         actionTitle: String? = nil,
         isActionDisabled: Bool = false,

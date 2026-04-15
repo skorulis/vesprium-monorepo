@@ -42,7 +42,7 @@ extension PlayerView: View {
                         .foregroundStyle(.secondary)
                 } else {
                     ForEach(viewModel.player.mentalAbilities, id: \.rawValue) { ability in
-                        MentalAbilityCell(ability: ability)
+                        AbilityCell(ability: ability)
                     }
                 }
             }

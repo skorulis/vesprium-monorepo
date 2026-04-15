@@ -43,7 +43,7 @@ extension ShopViewModel {
             purchaseEnhancement(enhancement)
         } else if let training = item as? ShopView.TrainingOption {
             purchaseTraining(training)
-        } else if let ability = item as? MentalAbility {
+        } else if let ability = item as? Ability {
 
         } else {
             fatalError("Unexpected item \(item)")
@@ -71,7 +71,7 @@ extension ShopViewModel {
         mainStore.player = player
     }
 
-    private func purchaseAbility(_ ability: MentalAbility) {
+    private func purchaseAbility(_ ability: Ability) {
         guard model.player.money >= ability.cost else { return }
 
         var player = mainStore.player

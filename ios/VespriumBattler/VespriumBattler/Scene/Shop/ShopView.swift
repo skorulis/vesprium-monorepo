@@ -74,8 +74,8 @@ extension ShopView: View {
                 RoundedRectangle(cornerRadius: 10)
                     .fill(.ultraThinMaterial)
             )
-        } else if let ability = item as? MentalAbility {
-            MentalAbilityCell(
+        } else if let ability = item as? Ability {
+            AbilityCell(
                 ability: ability,
                 price: item.cost,
                 actionTitle: "Purchase $\(item.cost)",
@@ -235,7 +235,7 @@ extension ShopView {
             [AttributeBonus(attribute: attribute, value: amount)]
         }
 
-        var grantedAbility: MentalAbility? { nil }
+        var grantedAbility: Ability? { nil }
     }
 
     struct Model {

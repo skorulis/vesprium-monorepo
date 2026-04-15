@@ -3,9 +3,9 @@
 import Foundation
 import SwiftUI
 
-struct MentalAbilityButton: View {
+struct AbilityButton: View {
 
-    let ability: MentalAbility
+    let ability: Ability
     let cooldownRemaining: TimeInterval
     let action: () -> Void
 
@@ -37,7 +37,7 @@ struct MentalAbilityButton: View {
     }
 }
 
-private extension MentalAbilityButton {
+private extension AbilityButton {
     var cooldownFractionRemaining: Double {
         guard ability.duration > 0 else { return 0 }
         return min(1, max(0, cooldownRemaining / ability.duration))
