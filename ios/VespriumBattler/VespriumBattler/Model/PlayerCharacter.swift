@@ -36,7 +36,7 @@ struct PlayerCharacter: Codable, Sendable, Equatable {
     }
 
     var mentalAbilities: [MentalAbility] {
-        return [.focusSpike]
+        return [.hardPush, .focusSpike]
     }
 
     var maxPhysicalBurnout: Int {

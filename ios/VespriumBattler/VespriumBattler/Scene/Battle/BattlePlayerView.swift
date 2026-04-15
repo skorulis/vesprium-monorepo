@@ -48,6 +48,7 @@ struct BattlePlayerView: View {
             Text("AGI: \(player.effectiveAttributes[.agility])")
             Text("HIT: \(hitChanceText)")
             Text("DMG: \(damageText)")
+            AttackIndicatorView(fraction: attackProgressFraction)
         }
         .font(.caption.weight(.semibold))
         .foregroundStyle(.secondary)
@@ -99,8 +100,11 @@ private extension BattlePlayerView {
     }
 
     var damageText: String {
-        let damage = Double(battle.battlePlayer.player.damage) * battle.battlePlayer.averagedPhysicalExertion
-        return "\(Int(round(damage)))"
+        return "\(battle.battlePlayer.damage)"
+    }
+
+    var attackProgressFraction: Double {
+        min(1, max(0, battle.battlePlayer.storedTime))
     }
 
     var physicalBurnoutTint: Color? {

@@ -21,9 +21,10 @@ extension BattleView: View {
                     battle: model.battle,
                     damageEvents: model.playerDamageEvents
                 )
+                mentalAbilitiesSection
                 exertionSection
                 enemySection
-                mentalAbilitiesSection
+                
                 playerHealthSection
             }
             .padding(16)
@@ -75,15 +76,10 @@ private extension BattleView {
         }
     }
 
+    @ViewBuilder
     var mentalAbilitiesSection: some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text("Mental Abilities")
-                .font(.headline)
-
-            if viewModel.mentalAbilities.isEmpty {
-                Text("No abilities unlocked")
-                    .foregroundStyle(.secondary)
-            } else {
+        if viewModel.mentalAbilities.count > 0 {
+            VStack(alignment: .leading, spacing: 8) {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 12) {
                         ForEach(viewModel.mentalAbilities, id: \.self) { ability in

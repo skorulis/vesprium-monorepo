@@ -39,6 +39,10 @@ struct BattlePlayer: Codable, Sendable, Equatable {
 
     /// Abilities that are active
     var activeAbilities: [MentalAbility: Double] = [:]
+    
+    var derivedAttributeBonuses: [DerivedAttributeBonus] {
+        return player.enhancements.derivedAttributeBonuses + activeAbilities.keys.flatMap { $0.derivedAttributeBonuses }
+    }
 
     init(player: PlayerCharacter) {
         self.player = player
@@ -51,14 +55,21 @@ struct BattlePlayer: Codable, Sendable, Equatable {
     }
 
     var damage: Int {
-        let value = Double(player.damage) * averagedPhysicalExertion
-        return Int(round(value))
+        let base = player.effectiveAttributes[.strength] / 2
+        let adjusted = DerivedAttributeBonus.adjustedValue(
+            base: base,
+            bonuses: derivedAttributeBonuses,
+            attribute: .damage
+        )
+        
+        return adjusted
     }
 
     mutating func activate(ability: MentalAbility) {
         abilityCooldowns[ability] = ability.cooldown
         activeAbilities[ability] = ability.duration
-        mentalBurnout += Double(ability.mentalLoad)
+        mentalBurnout += Double(ability.strain.mental)
+        physicalBurnout.total += Double(ability.strain.physical)
     }
 
     mutating func updateExertion(physical: Double, time: TimeInterval) {
