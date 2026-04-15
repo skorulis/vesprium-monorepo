@@ -74,6 +74,21 @@ extension ShopView: View {
                 RoundedRectangle(cornerRadius: 10)
                     .fill(.ultraThinMaterial)
             )
+        } else if let ability = item as? MentalAbility {
+            MentalAbilityCell(
+                ability: ability,
+                price: item.cost,
+                actionTitle: "Purchase $\(item.cost)",
+                isActionDisabled: !viewModel.model.canPurchase(item: item),
+                action: {
+                    viewModel.purchase(item)
+                }
+            )
+            .padding(12)
+            .background(
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(.ultraThinMaterial)
+            )
         } else {
             VStack(alignment: .leading, spacing: 8) {
                 HStack(alignment: .firstTextBaseline) {

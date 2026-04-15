@@ -12,9 +12,17 @@ final class MainStore: ObservableObject {
     private static let gameStateKey = "game.v1"
     private static let playerKey = "player.v1"
 
-    @Published var player: PlayerCharacter
+    @Published var player: PlayerCharacter {
+        didSet {
+            try? keyValueStore.set(codable: player, forKey: Self.playerKey)
+        }
+    }
 
-    @Published var gameState: GameState
+    @Published var gameState: GameState {
+        didSet {
+            try? keyValueStore.set(codable: gameState, forKey: Self.gameStateKey)
+        }
+    }
 
     @Resolvable<Resolver>
     init(keyValueStore: PKeyValueStore) {

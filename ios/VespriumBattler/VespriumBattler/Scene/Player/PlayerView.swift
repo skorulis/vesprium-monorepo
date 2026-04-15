@@ -37,50 +37,17 @@ extension PlayerView: View {
             }
 
             Section("Abilities") {
-                if viewModel.player.mentalAbilities.isEmpty {
+                if viewModel.player.allAbilities.isEmpty {
                     Text("No abilities unlocked.")
                         .foregroundStyle(.secondary)
                 } else {
                     ForEach(viewModel.player.mentalAbilities, id: \.rawValue) { ability in
-                        VStack(alignment: .leading, spacing: 6) {
-                            HStack(spacing: 8) {
-                                ability.icon
-                                Text(ability.rawValue.titleCase)
-                            }
-                            .font(.headline)
-
-                            Text(ability.text)
-                                .font(.subheadline)
-                                .foregroundStyle(.secondary)
-
-                            LabeledContent("Duration", value: "\(Int(ability.duration))s")
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-
-                            ForEach(ability.strain.descriptionLines, id: \.self) { line in
-                                Text(line)
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
-                            }
-                        }
-                        .padding(.vertical, 4)
+                        MentalAbilityCell(ability: ability)
                     }
                 }
             }
         }
         .navigationTitle("Player")
-    }
-}
-
-private extension String {
-    var titleCase: String {
-        unicodeScalars.reduce(into: "") { partialResult, scalar in
-            if CharacterSet.uppercaseLetters.contains(scalar), partialResult.isEmpty == false {
-                partialResult += " "
-            }
-            partialResult.append(String(scalar))
-        }
-        .capitalized
     }
 }
 

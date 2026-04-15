@@ -39,10 +39,6 @@ import Util
         model.battle.battlePlayer.player.maxHealth
     }
 
-    var mentalAbilities: [MentalAbility] {
-        model.battle.battlePlayer.player.mentalAbilities
-    }
-
     func remainingCooldown(for ability: MentalAbility) -> TimeInterval {
         model.battle.battlePlayer.activeAbilities[ability] ?? 0
     }

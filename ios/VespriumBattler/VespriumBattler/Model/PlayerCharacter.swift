@@ -34,9 +34,12 @@ struct PlayerCharacter: Codable, Sendable, Equatable {
             attribute: .damageAbsorbtion
         )
     }
+    
 
-    var mentalAbilities: [MentalAbility] {
-        return [.hardPush, .focusSpike]
+    var mentalAbilities: [MentalAbility] = [.hardPush]
+    
+    var allAbilities: [MentalAbility] {
+        mentalAbilities + enhancements.installed.compactMap { $0.grantedAbility }
     }
 
     var maxPhysicalBurnout: Int {

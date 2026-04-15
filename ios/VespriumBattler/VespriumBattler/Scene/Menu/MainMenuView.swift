@@ -16,6 +16,9 @@ extension MainMenuView: View {
                 Text("Start")
             }
         }
+        .onAppear {
+            viewModel.onAppear()
+        }
     }
 }
 
