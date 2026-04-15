@@ -19,41 +19,12 @@ import Util
     private var cancellables: Set<AnyCancellable> = []
 
     @Resolvable<Resolver>
-    init(mainStore: MainStore) {
+    init(mainStore: MainStore, shopService: ShopService) {
         self.mainStore = mainStore
-
-        var enhancementArray = RandomArray(items: BioEnhancement.allCases) {
-            if $0.isUseless { return 0 }
-            if mainStore.player.enhancements.installed.contains($0) {
-                return 0
-            }
-            return 1
-        }
-
-        var items: [ShopItem] = []
-        var checkCount = 0
-        while checkCount < 10 && items.count < 5 {
-            checkCount += 1
-            guard let (item, index) = enhancementArray.randomWithIndex else {
-                continue
-            }
-            enhancementArray.remove(index: index)
-            items.append(item)
-        }
-
-        for attribute in Attribute.allCases.shuffled().prefix(2) {
-            let training = ShopView.TrainingOption(
-                attribute: attribute,
-                amount: 1,
-                cost: 40
-            )
-            items.append(training)
-        }
-
         self.model = ShopView.Model(
             nextLevel: mainStore.gameState.currentLevel + 1,
             player: mainStore.player,
-            shopItems: items.shuffled(),
+            shopItems: shopService.createShopItems().shuffled(),
         )
 
         mainStore.$player.sink { [unowned self] in

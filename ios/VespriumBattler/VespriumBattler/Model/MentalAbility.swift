@@ -78,3 +78,9 @@ enum MentalAbility: String, Codable, Sendable, Equatable, CaseIterable {
         }
     }
 }
+
+extension MentalAbility {
+    static var purchaseable: [MentalAbility] {
+        return [.focusSpike]
+    }
+}

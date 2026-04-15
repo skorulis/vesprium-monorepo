@@ -30,6 +30,7 @@ final class VespriumBattlerAssembly: AutoInitModuleAssembly {
     private func registerServices(container: Container<TargetResolver>) {
         container.register(BattleService.self) { BattleService.make(resolver: $0) }
         container.register(EnemyService.self) { EnemyService.make(resolver: $0) }
+        container.register(ShopService.self) { ShopService.make(resolver: $0) }
     }
 
     private func registerStores(container: Container<TargetResolver>) {
