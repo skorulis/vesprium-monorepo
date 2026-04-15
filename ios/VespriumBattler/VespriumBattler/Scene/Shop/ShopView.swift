@@ -63,8 +63,6 @@ extension ShopView: View {
                 Text(item.title)
                     .font(.headline)
                 Spacer()
-                Text("$\(item.cost)")
-                    .foregroundStyle(.secondary)
             }
 
             Text(item.description)
@@ -75,7 +73,7 @@ extension ShopView: View {
 
             HStack {
                 Spacer()
-                Button("Purchase") {
+                Button("Purchase $\(item.cost)") {
                     viewModel.purchase(item)
                 }
                 .buttonStyle(.borderedProminent)
