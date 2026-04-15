@@ -18,6 +18,7 @@ import KnitMacros
     func startGame() {
         mainStore.gameState.phase = .battle
         mainStore.gameState.currentLevel = 1
+        mainStore.player = .init()
         coordinator?.push(MainPath.game)
     }
 }
