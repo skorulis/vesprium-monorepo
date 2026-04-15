@@ -38,7 +38,7 @@ final class ShopService {
 
     private var abilityOptions: [ShopItem] {
         MentalAbility.allCases.filter {
-            $0.cost > 0
+            $0.cost > 0 && !mainStore.player.mentalAbilities.contains($0)
         }
     }
 

@@ -219,6 +219,8 @@ extension ShopView {
         var attributeBonuses: [AttributeBonus] {
             [AttributeBonus(attribute: attribute, value: amount)]
         }
+
+        var grantedAbility: MentalAbility? { nil }
     }
 
     struct Model {

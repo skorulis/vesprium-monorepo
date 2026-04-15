@@ -99,4 +99,6 @@ enum MentalAbility: String, Codable, Sendable, Equatable, CaseIterable, ShopItem
             return 0 // Not purchaseable
         }
     }
+
+    var grantedAbility: MentalAbility? { self }
 }

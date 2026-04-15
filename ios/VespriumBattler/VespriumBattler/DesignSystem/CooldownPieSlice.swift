@@ -3,6 +3,21 @@
 import Foundation
 import SwiftUI
 
+struct CooldownPieView: View {
+    let remainingFraction: Double
+
+    var body: some View {
+        GeometryReader { proxy in
+            CooldownPieSlice(
+                fraction: remainingFraction
+            )
+            .fill(.black.opacity(0.45))
+            .frame(width: proxy.size.width, height: proxy.size.height)
+        }
+        .clipShape(RoundedRectangle(cornerRadius: 10))
+    }
+}
+
 struct CooldownPieSlice: Shape {
     let fraction: Double
 

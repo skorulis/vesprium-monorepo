@@ -22,14 +22,7 @@ struct MentalAbilityButton: View {
                     .foregroundStyle(.primary)
 
                 if cooldownFractionRemaining > 0 {
-                    GeometryReader { proxy in
-                        CooldownPieSlice(
-                            fraction: cooldownFractionRemaining
-                        )
-                        .fill(.black.opacity(0.45))
-                        .frame(width: proxy.size.width, height: proxy.size.height)
-                    }
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    CooldownPieView(remainingFraction: cooldownFractionRemaining)
                 }
             }
             .frame(width: 54, height: 54)

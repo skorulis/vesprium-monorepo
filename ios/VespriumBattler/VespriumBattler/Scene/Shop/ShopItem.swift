@@ -6,6 +6,7 @@ import BioEnhancements
 
 protocol ShopItem: EntityBoost {
     var cost: Int { get }
+    var grantedAbility: MentalAbility? { get }
 }
 
 extension ShopItem {

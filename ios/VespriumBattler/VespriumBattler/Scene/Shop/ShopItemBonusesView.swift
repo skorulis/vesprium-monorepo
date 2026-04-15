@@ -14,7 +14,7 @@ import SwiftUI
 // MARK: - Rendering
 
 extension ShopItemBonusesView: View {
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 4) {
             ForEach(item.attributeBonusText, id: \.self) { text in
@@ -40,4 +40,3 @@ extension ShopItemBonusesView: View {
 #Preview {
     ShopItemBonusesView(item: BioEnhancement.muscleEnergyImplants)
 }
-

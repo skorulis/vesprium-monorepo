@@ -35,14 +35,7 @@ struct EnemyChip: View {
             )
             .overlay {
                 if cooldownRemainingFraction > 0 {
-                    GeometryReader { proxy in
-                        CooldownPieSlice(
-                            fraction: cooldownRemainingFraction
-                        )
-                        .fill(.black.opacity(0.45))
-                        .frame(width: proxy.size.width, height: proxy.size.height)
-                    }
-                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    CooldownPieView(remainingFraction: cooldownRemainingFraction)
                 }
             }
             .overlay(
