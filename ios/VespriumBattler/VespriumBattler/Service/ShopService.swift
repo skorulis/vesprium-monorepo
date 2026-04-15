@@ -15,7 +15,7 @@ final class ShopService {
     init(mainStore: MainStore) {
         self.mainStore = mainStore
     }
-    
+
     private var enhancementOptions: [ShopItem] {
         BioEnhancement.allCases.filter {
             if $0.isUseless { return false }
@@ -25,7 +25,7 @@ final class ShopService {
             return true
         }
     }
-    
+
     private var attributeTrainingOptions: [ShopItem] {
         Attribute.allCases.map {
             ShopView.TrainingOption(
@@ -35,16 +35,22 @@ final class ShopService {
             )
         }
     }
-    
+
+    private var abilityOptions: [ShopItem] {
+        MentalAbility.allCases.filter {
+            $0.cost > 0
+        }
+    }
+
     private func allShopOptions() -> [ShopItem] {
-        return enhancementOptions + attributeTrainingOptions
+        return enhancementOptions + attributeTrainingOptions + abilityOptions
     }
 
     func createShopItems() -> [ShopItem] {
         var itemArray = RandomArray(items: allShopOptions()) { _ in
             1
         }
-        
+
         var items: [ShopItem] = []
         var checkCount = 0
         while checkCount < 20 && items.count < 8 {

@@ -3,13 +3,17 @@
 import BioStats
 import Foundation
 import SwiftUI
+import Util
 
-enum MentalAbility: String, Codable, Sendable, Equatable, CaseIterable {
+enum MentalAbility: String, Codable, Sendable, Equatable, CaseIterable, ShopItem {
 
     case hardPush // TODO: Rename
     case focusSpike
     case precisionStrike
     case psychicBlast
+
+    var id: String { rawValue }
+    var name: String { rawValue.fromCaseName }
 
     var text: String {
         switch self {
@@ -63,6 +67,13 @@ enum MentalAbility: String, Codable, Sendable, Equatable, CaseIterable {
         }
     }
 
+    var attributeBonuses: [BioStats.AttributeBonus] {
+        switch self {
+        default:
+            return []
+        }
+    }
+
     var derivedAttributeBonuses: [DerivedAttributeBonus] {
         switch self {
         case .hardPush:
@@ -77,10 +88,15 @@ enum MentalAbility: String, Codable, Sendable, Equatable, CaseIterable {
             return []
         }
     }
-}
 
-extension MentalAbility {
-    static var purchaseable: [MentalAbility] {
-        return [.focusSpike]
+    var cost: Int {
+        switch self {
+        case .focusSpike:
+            return 150
+        case .precisionStrike:
+            return 150
+        default:
+            return 0 // Not purchaseable
+        }
     }
 }

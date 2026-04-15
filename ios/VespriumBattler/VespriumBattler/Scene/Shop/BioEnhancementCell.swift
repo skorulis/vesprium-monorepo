@@ -1,4 +1,5 @@
 import BioStats
+import BioEnhancements
 import SwiftUI
 
 /// Reusable presentation for a `BioEnhancement` with optional shop affordances.
@@ -40,22 +41,7 @@ public struct BioEnhancementCell: View {
                 .font(.subheadline)
                 .foregroundStyle(.secondary)
 
-            VStack(alignment: .leading, spacing: 4) {
-                ForEach(enhancement.attributeBonusText, id: \.self) { text in
-                    Text(text)
-                        .font(.caption)
-                }
-
-                ForEach(enhancement.derivedAttributeBoostsText, id: \.self) { text in
-                    Text(text)
-                        .font(.caption)
-                }
-
-                ForEach(enhancement.strainIncreaseText, id: \.self) { text in
-                    Text(text)
-                        .font(.caption)
-                }
-            }
+            ShopItemBonusesView(item: enhancement)
 
             if let actionTitle, let action {
                 HStack {
