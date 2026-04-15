@@ -122,7 +122,7 @@ private extension BattleViewModel {
 
     func enemyTick() {
         var tickLength = BattleActionTimers.playerTickTime
-        if model.battle.battlePlayer.activeAbilities[.focusSpike] != nil {
+        if model.battle.battlePlayer.activeAbilities[.slowMotion] != nil {
             tickLength *= 0.5
         }
         var playerDamageEvents: [Int] = []

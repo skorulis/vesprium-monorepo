@@ -10,7 +10,7 @@ enum Ability: String, Codable, Sendable, Equatable, CaseIterable, ShopItem {
     // Boost physical aggressive
     case aggression
     
-    case focusSpike
+    case slowMotion
     case precisionStrike
     case psychicBlast
 
@@ -38,9 +38,9 @@ enum Ability: String, Codable, Sendable, Equatable, CaseIterable, ShopItem {
                 ],
                 cost: 0 // Not purchaseable
             )
-        case .focusSpike:
+        case .slowMotion:
             return AbilityDetails(
-                text: "Slows player perception of time for 5s",
+                text: "Reduces the perception of time",
                 duration: 5,
                 strain: Strain(mental: 7),
                 iconSystemName: "sparkle",

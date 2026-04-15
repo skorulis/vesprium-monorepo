@@ -251,5 +251,7 @@ extension ShopView {
 
 #Preview {
     let assembler = VespriumBattlerAssembly.testing()
-    ShopView(viewModel: assembler.resolver.shopViewModel())
+    let viewModel = assembler.resolver.shopViewModel()
+    viewModel.model.shopItems = assembler.resolver.shopService().allShopOptions()
+    return ShopView(viewModel: viewModel)
 }

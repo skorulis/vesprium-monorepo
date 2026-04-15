@@ -42,7 +42,7 @@ final class ShopService {
         }
     }
 
-    private func allShopOptions() -> [ShopItem] {
+    func allShopOptions() -> [ShopItem] {
         return enhancementOptions + attributeTrainingOptions + abilityOptions
     }
 
