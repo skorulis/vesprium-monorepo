@@ -10,6 +10,7 @@ struct Enemy: Codable, Sendable, Equatable {
 
     var storedTime: TimeInterval = 0
     var health: Int
+    var statusEffects = StatusEffectContainer()
 
     init(kind: EnemyKind) {
         self.id = UUID()

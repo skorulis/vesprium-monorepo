@@ -72,7 +72,8 @@ struct Battle: Codable, Sendable, Equatable {
         guard let target = targettedEnemy else { return nil }
         let base = BattleCalculator().hitChance(
             attackerAgility: battlePlayer.agility,
-            defenderAgility: target.details.agility
+            defenderAgility: target.details.agility,
+            reflexSpeed: 1,
         ).percent
 
         let adjusted = DerivedAttributeBonus.adjustedValue(

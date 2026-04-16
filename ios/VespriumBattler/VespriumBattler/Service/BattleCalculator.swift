@@ -5,8 +5,10 @@ import Util
 
 struct BattleCalculator {
 
-    func hitChance(attackerAgility: Int, defenderAgility: Int) -> Chance {
-        let fraction = Double(attackerAgility) / Double(attackerAgility / 2 + defenderAgility)
+    func hitChance(attackerAgility: Int, defenderAgility: Int, reflexSpeed: Double) -> Chance {
+        let totalDefence = Double(defenderAgility) * reflexSpeed
+        let agi = Double(attackerAgility)
+        let fraction = agi / (agi * 0.5 + totalDefence)
         return Chance(fraction)
     }
 }

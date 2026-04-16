@@ -67,6 +67,11 @@ extension BattleViewModel {
         guard canActivate(ability) else { return }
         updateBattle { battle in
             battle.battlePlayer.activate(ability: ability)
+            if ability == .psychicBlast {
+                for index in 0..<battle.enemies.count {
+                    battle.enemies[index].statusEffects.add(effect: .stun, duration: 2)
+                }
+            }
         }
     }
 

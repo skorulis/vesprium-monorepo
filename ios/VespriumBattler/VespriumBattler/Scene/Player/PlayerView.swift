@@ -41,7 +41,7 @@ extension PlayerView: View {
                     Text("No abilities unlocked.")
                         .foregroundStyle(.secondary)
                 } else {
-                    ForEach(viewModel.player.mentalAbilities, id: \.rawValue) { ability in
+                    ForEach(viewModel.player.allAbilities, id: \.rawValue) { ability in
                         AbilityCell(ability: ability)
                     }
                 }

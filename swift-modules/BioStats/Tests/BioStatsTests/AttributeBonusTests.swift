@@ -25,7 +25,7 @@ struct AttributeBonusTests {
             AttributeBonus(attribute: .vitality, value: 10, kind: .multiplicative),
             AttributeBonus(attribute: .vitality, value: 15, kind: .multiplicative),
         ]
-        #expect(AttributeBonus.adjustedValue(base: 100, bonuses: bonuses, attribute: .vitality) == 126)
+        #expect(AttributeBonus.adjustedValue(base: 100, bonuses: bonuses, attribute: .vitality) == 127)
     }
 
     @Test func adjustedValueAdditiveThenMultiplicative() {

@@ -37,7 +37,7 @@ struct AttributeValuesBonusTests {
         let adjusted = values.applyingBonuses(bonuses)
         let expected = AttributeBonus.adjustedValue(base: 100, bonuses: bonuses, attribute: .vitality)
         #expect(adjusted[.vitality] == expected)
-        #expect(adjusted[.vitality] == 126)
+        #expect(adjusted[.vitality] == 127)
     }
 
     @Test func applyingBonusesOrdered() {

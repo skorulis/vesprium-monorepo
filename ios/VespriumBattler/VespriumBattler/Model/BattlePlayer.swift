@@ -65,6 +65,14 @@ struct BattlePlayer: Codable, Sendable, Equatable {
             attribute: .damage
         )
     }
+    
+    var reflexSpeed: Double {
+        return DerivedAttributeBonus.adjustedValue(
+            double: 1,
+            bonuses: derivedAttributeBonuses,
+            attribute: .reflexes
+        )
+    }
 
     mutating func activate(ability: Ability) {
         activeAbilities[ability] = ability.duration

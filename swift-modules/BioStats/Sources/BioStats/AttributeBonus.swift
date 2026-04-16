@@ -28,13 +28,18 @@ public struct Bonus<AttributeType: Equatable> where AttributeType: CustomStringC
     /// 1. All additive bonuses for this attribute are summed and added to `base`.
     /// 2. Each multiplicative bonus applies in array order: `result = (result * (100 + value)) / 100`.
     public static func adjustedValue(base: Int, bonuses: [Bonus<AttributeType>], attribute: AttributeType) -> Int {
+        let adjustedDouble = adjustedValue(double: Double(base), bonuses: bonuses, attribute: attribute)
+        return Int(round(adjustedDouble))
+    }
+    
+    public static func adjustedValue(double: Double, bonuses: [Bonus<AttributeType>], attribute: AttributeType) -> Double {
         let relevant = bonuses.filter { $0.attribute == attribute }
         let additiveSum = relevant
             .filter { $0.kind == .additive }
             .reduce(0) { $0 + $1.value }
-        var result = base + additiveSum
+        var result = double + Double(additiveSum)
         for bonus in relevant where bonus.kind == .multiplicative {
-            result = (result * (100 + bonus.value)) / 100
+            result = (result * (100 + Double(bonus.value))) / 100
         }
         return result
     }

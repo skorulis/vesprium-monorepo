@@ -28,4 +28,15 @@ public enum Attribute: String, Codable, CaseIterable, Hashable, Sendable, Custom
     }
 
     public var description: String { name }
+    
+    public var acronym: String {
+        switch self {
+        case .strength: "STR"
+        case .agility: "AGI"
+        case .cognition: "COG"
+        case .vitality: "VIT"
+        case .charisma: "CHR"
+        case .stability: "STB"
+        }
+    }
 }

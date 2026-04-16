@@ -50,10 +50,6 @@ public struct BioEnhancementCell: View {
                     Text(grantedAbility.name)
                         .font(.subheadline)
                 }
-
-                Text(grantedAbility.text)
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
             }
 
             ShopItemBonusesView(item: enhancement)

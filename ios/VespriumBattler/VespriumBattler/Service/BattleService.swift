@@ -55,7 +55,8 @@ final class BattleService {
 
         let hitChance = calculator.hitChance(
             attackerAgility: battle.battlePlayer.agility,
-            defenderAgility: details.agility
+            defenderAgility: details.agility,
+            reflexSpeed: 1,
         )
         guard hitChance.check() else {
             print("Miss")
@@ -72,6 +73,10 @@ final class BattleService {
 
     /// An enemy attacks
     func enemyTick(battle: inout Battle, enemy: inout Enemy, time: TimeInterval) {
+        enemy.statusEffects.reduce(time: time)
+        if enemy.statusEffects.contains(effect: .stun) {
+            return
+        }
         enemy.storedTime += time
         let details = enemy.details
         guard enemy.storedTime >= details.attackRate else { return }
@@ -79,7 +84,8 @@ final class BattleService {
 
         let hitChance = calculator.hitChance(
             attackerAgility: details.agility,
-            defenderAgility: battle.battlePlayer.agility
+            defenderAgility: battle.battlePlayer.agility,
+            reflexSpeed: battle.battlePlayer.reflexSpeed,
         )
 
         guard hitChance.check() else { return }
